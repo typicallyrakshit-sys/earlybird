@@ -559,6 +559,9 @@ const COMMITTEES = [
 if (window.__takenPortfolios) {
     const takenMap = window.__takenPortfolios;
     COMMITTEES.forEach(com => {
+        // Skip IP committee to allow infinite capacity
+        if (com.id === 'ip') return;
+        
         const takenSet = takenMap[com.id];
         if (takenSet && takenSet.size > 0) {
             com.portfolios.forEach(port => {
