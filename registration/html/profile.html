@@ -137,7 +137,7 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
-        import { getFirestore, collection, query, where, getDocs, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+        import { getFirestore, collection, query, where, getDocs, doc, getDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
@@ -232,7 +232,47 @@
                     throw new Error('No registration found for this account. Please complete registration.');
                 }
 
-                const data = snapshot.docs[0].data();
+                // --- Smart doc selection ---
+                // Prefer non-draft docs (pending / approved / rejected).
+                // If multiple non-drafts exist (shouldn't happen), pick first.
+                // If only drafts exist, redirect user to continue their registration.
+
+                let chosenDoc = null;
+                const draftDocs = [];
+
+                snapshot.forEach(d => {
+                    const s = (d.data().status || '').toLowerCase();
+                    if (s !== 'draft') {
+                        if (!chosenDoc) chosenDoc = d; // take first completed doc
+                    } else {
+                        draftDocs.push(d);
+                    }
+                });
+
+                if (!chosenDoc) {
+                    // Only unfinished drafts — send them to resume
+                    const draftData = draftDocs[0].data();
+                    const draftId   = draftDocs[0].id;
+                    sessionStorage.setItem('nydc_registration', JSON.stringify({
+                        uid: draftData.uid, firstName: draftData.firstName,
+                        lastName: draftData.lastName, email: draftData.email,
+                        phone: draftData.phone || '', school: draftData.school || '',
+                        grade: draftData.grade || '', city: draftData.city || ''
+                    }));
+                    sessionStorage.setItem('nydc_doc_id', draftId);
+                    if (draftData.event) {
+                        sessionStorage.setItem('nydc_event', JSON.stringify({ event: draftData.event }));
+                    }
+                    window.location.href = draftData.event ? 'selection.html' : 'event.html';
+                    return;
+                }
+
+                // Delete any stale draft docs (cleanup)
+                for (const d of draftDocs) {
+                    try { await deleteDoc(doc(db, 'registrations', d.id)); } catch(_) {}
+                }
+
+                const data = chosenDoc.data();
 
                 // Populate UI
                 document.getElementById('profile-name').innerHTML = `${data.firstName} <span>${data.lastName}</span>`;
