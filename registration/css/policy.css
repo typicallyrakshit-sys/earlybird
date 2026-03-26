@@ -1,0 +1,299 @@
+/* ─────────────────────────────────────────
+   NYDC — Policy Pages Shared Stylesheet
+   Matches the dark-red registration form
+───────────────────────────────────────── */
+
+:root {
+  --bg:         #0d0d0d;
+  --surface:    #161616;
+  --surface-2:  #1e1e1e;
+  --border:     rgba(180, 30, 30, 0.25);
+  --red:        #c0392b;
+  --red-soft:   #9b2020;
+  --text:       #e8e0d8;
+  --text-muted: #888;
+  --text-dim:   #555;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Barlow', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.8;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ── Decorative corner brackets (matches registration form) ── */
+.corner {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  pointer-events: none;
+  z-index: 0;
+}
+.corner--tl {
+  top: 20px; left: 20px;
+  border-top: 1px solid var(--red);
+  border-left: 1px solid var(--red);
+}
+.corner--br {
+  bottom: 20px; right: 20px;
+  border-bottom: 1px solid var(--red);
+  border-right: 1px solid var(--red);
+}
+
+/* ── Page layout ── */
+.page-wrapper {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 28px 80px;
+  position: relative;
+  z-index: 1;
+  animation: fadeUp 0.5s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Back link ── */
+.back-link {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-bottom: 48px;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--red); }
+
+/* ── Header ── */
+.policy-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.label {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  color: var(--red);
+  border: 1px solid var(--red-soft);
+  padding: 4px 14px;
+  margin-bottom: 20px;
+}
+
+.policy-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  margin-bottom: 12px;
+}
+
+.accent {
+  color: var(--red);
+  font-style: italic;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 28px;
+}
+
+.divider {
+  width: 40px;
+  height: 1px;
+  background: var(--red);
+  margin: 0 auto;
+}
+
+/* ── Policy sections ── */
+.policy-body {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.policy-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 32px 36px;
+  transition: border-color 0.3s;
+}
+.policy-section:hover {
+  border-color: rgba(180, 30, 30, 0.5);
+}
+
+.policy-section h2 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.num {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--red);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.policy-section h3 {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin: 22px 0 10px;
+}
+
+.policy-section p {
+  color: #b0a9a0;
+  font-size: 0.92rem;
+  margin-bottom: 12px;
+}
+.policy-section p:last-child { margin-bottom: 0; }
+
+.policy-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.policy-section ul li {
+  font-size: 0.92rem;
+  color: #b0a9a0;
+  padding-left: 18px;
+  position: relative;
+}
+.policy-section ul li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--red);
+  font-size: 0.75rem;
+}
+
+.policy-section strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ── Note callout ── */
+.note {
+  background: var(--surface-2);
+  border-left: 2px solid var(--red-soft);
+  padding: 12px 16px !important;
+  font-size: 0.83rem !important;
+  color: var(--text-muted) !important;
+  margin-top: 14px !important;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ── Contact card ── */
+.contact-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 20px 24px;
+  margin-top: 16px;
+  border-radius: 2px;
+}
+.contact-org {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--text) !important;
+  font-weight: 600;
+  margin-bottom: 6px !important;
+}
+.contact-email {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: var(--red);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: opacity 0.2s;
+}
+.contact-email:hover { opacity: 0.75; text-decoration: underline; }
+
+.contact-phone {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  margin-top: 6px;
+  transition: color 0.2s;
+}
+.contact-phone:hover { color: var(--red); }
+
+/* ── Footer ── */
+.policy-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid #222;
+}
+
+.footer-link {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-link:hover,
+.footer-link.active {
+  color: var(--red);
+}
+
+.footer-sep {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  user-select: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .page-wrapper { padding: 36px 18px 60px; }
+  .policy-section { padding: 24px 20px; }
+}

@@ -1,0 +1,53 @@
+╔══════════════════════════════════════════════════════════════╗
+║              NYDC 2026 — COUPON CODES                       ║
+║              Campus Ambassador Discount Codes                ║
+╚══════════════════════════════════════════════════════════════╝
+
+General Code:
+  NYDC2026              — Early Bird Discount (Anyone)
+
+Campus Ambassador Codes:
+─────────────────────────────────────────────────────
+  PRISHA-NYDC26         — Prisha Hastir
+  VANEE-NYDC26          — Vanee Jain
+  GOURICA-NYDC26        — Gourica Vij
+  AKSHAT-NYDC26         — Akshat Agarwal
+  JANNAT-NYDC26         — Jannat Praveen
+  SNIGDHA-NYDC26        — Snigdha Bohat
+  DHATHRI-NYDC26        — Dhathri
+  HARSHAL-NYDC26        — Harshal Lohia
+  RHYAH-NYDC26          — Rhyah Singh
+  RISHIKA-NYDC26        — Rishika Jain
+  RANVIR-NYDC26         — Ranvir Bajwa
+  DIKSHA-NYDC26         — Diksha
+  JIVANSH-NYDC26        — Jivansh
+  PRITHIKA-NYDC26       — Prithika
+  PARTHW-NYDC26         — Parth Walia
+  APARNA-NYDC26         — Aparna Makan
+  ADVAITA-NYDC26        — Advaita Vashista
+  MANSEERAT-NYDC26      — Manseerat Singh
+  ADONIKA-NYDC26        — Adonika
+  ANSHU-NYDC26          — Anshu Rao
+  DHAIRYA-NYDC26        — Dhairya Setia
+  VANSH-NYDC26          — Vansh Solanki
+  RIDDHIMA-NYDC26       — Riddhima Ramrakhiani
+  DEVESH-NYDC26         — Devesh Dixit
+  PARTHB-NYDC26         — Parth Bhardwaj
+  RAKSHIT-NYDC26        — Rakshit Tiwari
+  DHAMIN-NYDC26         — Dhamin Dhankher
+  KARAN-NYDC26          — Karan Dwivedi
+  SAUMYA-NYDC26         — Saumya Prasad
+  NIKHILESH-NYDC26      — Nikhilesh
+  AAYUSH-NYDC26         — Aayush Jain
+  JAGNEET-NYDC26        — Jagneet Singh
+  ASMIT-NYDC26          — Asmit Kumar Sahoo
+  REVANT-NYDC26         — Revant Bhatt
+  SUVARCHA-NYDC26       — Suvarcha
+  GAURI-NYDC26          — Gauri
+  BHAVYA-NYDC26         — Bhavya Bhardwaj
+  JANAYA-NYDC26         — Janaya Sachdeva
+  PRAKHAR-NYDC26        — Prakhar Sagar
+
+─────────────────────────────────────────────────────
+Effect: Reverts event price to original (removes 10% markup)
+Total Codes: 40 (1 general + 39 ambassador)

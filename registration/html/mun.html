@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Committee — NYDC 2026</title>
+    <meta name="description" content="Select your committees and portfolios for MUN">
+    <link rel="stylesheet" href="../css/registration.css">
+    <link rel="stylesheet" href="../css/mun.css">
+    <link rel="icon" href="../../NYDC-Final-main/images/nydc-logo.png" type="image/png" />
+</head>
+<body>
+
+    <!-- Background Ambience -->
+    <div class="bg-ambience"></div>
+    <div class="border-frame"></div>
+    <div class="grainy-border-left"></div>
+    <div class="grainy-border-right"></div>
+
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <p>NYDC 2026 POWERED BY GENSPARK</p>
+    </div>
+
+    <main class="registration-wrapper mun-wrapper">
+        <div class="registration-card mun-card">
+
+            <!-- Back Link -->
+            <a href="event.html" class="back-link">← Back to Events</a>
+
+            <!-- Header -->
+            <div class="card-header">
+                <span class="card-tag">Model United Nations</span>
+                <h1>Select <span>Portfolios</span></h1>
+                <p class="card-subtitle greeting">
+                    Choose <strong>exactly 1 portfolio</strong> from the committees below.
+                </p>
+                <div class="selection-status">
+                    <span id="select-count">0</span> / 1 Selected
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Search -->
+            <div class="search-wrapper" id="portfolio-search-wrapper">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="portfolio-search" placeholder="Search portfolios across all committees…" autocomplete="off">
+                <span class="search-count" id="search-count"></span>
+            </div>
+
+            <!-- Committees Grid -->
+            <div class="committees-container" id="committees-container">
+                <!-- Committees injected by JS -->
+            </div>
+
+            <!-- Submit -->
+            <button type="button" class="submit-btn" id="mun-submit-btn" disabled>Continue to Team Details →</button>
+
+            <!-- Step Indicator -->
+            <p class="step-indicator">Step 2.5 of 3 — Committee Selection</p>
+        </div>
+    </main>
+
+    <!-- Guard: redirect if no personal/event data -->
+    <script>
+      const storedPersonal = sessionStorage.getItem('nydc_registration');
+      const storedEvent = sessionStorage.getItem('nydc_event');
+      if (!storedPersonal || !storedEvent) {
+        window.location.href = '../registration.html';
+      }
+    </script>
+
+    <!-- Fetch taken portfolios from Firebase, then load mun.js -->
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
+      import { getFirestore, collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+
+      const app = initializeApp({
+        apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
+        authDomain: "nydc-72b34.firebaseapp.com",
+        projectId: "nydc-72b34",
+        storageBucket: "nydc-72b34.firebasestorage.app",
+        messagingSenderId: "935882112599",
+        appId: "1:935882112599:web:f04b660e233f21a46f2d12",
+        measurementId: "G-5G8Z44578K"
+      });
+      const db = getFirestore(app);
+
+      // Fetch MUN registrations that are NOT rejected
+      const takenMap = {}; // { committeeId: Set(portfolioName) }
+      try {
+        const q = query(collection(db, 'registrations'), where('event', '==', 'mun'));
+        const snap = await getDocs(q);
+        snap.forEach(d => {
+          const data = d.data();
+          // Only count pending + approved as taken; rejected = available
+          if (data.status === 'rejected') return;
+          if (data.munPortfolios && Array.isArray(data.munPortfolios)) {
+            data.munPortfolios.forEach(p => {
+              const comId = (p.committeeId || '').toLowerCase();
+              if (!takenMap[comId]) takenMap[comId] = new Set();
+              takenMap[comId].add(p.portfolioName);
+            });
+          }
+        });
+        console.log('✅ Taken portfolios loaded:', takenMap);
+      } catch (err) {
+        console.error('Failed to fetch taken portfolios:', err);
+      }
+
+      // Store globally for mun.js
+      window.__takenPortfolios = takenMap;
+
+      // Dynamically load mun.js after data is ready
+      const script = document.createElement('script');
+      script.src = '../js/mun.js';
+      document.body.appendChild(script);
+    </script>
+</body>
+</html>

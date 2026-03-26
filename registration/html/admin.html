@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard — NYDC 2026</title>
+    <meta name="description" content="View all NYDC 2026 registrations">
+    <link rel="stylesheet" href="../css/registration.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="../../NYDC-Final-main/images/nydc-logo.png" type="image/png" />
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+    <!-- Background Ambience -->
+    <div class="bg-ambience"></div>
+    <div class="border-frame"></div>
+    <div class="grainy-border-left"></div>
+    <div class="grainy-border-right"></div>
+
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <p>NYDC 2026 ADMIN SECURE DASHBOARD</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="registration-wrapper admin-wrapper">
+
+        <!-- 1. LOGIN GATE (Shown if not logged in) -->
+        <div class="registration-card profile-card" id="login-section" style="display: none;">
+            <div class="card-header">
+                <span class="card-tag">Admin Access</span>
+                <h1>Secure <span>Login</span></h1>
+                <p class="card-subtitle">Authorized personnel only</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Admin Email</label>
+                    <input type="email" id="login-email" required placeholder="admin@nydc.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="login-password" required placeholder="Enter password">
+                        <button type="button" class="password-toggle" data-target="login-password" aria-label="Toggle password visibility">
+                            <svg class="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <svg class="eye-off-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                        </button>
+                    </div>
+                    <p class="password-error" id="login-error"></p>
+                </div>
+
+                <button type="submit" class="submit-btn" id="login-btn">Log In →</button>
+            </form>
+        </div>
+
+        <!-- 2. LOADING STATE -->
+        <div class="registration-card profile-card" id="loading-section">
+            <div class="center-content">
+                <div class="spinner"></div>
+                <p id="loading-text">Authenticating...</p>
+            </div>
+        </div>
+
+        <!-- 3. DASHBOARD (Shown when logged in as admin) -->
+        <div class="admin-dashboard card-glass" id="dashboard-section" style="display: none;">
+            
+            <div class="dashboard-header">
+                <div>
+                    <h1>Registration <span>Data</span></h1>
+                    <p class="admin-subtitle">
+                        Total: <strong id="total-count">0</strong> &nbsp;|&nbsp;
+                        <span class="status-dot pending"></span> Pending: <strong id="pending-count">0</strong> &nbsp;|&nbsp;
+                        <span class="status-dot approved"></span> Approved: <strong id="approved-count">0</strong> &nbsp;|&nbsp;
+                        <span class="status-dot rejected"></span> Rejected: <strong id="rejected-count">0</strong>
+                    </p>
+                </div>
+                <div class="dashboard-actions">
+                    <select id="status-filter" class="search-box" style="width:160px;cursor:pointer;">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                    <input type="text" id="search-input" class="search-box" placeholder="Search by name, email, or event...">
+                    <button type="button" class="logout-btn-header" id="logout-btn">Log Out</button>
+                </div>
+            </div>
+
+            <!-- Coupon Usage Tracking -->
+            <div class="coupon-stats-section" id="coupon-stats-section" style="display:none;">
+                <h3 class="section-title">🎟️ Coupon Usage</h3>
+                <div class="coupon-stats-grid" id="coupon-stats-grid">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Registrant</th>
+                            <th>Contact</th>
+                            <th>Event</th>
+                            <th>Price / Coupon</th>
+                            <th>Txn ID</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Rows injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+
+
+    <script type="module">
+    // ─── Admin Dashboard — Inline for file:// compatibility ───
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+    import { getFirestore, collection, getDocs, orderBy, query, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+    const app = initializeApp({
+      apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
+      authDomain: "nydc-72b34.firebaseapp.com",
+      projectId: "nydc-72b34",
+      storageBucket: "nydc-72b34.firebasestorage.app",
+      messagingSenderId: "935882112599",
+      appId: "1:935882112599:web:f04b660e233f21a46f2d12",
+      measurementId: "G-5G8Z44578K"
+    });
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    if (typeof emailjs !== 'undefined') emailjs.init({ publicKey: 'Vvw-ypTsbb2QHoiiX' });
+
+    const FALLBACK_ADMIN = "dhamindhankher2010@gmail.com";
+    async function isUserAdmin(email) {
+      try {
+        const snap = await getDoc(doc(db, 'settings', 'admins'));
+        if (snap.exists() && snap.data().emails) return snap.data().emails.includes(email);
+      } catch(e) { console.error("Admin check err:", e); }
+      return email === FALLBACK_ADMIN;
+    }
+
+    const EN = { mun:'Model United Nations', moot_court:'Moot Court', hackathon:'Hackathon', debate:'Conventional Debate', spark_tank:'Spark Tank', marketing:'Marketing', paper_trading:'Paper Trading', film_making:'Film Making', Navras:'Navras', poetry:'Poetry', raag_jaam:'Raag Jaam', ipl:'IPL Auction' };
+
+    const loginSection = document.getElementById('login-section');
+    const loadingSection = document.getElementById('loading-section');
+    const dashboardSection = document.getElementById('dashboard-section');
+    const loginForm = document.getElementById('login-form');
+    const loginBtn = document.getElementById('login-btn');
+    const loginError = document.getElementById('login-error');
+    const logoutBtn = document.getElementById('logout-btn');
+    const totalCount = document.getElementById('total-count');
+    const pendingCount = document.getElementById('pending-count');
+    const approvedCount = document.getElementById('approved-count');
+    const rejectedCount = document.getElementById('rejected-count');
+    const tableBody = document.getElementById('table-body');
+    const searchInput = document.getElementById('search-input');
+    const statusFilter = document.getElementById('status-filter');
+    const couponStatsSection = document.getElementById('coupon-stats-section');
+    const couponStatsGrid = document.getElementById('coupon-stats-grid');
+
+    let registrationsData = [];
+
+    // Auth timeout — if onAuthStateChanged doesn't fire in 5s, show login
+    let authResolved = false;
+    setTimeout(() => { if (!authResolved) { showLogin(); } }, 5000);
+
+    onAuthStateChanged(auth, async (user) => {
+      authResolved = true;
+      if (user) {
+        showLoading("Verifying admin access...");
+        if (await isUserAdmin(user.email)) {
+          showLoading("Fetching data...");
+          await fetchRegistrations();
+        } else {
+          showLoading("Access Denied.");
+          document.querySelector('.spinner').style.display = 'none';
+          document.getElementById('loading-text').classList.add('error-text');
+          setTimeout(() => signOut(auth), 3000);
+        }
+      } else { showLogin(); }
+    });
+
+    async function fetchRegistrations() {
+      try {
+        const q = query(collection(db, "registrations"), orderBy('registeredAt', 'desc'));
+        const snap = await getDocs(q);
+        registrationsData = [];
+        snap.forEach(d => registrationsData.push({ id: d.id, ...d.data() }));
+        renderCouponStats(registrationsData);
+        renderTable(registrationsData);
+        showDashboard();
+      } catch (error) {
+        console.error("Fetch err:", error);
+        showLoading("Failed to load data: " + error.message);
+        document.querySelector('.spinner').style.display = 'none';
+        document.getElementById('loading-text').classList.add('error-text');
+      }
+    }
+
+    function renderCouponStats(data) {
+      const map = {};
+      data.forEach(r => {
+        // Skip coupon counting if registration is rejected
+        if (r.status === 'rejected') return;
+        
+        if (r.couponApplied && r.couponCode) {
+          const c = r.couponCode.toUpperCase();
+          if (!map[c]) map[c] = { count: 0, users: [] };
+          map[c].count++;
+          map[c].users.push(`${r.firstName} ${r.lastName||''}`);
+        }
+      });
+      const codes = Object.keys(map);
+      if (!codes.length) { couponStatsSection.style.display = 'none'; return; }
+      couponStatsSection.style.display = 'block';
+      codes.sort((a,b) => map[b].count - map[a].count);
+      const total = codes.reduce((s,c) => s + map[c].count, 0);
+      let html = `<div class="coupon-stat-card total-card"><div class="coupon-stat-code">TOTAL</div><div class="coupon-stat-count">${total}</div><div class="coupon-stat-label">coupon uses</div><div class="coupon-stat-users">${codes.length} unique codes</div></div>`;
+      codes.forEach(c => {
+        html += `<div class="coupon-stat-card"><div class="coupon-stat-code">${c}</div><div class="coupon-stat-count">${map[c].count}</div><div class="coupon-stat-label">use${map[c].count>1?'s':''}</div><div class="coupon-stat-users" title="${map[c].users.join(', ')}">${map[c].users.join(', ')}</div></div>`;
+      });
+      couponStatsGrid.innerHTML = html;
+    }
+
+    function renderTable(dataArray) {
+      const fv = statusFilter.value;
+      let filtered = fv === 'all' ? dataArray : dataArray.filter(r => (r.status||'pending') === fv);
+      const term = searchInput.value.toLowerCase();
+      if (term) {
+        filtered = filtered.filter(r => {
+          const n = `${r.firstName} ${r.lastName||''}`.toLowerCase();
+          return n.includes(term) || (r.email||'').toLowerCase().includes(term) || (EN[r.event]||r.event).toLowerCase().includes(term) || (r.transactionId||'').toLowerCase().includes(term) || (r.couponCode||'').toLowerCase().includes(term) || (r.city||'').toLowerCase().includes(term);
+        });
+      }
+      totalCount.textContent = dataArray.length;
+      pendingCount.textContent = dataArray.filter(r => (r.status||'pending') === 'pending').length;
+      approvedCount.textContent = dataArray.filter(r => r.status === 'approved').length;
+      rejectedCount.textContent = dataArray.filter(r => r.status === 'rejected').length;
+      tableBody.innerHTML = '';
+      if (!filtered.length) { tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted);">No registrations found.</td></tr>`; return; }
+
+      filtered.forEach(reg => {
+        const row = document.createElement('tr');
+        let dateStr = '—';
+        if (reg.registeredAt) { try { dateStr = reg.registeredAt.toDate().toLocaleDateString('en-IN',{day:'2-digit',month:'short'}); } catch(e){} }
+        const status = reg.status || 'pending';
+        let priceHtml = reg.price ? `<span class="td-price">₹${reg.price.toLocaleString('en-IN')}</span>` : '—';
+        if (reg.couponApplied && reg.couponCode) priceHtml += `<span class="td-coupon">${reg.couponCode}</span>`;
+        const txnHtml = reg.transactionId ? `<span class="td-txn">${reg.transactionId}</span>` : '<span style="color:var(--text-dimmed);font-size:0.75rem;">None</span>';
+        let actionsHtml = '';
+        if (status === 'pending') actionsHtml = `<button class="action-btn approve-btn" data-id="${reg.id}">✓ Approve</button><button class="action-btn reject-btn" data-id="${reg.id}">✕ Reject</button>`;
+        else if (status === 'approved') actionsHtml = `<span class="action-done">✓ Done</span>`;
+        else actionsHtml = `<span class="action-done rejected-done">✕ Rejected</span>`;
+
+        row.innerHTML = `
+          <td><span class="td-name">${reg.firstName} ${reg.lastName||''}</span><span class="td-city">${reg.school||'—'} · ${reg.city||''}</span></td>
+          <td class="td-contact"><div><a href="mailto:${reg.email}">${reg.email}</a></div><div style="margin-top:4px;font-size:0.75rem;color:var(--text-dimmed);">${reg.phone||'—'}</div></td>
+          <td><span class="event-badge">${EN[reg.event]||reg.event}</span><span style="display:block;font-size:0.7rem;color:var(--text-dimmed);margin-top:4px;">${dateStr}</span></td>
+          <td>${priceHtml}</td>
+          <td>${txnHtml}</td>
+          <td><span class="status-badge ${status}">${status.charAt(0).toUpperCase()+status.slice(1)}</span></td>
+          <td class="td-actions">${actionsHtml}</td>`;
+        tableBody.appendChild(row);
+      });
+
+      document.querySelectorAll('.approve-btn').forEach(b => b.addEventListener('click', () => handleAction(b.dataset.id, 'approved')));
+      document.querySelectorAll('.reject-btn').forEach(b => b.addEventListener('click', () => handleAction(b.dataset.id, 'rejected')));
+    }
+
+    async function handleAction(regId, newStatus) {
+      const reg = registrationsData.find(r => r.id === regId);
+      if (!reg) return;
+      if (!confirm(`${newStatus === 'approved' ? 'Approve' : 'Reject'} registration for ${reg.firstName} ${reg.lastName||''}?`)) return;
+      const btns = document.querySelectorAll(`[data-id="${regId}"]`);
+      btns.forEach(b => { b.disabled = true; b.textContent = '…'; });
+      try {
+        await updateDoc(doc(db, 'registrations', regId), { status: newStatus });
+        if (typeof emailjs !== 'undefined') {
+          const evName = EN[reg.event] || reg.event;
+          const teamList = (reg.teamMembers||[]).map((m,i) => `${i+1}. ${m.firstName} ${m.lastName} (${m.email})`).join('\n');
+          try {
+            await emailjs.send('service_1fxd5y7', 'template_09rbyci', {
+              to_name: reg.firstName + ' ' + (reg.lastName||''),
+              to_email: reg.email,
+              event_name: newStatus === 'rejected' ? evName + ' — REJECTED' : evName,
+              team_size: reg.teamSize || 1,
+              team_members: newStatus === 'rejected' ? 'Your registration has been rejected. Payment could not be verified.' : teamList,
+              registration_id: regId, school: reg.school||'', city: reg.city||''
+            });
+          } catch(e) { console.warn('Email err:', e); }
+        }
+        reg.status = newStatus;
+        renderCouponStats(registrationsData);
+        renderTable(registrationsData);
+      } catch (error) {
+        console.error('Update err:', error);
+        alert('Failed: ' + error.message);
+        btns.forEach(b => { b.disabled = false; });
+      }
+    }
+
+    searchInput.addEventListener('input', () => renderTable(registrationsData));
+    statusFilter.addEventListener('change', () => renderTable(registrationsData));
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      loginError.textContent = '';
+      const email = document.getElementById('login-email').value.trim();
+      const pass = document.getElementById('login-password').value;
+      loginBtn.disabled = true; loginBtn.textContent = 'Verifying...';
+      const admin = await isUserAdmin(email);
+      if (!admin) { loginError.textContent = "Not authorized."; loginBtn.disabled = false; loginBtn.textContent = 'Log In →'; return; }
+      loginBtn.textContent = 'Logging in...';
+      try { await signInWithEmailAndPassword(auth, email, pass); }
+      catch(err) { loginBtn.disabled = false; loginBtn.textContent = 'Log In →'; loginError.textContent = err.code === 'auth/invalid-credential' ? 'Wrong email/password.' : 'Login failed.'; }
+    });
+
+    logoutBtn.addEventListener('click', () => signOut(auth));
+
+    const toggleBtn = document.querySelector('.password-toggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        const inp = document.getElementById(toggleBtn.getAttribute('data-target'));
+        const isPass = inp.type === 'password';
+        inp.type = isPass ? 'text' : 'password';
+        toggleBtn.querySelector('.eye-icon').style.display = isPass ? 'none' : 'block';
+        toggleBtn.querySelector('.eye-off-icon').style.display = isPass ? 'block' : 'none';
+      });
+    }
+
+    function showLogin() { loginSection.style.display = 'block'; loadingSection.style.display = 'none'; dashboardSection.style.display = 'none'; }
+    function showLoading(t) { document.getElementById('loading-text').textContent = t; document.getElementById('loading-text').classList.remove('error-text'); document.querySelector('.spinner').style.display = 'block'; loginSection.style.display = 'none'; loadingSection.style.display = 'block'; dashboardSection.style.display = 'none'; }
+    function showDashboard() { loginSection.style.display = 'none'; loadingSection.style.display = 'none'; dashboardSection.style.display = 'block'; }
+
+    console.log('✅ Admin loaded');
+    </script>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile — NYDC 2026</title>
+    <meta name="description" content="Manage your NYDC 2026 registration profile">
+    <link rel="stylesheet" href="../css/registration.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="icon" href="../../NYDC-Final-main/images/nydc-logo.png" type="image/png" />
+</head>
+<body>
+
+    <!-- Background Ambience -->
+    <div class="bg-ambience"></div>
+
+    <!-- Decorative Frame -->
+    <div class="border-frame"></div>
+
+    <!-- Grainy Side Borders -->
+    <div class="grainy-border-left"></div>
+    <div class="grainy-border-right"></div>
+
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <p>NYDC 2026 POWERED BY GENSPARK</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="registration-wrapper">
+
+        <!-- 1. LOGIN GATE (Shown if not logged in) -->
+        <div class="registration-card profile-card" id="login-section" style="display: none;">
+            <!-- Back Link -->
+            <a href="../../index.html" class="back-link">🏠 Main Page</a>
+            <div class="card-header">
+                <span class="card-tag">Profile Access</span>
+                <h1>Access <span>Account</span></h1>
+                <p class="card-subtitle">Log in to view your registration</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" required placeholder="you@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="login-password" required placeholder="Enter password">
+                        <button type="button" class="password-toggle" data-target="login-password" aria-label="Toggle password visibility">
+                            <svg class="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <svg class="eye-off-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                        </button>
+                    </div>
+                    <p class="password-error" id="login-error"></p>
+                </div>
+
+                <button type="submit" class="submit-btn" id="login-btn">Log In →</button>
+            </form>
+            
+            <p class="form-footer">
+                Don't have an account? <a href="../registration.html">Register here</a>.
+            </p>
+        </div>
+
+        <!-- 2. LOADING STATE -->
+        <div class="registration-card profile-card" id="loading-section">
+            <div class="center-content">
+                <div class="spinner"></div>
+                <p>Loading your profile...</p>
+            </div>
+        </div>
+
+        <!-- 3. PROFILE DASHBOARD (Shown when logged in) -->
+        <div class="registration-card profile-card" id="profile-section" style="display: none;">
+            <!-- Back Link -->
+            <a href="../../index.html" class="back-link">🏠 Main Page</a>
+            <div class="card-header">
+                <h1 id="profile-name"><span>Profile</span></h1>
+                <p class="card-subtitle" id="profile-email">email@example.com</p>
+                <div class="status-badge">Registered</div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="profile-grid">
+                <div class="profile-item">
+                    <span class="p-label">Phone Num</span>
+                    <span class="p-value" id="p-phone">—</span>
+                </div>
+                <div class="profile-item">
+                    <span class="p-label">School / Institution</span>
+                    <span class="p-value" id="p-school">—</span>
+                </div>
+                <div class="profile-item">
+                    <span class="p-label">Grade / Year</span>
+                    <span class="p-value" id="p-grade">—</span>
+                </div>
+                <div class="profile-item">
+                    <span class="p-label">City</span>
+                    <span class="p-value" id="p-city">—</span>
+                </div>
+            </div>
+
+            <div class="event-details">
+                <h3>Event Details</h3>
+                <div class="profile-item full-width">
+                    <span class="p-label">Registered Event</span>
+                    <span class="p-value highlight" id="p-event">—</span>
+                </div>
+            </div>
+
+            <div id="mun-details" class="event-details" style="display: none;">
+                <h3>Committees & Portfolios</h3>
+                <div class="team-list" id="p-mun-list">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
+
+            <div id="team-details" class="team-details" style="display: none;">
+                <h3>Team Members <span class="team-count" id="p-team-size"></span></h3>
+                <div class="team-list" id="p-team-list">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
+
+            <button type="button" class="logout-btn" id="logout-btn">Log Out</button>
+
+        </div>
+    </main>
+
+    <!-- Firebase Logic -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
+        import { getFirestore, collection, query, where, getDocs, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
+            authDomain: "nydc-72b34.firebaseapp.com",
+            projectId: "nydc-72b34",
+            storageBucket: "nydc-72b34.firebasestorage.app",
+            messagingSenderId: "935882112599",
+            appId: "1:935882112599:web:f04b660e233f21a46f2d12",
+            measurementId: "G-5G8Z44578K"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Sections
+        const loginSec = document.getElementById('login-section');
+        const loadSec = document.getElementById('loading-section');
+        const profSec = document.getElementById('profile-section');
+
+        // Event name formatter
+        const EVENT_NAMES = {
+            mun: 'Model United Nations',
+            moot_court: 'Moot Court',
+            hackathon: 'Hackathon',
+            debate: 'Conventional Debate',
+            spark_tank: 'Spark Tank',
+            marketing: 'Marketing',
+            paper_trading: 'Paper Trading',
+            film_making: 'Film Making',
+            Navras: 'Navras',
+            poetry: 'Poetry',
+            raag_jaam: 'Raag Jaam',
+            ipl: 'IPL'
+        };
+
+        // Password toggle
+        document.querySelectorAll('.password-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const input = document.getElementById(btn.dataset.target);
+                const isPassword = input.type === 'password';
+                input.type = isPassword ? 'text' : 'password';
+                btn.querySelector('.eye-icon').style.display = isPassword ? 'none' : 'block';
+                btn.querySelector('.eye-off-icon').style.display = isPassword ? 'block' : 'none';
+            });
+        });
+
+        // ── Auth Listener ──
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // Check if admin dynamically
+                let isAdmin = false;
+                try {
+                    const adminRef = doc(db, 'settings', 'admins');
+                    const adminSnap = await getDoc(adminRef);
+                    if (adminSnap.exists() && adminSnap.data().emails) {
+                        isAdmin = adminSnap.data().emails.includes(user.email);
+                    } else {
+                        // Fallback if document doesn't exist yet
+                        isAdmin = user.email === "dhamindhankher2010@gmail.com";
+                    }
+                } catch (e) {
+                    console.error("Admin check failed", e);
+                }
+
+                if (isAdmin) {
+                    window.location.href = 'admin.html';
+                    return;
+                }
+
+                // User logged in — fetch profile data
+                loadSec.style.display = 'block';
+                loginSec.style.display = 'none';
+                profSec.style.display = 'none';
+                await loadUserProfile(user);
+            } else {
+                // Not logged in — show login form
+                loadSec.style.display = 'none';
+                loginSec.style.display = 'block';
+                profSec.style.display = 'none';
+            }
+        });
+
+        // ── Fetch Profile Logic ──
+        async function loadUserProfile(user) {
+            try {
+                // Find registration doc where uid matches
+                const q = query(collection(db, 'registrations'), where('uid', '==', user.uid));
+                const snapshot = await getDocs(q);
+
+                if (snapshot.empty) {
+                    throw new Error('No registration found for this account. Please complete registration.');
+                }
+
+                const data = snapshot.docs[0].data();
+
+                // Populate UI
+                document.getElementById('profile-name').innerHTML = `${data.firstName} <span>${data.lastName}</span>`;
+                document.getElementById('profile-email').textContent = data.email;
+                
+                document.getElementById('p-phone').textContent = data.phone || '—';
+                document.getElementById('p-school').textContent = data.school || '—';
+                document.getElementById('p-grade').textContent = data.grade ? `Grade ${data.grade}` : '—';
+                document.getElementById('p-city').textContent = data.city || '—';
+                
+                document.getElementById('p-event').textContent = EVENT_NAMES[data.event] || data.event;
+
+                // Handle MUN Portfolios
+                const munSec = document.getElementById('mun-details');
+                const munList = document.getElementById('p-mun-list');
+                if (data.munPortfolios && data.munPortfolios.length > 0) {
+                    munSec.style.display = 'block';
+                    munList.innerHTML = '';
+                    data.munPortfolios.forEach(port => {
+                        munList.innerHTML += `
+                            <div class="team-member-tile">
+                                <div class="member-role">${port.committeeName}</div>
+                                <h4>${port.portfolioName}</h4>
+                                ${port.position ? `<p class="portfolio-pos-text">${port.position}</p>` : ''}
+                                ${port.party ? `<p class="portfolio-party-text">${port.party}</p>` : ''}
+                            </div>
+                        `;
+                    });
+                } else {
+                    munSec.style.display = 'none';
+                }
+
+                // Handle Team
+                const teamSec = document.getElementById('team-details');
+                const teamList = document.getElementById('p-team-list');
+                
+                if (data.teamSize > 1 && data.teamMembers && data.teamMembers.length > 0) {
+                    teamSec.style.display = 'block';
+                    document.getElementById('p-team-size').textContent = `(${data.teamSize})`;
+                    teamList.innerHTML = '';
+                    
+                    data.teamMembers.forEach(mem => {
+                        const isLeader = mem.role === 'leader';
+                        teamList.innerHTML += `
+                            <div class="team-member-tile">
+                                <div class="member-role">${isLeader ? '👑 Leader' : 'Member'}</div>
+                                <h4>${mem.firstName} ${mem.lastName}</h4>
+                                <p>${mem.email}</p>
+                            </div>
+                        `;
+                    });
+                } else {
+                    teamSec.style.display = 'none';
+                }
+
+                loadSec.style.display = 'none';
+                profSec.style.display = 'block';
+
+            } catch (err) {
+                console.error("Profile load err:", err);
+                loadSec.innerHTML = `
+                    <div class="center-content">
+                        <p class="error-text">${err.message || 'Error loading profile'}</p>
+                        <button onclick="window.location.reload()" class="logout-btn" style="width: auto; margin-top: 16px;">Retry</button>
+                        <button id="force-logout" class="logout-btn" style="width: auto; margin-top: 8px; background: transparent;">Sign Out</button>
+                    </div>
+                `;
+                document.getElementById('force-logout')?.addEventListener('click', () => signOut(auth));
+            }
+        }
+
+        // ── Login Submit ──
+        const loginForm = document.getElementById('login-form');
+        const loginBtn = document.getElementById('login-btn');
+        const loginError = document.getElementById('login-error');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-password').value;
+
+            loginError.textContent = '';
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Logging In...';
+
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                // Auth listener will handle the transition
+            } catch (err) {
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Log In →';
+                if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+                    loginError.textContent = 'Invalid email or password.';
+                } else {
+                    loginError.textContent = 'Error logging in. Try again.';
+                }
+            }
+        });
+
+        // ── Logout ──
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            await signOut(auth);
+        });
+
+    </script>
+</body>
+</html>

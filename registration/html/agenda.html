@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Committees & Portfolios — NYDC 2026</title>
+    <meta name="description" content="View committee agendas and portfolio availability for NYDC 2026 Model United Nations">
+    <link rel="stylesheet" href="../css/registration.css">
+    <link rel="stylesheet" href="../css/agenda.css">
+    <link rel="icon" href="../../NYDC-Final-main/images/nydc-logo.png" type="image/png" />
+</head>
+<body>
+
+    <!-- Background Ambience -->
+    <div class="bg-ambience"></div>
+    <div class="border-frame"></div>
+    <div class="grainy-border-left"></div>
+    <div class="grainy-border-right"></div>
+
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <p>NYDC 2026 POWERED BY GENSPARK</p>
+    </div>
+
+    <main class="agenda-page-wrapper">
+
+        <!-- Back to Home -->
+        <a href="../../index.html" class="back-home-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            Back to Home
+        </a>
+
+        <!-- Page Header -->
+        <header class="agenda-header">
+            <span class="agenda-tag">Model United Nations</span>
+            <h1>Committees <span>&</span> Portfolios</h1>
+            <p class="agenda-subtitle">View agendas and portfolio availability for each committee</p>
+        </header>
+
+        <!-- Committee Tabs -->
+        <nav class="committee-tabs" id="committee-tabs">
+            <button class="tab-btn active" data-committee="unga">
+                <span class="tab-abbr">UNGA</span>
+                <span class="tab-full">General Assembly</span>
+            </button>
+            <button class="tab-btn" data-committee="uncsw">
+                <span class="tab-abbr">UNCSW</span>
+                <span class="tab-full">Commission on the Status of Women</span>
+            </button>
+            <button class="tab-btn" data-committee="unhrc">
+                <span class="tab-abbr">UNHRC</span>
+                <span class="tab-full">Human Rights Council</span>
+            </button>
+            <button class="tab-btn" data-committee="who">
+                <span class="tab-abbr">WHO</span>
+                <span class="tab-full">World Health Organization</span>
+            </button>
+            <button class="tab-btn" data-committee="aippm">
+                <span class="tab-abbr">AIPPM</span>
+                <span class="tab-full">All India Political Parties Meet</span>
+            </button>
+            <div class="tab-indicator" id="tab-indicator"></div>
+        </nav>
+
+        <!-- Tab Content Panels -->
+        <div class="tab-content-area" id="tab-content-area">
+
+            <!-- UNGA Panel -->
+            <section class="tab-panel active" id="panel-unga">
+                <div class="agenda-banner">
+                    <div class="agenda-icon">🏛️</div>
+                    <div class="agenda-info">
+                        <span class="agenda-label">Agenda</span>
+                        <h2 class="agenda-topic">Reforming the United Nations Security Council in the 21st Century</h2>
+                    </div>
+                </div>
+                <div class="portfolio-section">
+                    <div class="portfolio-header">
+                        <h3>Country Portfolios</h3>
+                        <div class="portfolio-stats">
+                            <span class="stat available-stat"><span class="dot dot-available"></span> Available: <strong id="unga-available">—</strong></span>
+                            <span class="stat taken-stat"><span class="dot dot-taken"></span> Taken: <strong id="unga-taken">—</strong></span>
+                        </div>
+                    </div>
+                    <div class="search-box-wrapper">
+                        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" class="portfolio-search" data-committee="unga" placeholder="Search portfolios..." autocomplete="off">
+                    </div>
+                    <div class="portfolio-grid" id="grid-unga">
+                        <div class="loading-portfolios"><div class="mini-spinner"></div> Loading portfolios...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- UNCSW Panel -->
+            <section class="tab-panel" id="panel-uncsw">
+                <div class="agenda-banner">
+                    <div class="agenda-icon">⚖️</div>
+                    <div class="agenda-info">
+                        <span class="agenda-label">Agenda</span>
+                        <h2 class="agenda-topic">Deliberation on Enhancing Women's Participation in Political Decision Making, Peacebuilding, and Conflict Resolution</h2>
+                    </div>
+                </div>
+                <div class="portfolio-section">
+                    <div class="portfolio-header">
+                        <h3>Country Portfolios</h3>
+                        <div class="portfolio-stats">
+                            <span class="stat available-stat"><span class="dot dot-available"></span> Available: <strong id="uncsw-available">—</strong></span>
+                            <span class="stat taken-stat"><span class="dot dot-taken"></span> Taken: <strong id="uncsw-taken">—</strong></span>
+                        </div>
+                    </div>
+                    <div class="search-box-wrapper">
+                        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" class="portfolio-search" data-committee="uncsw" placeholder="Search portfolios..." autocomplete="off">
+                    </div>
+                    <div class="portfolio-grid" id="grid-uncsw">
+                        <div class="loading-portfolios"><div class="mini-spinner"></div> Loading portfolios...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- UNHRC Panel -->
+            <section class="tab-panel" id="panel-unhrc">
+                <div class="agenda-banner">
+                    <div class="agenda-icon">🛡️</div>
+                    <div class="agenda-info">
+                        <span class="agenda-label">Agenda</span>
+                        <h2 class="agenda-topic">Ensuring the Protection of Human Rights in Armed Conflicts Involving Autonomous Weapons and AI-Driven Surveillance</h2>
+                    </div>
+                </div>
+                <div class="portfolio-section">
+                    <div class="portfolio-header">
+                        <h3>Country Portfolios</h3>
+                        <div class="portfolio-stats">
+                            <span class="stat available-stat"><span class="dot dot-available"></span> Available: <strong id="unhrc-available">—</strong></span>
+                            <span class="stat taken-stat"><span class="dot dot-taken"></span> Taken: <strong id="unhrc-taken">—</strong></span>
+                        </div>
+                    </div>
+                    <div class="search-box-wrapper">
+                        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" class="portfolio-search" data-committee="unhrc" placeholder="Search portfolios..." autocomplete="off">
+                    </div>
+                    <div class="portfolio-grid" id="grid-unhrc">
+                        <div class="loading-portfolios"><div class="mini-spinner"></div> Loading portfolios...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- WHO Panel -->
+            <section class="tab-panel" id="panel-who">
+                <div class="agenda-banner">
+                    <div class="agenda-icon">🏥</div>
+                    <div class="agenda-info">
+                        <span class="agenda-label">Agenda</span>
+                        <h2 class="agenda-topic">Strengthening Global Preparedness for Climate-Driven Health Emergencies and Emerging Zoonotic Diseases</h2>
+                    </div>
+                </div>
+                <div class="portfolio-section">
+                    <div class="portfolio-header">
+                        <h3>Country Portfolios</h3>
+                        <div class="portfolio-stats">
+                            <span class="stat available-stat"><span class="dot dot-available"></span> Available: <strong id="who-available">—</strong></span>
+                            <span class="stat taken-stat"><span class="dot dot-taken"></span> Taken: <strong id="who-taken">—</strong></span>
+                        </div>
+                    </div>
+                    <div class="search-box-wrapper">
+                        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" class="portfolio-search" data-committee="who" placeholder="Search portfolios..." autocomplete="off">
+                    </div>
+                    <div class="portfolio-grid" id="grid-who">
+                        <div class="loading-portfolios"><div class="mini-spinner"></div> Loading portfolios...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AIPPM Panel -->
+            <section class="tab-panel" id="panel-aippm">
+                <div class="agenda-banner">
+                    <div class="agenda-icon">🏛️</div>
+                    <div class="agenda-info">
+                        <span class="agenda-label">Agenda</span>
+                        <h2 class="agenda-topic">Deliberation on the Freedom of Press and Media with Special Emphasis on Broadcasting Bill</h2>
+                    </div>
+                </div>
+                <div class="portfolio-section">
+                    <div class="portfolio-header">
+                        <h3>Portfolios</h3>
+                        <div class="portfolio-stats">
+                            <span class="stat available-stat"><span class="dot dot-available"></span> Available: <strong id="aippm-available">—</strong></span>
+                            <span class="stat taken-stat"><span class="dot dot-taken"></span> Taken: <strong id="aippm-taken">—</strong></span>
+                        </div>
+                    </div>
+                    <div class="search-box-wrapper">
+                        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" class="portfolio-search" data-committee="aippm" placeholder="Search portfolios..." autocomplete="off">
+                    </div>
+                    <div class="portfolio-grid" id="grid-aippm">
+                        <div class="loading-portfolios"><div class="mini-spinner"></div> Loading portfolios...</div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <script type="module">
+    // ─── Agenda / Portfolios — Inline for file:// compatibility ───
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
+    import { getFirestore, collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+
+    const app = initializeApp({
+      apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
+      authDomain: "nydc-72b34.firebaseapp.com",
+      projectId: "nydc-72b34",
+      storageBucket: "nydc-72b34.firebasestorage.app",
+      messagingSenderId: "935882112599",
+      appId: "1:935882112599:web:f04b660e233f21a46f2d12",
+      measurementId: "G-5G8Z44578K"
+    });
+    const db = getFirestore(app);
+
+    const COMMITTEES = {
+      unga: { name: 'UNGA', portfolios: ['Afghanistan','Albania','Algeria','Andorra','Angola','Antigua and Barbuda','Argentina','Armenia','Australia','Austria','Azerbaijan','Bahamas','Bahrain','Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bhutan','Bolivia','Bosnia and Herzegovina','Botswana','Brazil','Brunei','Bulgaria','Burkina Faso','Burundi','Cabo Verde','Cambodia','Cameroon','Canada','Central African Republic','Chad','Chile','China','Colombia','Comoros','Congo','Costa Rica','Côte d\u2019Ivoire','Croatia','Cuba','Cyprus','Czechia','Democratic Republic of the Congo','Denmark','Djibouti','Dominica','Dominican Republic','Ecuador','Egypt','El Salvador','Equatorial Guinea','Eritrea','Estonia','Eswatini','Ethiopia','Fiji','Finland','France','Gabon','Gambia','Georgia','Germany','Ghana','Greece','Grenada','Guatemala','Guinea','Guinea-Bissau','Guyana','Haiti','Honduras','Hungary','Iceland','India','Indonesia','Iran','Iraq','Ireland','Israel','Italy','Jamaica','Japan','Jordan','Kazakhstan','Kenya','Kiribati','Kuwait','Kyrgyzstan','Laos','Latvia','Lebanon','Lesotho','Liberia','Libya','Liechtenstein','Lithuania','Luxembourg','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Marshall Islands','Mauritania','Mauritius','Mexico','Micronesia','Moldova','Monaco','Mongolia','Montenegro','Morocco','Mozambique','Myanmar','Namibia','Nauru','Nepal','Netherlands','New Zealand','Nicaragua','Niger','Nigeria','North Korea','North Macedonia','Norway','Oman','Pakistan','Palau','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Qatar','Romania','Russia','Rwanda','Saint Kitts and Nevis','Saint Lucia','Saint Vincent and the Grenadines','Samoa','San Marino','Sao Tome and Principe','Saudi Arabia','Senegal','Serbia','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','Solomon Islands','Somalia','South Africa','South Sudan','Spain','Sri Lanka','Sudan','Suriname','Sweden','Switzerland','Syria','Tajikistan','Tanzania','Thailand','Timor-Leste','Togo','Tonga','Trinidad and Tobago','Tunisia','Turkey','Turkmenistan','Tuvalu','Uganda','Ukraine','United Arab Emirates','United Kingdom','United States','Uruguay','Uzbekistan','Vanuatu','Venezuela','Vietnam','Yemen','Zambia','Zimbabwe'] },
+      uncsw: { name: 'UNCSW', portfolios: ['Angola','Burkina Faso','Cameroon','Chad','Comoros','Congo','Côte d\u2019Ivoire','Equatorial Guinea','Kenya','Liberia','Madagascar','Niger','United Republic of Tanzania','Bangladesh','China','India','Indonesia','Iran','Japan','Lebanon','Mongolia','Pakistan','Philippines','Saudi Arabia','Argentina','Bolivia','Brazil','Colombia','Cuba','Dominican Republic','El Salvador','Mexico','Paraguay','Austria','Belgium','Canada','France','Germany','Italy','Sweden','United States','Armenia','Poland','Romania','Russian Federation'] },
+      unhrc: { name: 'UNHRC', portfolios: ['Albania','Angola','Benin','Bolivia (Plurinational State of)','Brazil','Bulgaria','Burundi','Chile','China','Colombia','Côte d\u2019Ivoire','Cuba','Cyprus','Czechia','Democratic Republic of the Congo','Dominican Republic','Ecuador','Egypt','Estonia','Ethiopia','France','Gambia','Ghana','Iceland','India','Indonesia','Iraq','Italy','Japan','Kenya','Kuwait','Malawi','Marshall Islands','Mauritius','Mexico','Netherlands (Kingdom of the)','North Macedonia','Pakistan','Qatar','Republic of Korea','Slovenia','South Africa','Spain','Switzerland','Thailand','United Kingdom of Great Britain and Northern Ireland','Viet Nam'] },
+      who: { name: 'WHO', portfolios: ['Afghanistan','Albania','Algeria','Andorra','Angola','Antigua and Barbuda','Argentina','Armenia','Australia','Austria','Azerbaijan','Bahamas','Bahrain','Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bhutan','Bolivia','Bosnia and Herzegovina','Botswana','Brazil','Brunei','Bulgaria','Burkina Faso','Burundi','Cabo Verde','Cambodia','Cameroon','Canada','Central African Republic','Chad','Chile','China','Colombia','Comoros','Congo','Costa Rica','Côte d\u2019Ivoire','Croatia','Cuba','Cyprus','Czechia','Democratic Republic of the Congo','Denmark','Djibouti','Dominica','Dominican Republic','Ecuador','Egypt','El Salvador','Equatorial Guinea','Eritrea','Estonia','Eswatini','Ethiopia','Fiji','Finland','France','Gabon','Gambia','Georgia','Germany','Ghana','Greece','Grenada','Guatemala','Guinea','Guinea-Bissau','Guyana','Haiti','Honduras','Hungary','Iceland','India','Indonesia','Iran','Iraq','Ireland','Israel','Italy','Jamaica','Japan','Jordan','Kazakhstan','Kenya','Kiribati','Kuwait','Kyrgyzstan','Laos','Latvia','Lebanon','Lesotho','Liberia','Libya','Liechtenstein','Lithuania','Luxembourg','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Marshall Islands','Mauritania','Mauritius','Mexico','Micronesia','Moldova','Monaco','Mongolia','Montenegro','Morocco','Mozambique','Myanmar','Namibia','Nauru','Nepal','Netherlands','New Zealand','Nicaragua','Niger','Nigeria','North Korea','North Macedonia','Norway','Oman','Pakistan','Palau','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Qatar','Romania','Russia','Rwanda','Saint Kitts and Nevis','Saint Lucia','Saint Vincent and the Grenadines','Samoa','San Marino','Sao Tome and Principe','Saudi Arabia','Senegal','Serbia','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','Solomon Islands','Somalia','South Africa','South Sudan','Spain','Sri Lanka','Sudan','Suriname','Sweden','Switzerland','Syria','Tajikistan','Tanzania','Thailand','Timor-Leste','Togo','Tonga','Trinidad and Tobago','Tunisia','Turkey','Turkmenistan','Tuvalu','Uganda','Ukraine','United Arab Emirates','United Kingdom','United States','Uruguay','Uzbekistan','Vanuatu','Venezuela','Vietnam','Yemen','Zambia','Zimbabwe'] },
+      aippm: { name: 'AIPPM', portfolios: ['Narendra Modi','Rajnath Singh','Amit Shah','Nirmala Sitharaman','S. Jaishankar','Nitin Gadkari','Piyush Goyal','Ashwini Vaishnaw','Dharmendra Pradhan','Hardeep Singh Puri','Jyotiraditya Scindia','Sarbananda Sonowal','Gajendra Singh Shekhawat','Bhupender Yadav','Mansukh Mandaviya','Kiren Rijiju','J. P. Nadda','Rahul Gandhi','Mallikarjun Kharge','Shashi Tharoor','Adhir Ranjan Chowdhury','Arvind Kejriwal','Atishi','Mamata Banerjee','Akhilesh Yadav','Tejashwi Yadav','Nitish Kumar','Uddhav Thackeray','Eknath Shinde','Devendra Fadnavis','Yogi Adityanath','K. Chandrashekar Rao','M. K. Stalin','Pinarayi Vijayan','Chirag Paswan','Asaduddin Owaisi','Sukhbir Singh Badal','Hemant Soren'] }
+    };
+
+    async function fetchTakenPortfolios() {
+      const takenMap = { unga: new Set(), uncsw: new Set(), unhrc: new Set(), who: new Set(), aippm: new Set() };
+      try {
+        const q = query(collection(db, 'registrations'), where('event', '==', 'mun'));
+        const snapshot = await getDocs(q);
+        snapshot.forEach(d => {
+          const data = d.data();
+          if (data.munPortfolios && Array.isArray(data.munPortfolios)) {
+            data.munPortfolios.forEach(p => {
+              const comId = (p.committeeId || '').toLowerCase();
+              if (takenMap[comId]) takenMap[comId].add(p.portfolioName);
+            });
+          }
+        });
+      } catch (err) { console.error('Error fetching:', err); }
+      return takenMap;
+    }
+
+    function renderGrid(committeeId, takenSet, searchQuery = '') {
+      const grid = document.getElementById(`grid-${committeeId}`);
+      const committee = COMMITTEES[committeeId];
+      if (!grid || !committee) return;
+      const q = searchQuery.trim().toLowerCase();
+      let portfolios = committee.portfolios;
+      if (q) portfolios = portfolios.filter(name => name.toLowerCase().includes(q));
+      const sorted = [...portfolios].sort((a, b) => {
+        const d = (takenSet.has(a)?1:0) - (takenSet.has(b)?1:0);
+        return d !== 0 ? d : a.localeCompare(b);
+      });
+      if (!sorted.length) { grid.innerHTML = `<div class="no-results-msg">No portfolios match "${searchQuery}"</div>`; return; }
+      grid.innerHTML = sorted.map(name => {
+        const taken = takenSet.has(name);
+        return `<div class="portfolio-card ${taken?'taken':''}"><span class="portfolio-name" title="${name}">${name}</span><span class="status-badge ${taken?'taken':'available'}">${taken?'Taken':'Available'}</span></div>`;
+      }).join('');
+      const totalTaken = committee.portfolios.filter(n => takenSet.has(n)).length;
+      const el1 = document.getElementById(`${committeeId}-available`);
+      const el2 = document.getElementById(`${committeeId}-taken`);
+      if (el1) el1.textContent = committee.portfolios.length - totalTaken;
+      if (el2) el2.textContent = totalTaken;
+    }
+
+    function initTabs() {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+          const panel = document.getElementById(`panel-${btn.dataset.committee}`);
+          if (panel) { void panel.offsetWidth; panel.classList.add('active'); }
+        });
+      });
+    }
+
+    function initSearch(takenMap) {
+      document.querySelectorAll('.portfolio-search').forEach(input => {
+        input.addEventListener('input', () => renderGrid(input.dataset.committee, takenMap[input.dataset.committee], input.value));
+      });
+    }
+
+    async function init() {
+      const takenMap = await fetchTakenPortfolios();
+      Object.keys(COMMITTEES).forEach(id => renderGrid(id, takenMap[id]));
+      initTabs();
+      initSearch(takenMap);
+    }
+
+    init();
+    console.log('✅ Agenda loaded');
+    </script>
+</body>
+</html>

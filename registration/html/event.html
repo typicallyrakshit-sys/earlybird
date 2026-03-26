@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Events — NYDC 2026</title>
+    <meta name="description" content="Choose your preferred events for the National Youth Development Conference 2026">
+    <link rel="stylesheet" href="../css/registration.css">
+    <link rel="icon" href="../../NYDC-Final-main/images/nydc-logo.png" type="image/png" />
+</head>
+<body>
+
+    <!-- Background Ambience -->
+    <div class="bg-ambience"></div>
+
+    <!-- Decorative Frame -->
+    <div class="border-frame"></div>
+
+    <!-- Grainy Side Borders -->
+    <div class="grainy-border-left"></div>
+    <div class="grainy-border-right"></div>
+
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <p>NYDC 2026 POWERED BY GENSPARK</p>
+    </div>
+
+    <!-- Event Selection Form -->
+    <main class="registration-wrapper">
+        <div class="registration-card">
+
+            <!-- Back Link -->
+            <a href="../registration.html" class="back-link" id="back-link">← Back</a>
+            <a href="../../index.html" class="back-link" style="margin-left:16px;">🏠 Main Page</a>
+
+            <!-- Header -->
+            <div class="card-header">
+                <span class="card-tag">July 2026 • Delhi NCR</span>
+                <h1>Choose Your <span>Events</span></h1>
+                <p class="card-subtitle greeting" id="user-greeting">
+                    <!-- Filled by JS -->
+                </p>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Form -->
+            <form id="event-form" action="#" method="POST">
+
+                <!-- Events Selection -->
+                <div class="form-group">
+                    <span class="events-label">Preferred Events</span>
+                    <div class="events-grid" id="events-grid">
+                        <div class="event-check">
+                            <input type="radio" id="ev-mun" name="events" value="mun">
+                            <label for="ev-mun">Model United Nations &nbsp;<span class="event-price" data-event="mun">(&#8377;1,869)</span> <span class="event-duration">2 Days</span></label>
+                        </div>               
+                        <div class="event-check">
+                            <input type="radio" id="ev-moot" name="events" value="moot_court">
+                            <label for="ev-moot">Moot Court &nbsp;<span class="event-price" data-event="moot_court">(&#8377;3,849)</span> <span class="event-duration">2 Days</span></label>
+                        </div>
+                        <div class="event-check">
+                            <input type="radio" id="ev-debate" name="events" value="debate">
+                            <label for="ev-debate">Conventional Debate &nbsp;<span class="event-price" data-event="debate">(&#8377;1,759)</span> <span class="event-duration">1 Day</span></label>
+                        </div>
+                        <div class="event-check">
+                            <input type="radio" id="ev-spark" name="events" value="spark_tank">
+                            <label for="ev-spark">Spark Tank &nbsp;<span class="event-price" data-event="spark_tank">(&#8377;3,519)</span> <span class="event-duration">1 Day</span></label>
+                        </div>
+                        <div class="event-check">
+                            <input type="radio" id="ev-mktg" name="events" value="marketing">
+                            <label for="ev-mktg">Marketing &nbsp;<span class="event-price" data-event="marketing">(&#8377;1,099)</span> <span class="event-duration">1 Day</span></label>
+                        </div>
+                        <div class="event-check">
+                            <input type="radio" id="ev-trade" name="events" value="paper_trading">
+                            <label for="ev-trade">Paper Trading &nbsp;<span class="event-price" data-event="paper_trading">(&#8377;1,319)</span> <span class="event-duration">1 Day</span></label>
+                        </div>
+                        <div class="event-check">
+                            <input type="radio" id="ev-film" name="events" value="film_making">
+                            <label for="ev-film">Film Making &nbsp;<span class="event-price" data-event="film_making">(&#8377;3,299)</span> <span class="event-duration">1 Day</span></label>
+                        </div>
+                        <div class="event-check">
+                            <input type="radio" id="Navras" name="events" value="Navras">
+                            <label for="Navras">Navras &nbsp;<span class="event-price" data-event="Navras">(&#8377;1,649)</span> <span class="event-duration">1 Day</span></label>
+                        </div>
+                        <div class="event-check">
+                            <input type="radio" id="ev-poetry" name="events" value="poetry">
+                            <label for="ev-poetry">Poetry &nbsp;<span class="event-price" data-event="poetry">(&#8377;1,099)</span> <span class="event-duration">1 Day</span></label>
+                        </div>
+                        <div class="event-check">
+                            <input type="radio" id="ev-raag" name="events" value="raag_jaam">
+                            <label for="ev-raag">Raag Jaam &nbsp;<span class="event-price" data-event="raag_jaam">(&#8377;4,399)</span> <span class="event-duration">1 Day</span></label>
+                        </div>
+                        <div class="event-check">
+                            <input type="radio" id="ev-ipl" name="events" value="ipl">
+                            <label for="ev-ipl">IPL Auction &nbsp;<span class="event-price" data-event="ipl">(&#8377;3,299)</span> <span class="event-duration">1 Day</span></label>
+                        </div>
+                        <div class="event-check" style="opacity:0.5;pointer-events:none;position:relative;">
+                            <input type="radio" id="ev-hack" name="events" value="hackathon" disabled>
+                            <label for="ev-hack">Hackathon<span class="event-duration">1 Day(24 Hours)</span> <span style="background:#8b1a1a;color:#fff;font-size:10px;padding:2px 10px;border-radius:9999px;margin-left:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Coming Soon</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coupon Code Section -->
+                <div class="coupon-section" id="coupon-section">
+                    <span class="events-label">🎟️ Have a Coupon Code?</span>
+                    <div class="coupon-input-row">
+                        <input type="text" id="coupon-input" class="coupon-input" placeholder="Enter coupon code" autocomplete="off" spellcheck="false">
+                        <button type="button" id="coupon-apply-btn" class="coupon-apply-btn">Apply</button>
+                    </div>
+                    <p class="coupon-status" id="coupon-status"></p>
+                    <!-- Price Summary (shown after selecting event + applying coupon) -->
+                    <div class="price-summary" id="price-summary" style="display:none;">
+                        <div class="price-row">
+                            <span>Original Price</span>
+                            <span class="price-original" id="price-original"></span>
+                        </div>
+                        <div class="price-row price-discount-row">
+                            <span>Coupon Discount</span>
+                            <span class="price-discount" id="price-discount"></span>
+                        </div>
+                        <div class="price-row price-final-row">
+                            <span>You Pay(Only Phone)</span>
+                            <span class="price-final" id="price-final"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience -->
+                <div class="form-group">
+                    <label for="experience">Prior Experience (optional)</label>
+                    <textarea id="experience" name="experience" placeholder="Tell us about any relevant MUN, debate, or hackathon experience…"></textarea>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="submit-btn">Continue to Team →</button>
+            </form>
+
+            <!-- Step Indicator -->
+            <p class="step-indicator">Step 2 of 3 — Event Selection</p>
+        </div>
+    </main>
+
+    <!-- Guard: redirect if no personal data -->
+    <script>
+      // ─── Price Configuration ───
+      const PRICES = {
+        mun:           { original: 1699, increased: 1869 },
+        moot_court:    { original: 3499, increased: 3849 },
+        debate:        { original: 1599, increased: 1759 },
+        spark_tank:    { original: 3199, increased: 3519 },
+        marketing:     { original: 999,  increased: 1099 },
+        paper_trading: { original: 1199, increased: 1319 },
+        film_making:   { original: 2999, increased: 3299 },
+        Navras:        { original: 1499, increased: 1649 },
+        poetry:        { original: 999,  increased: 1099 },
+        raag_jaam:     { original: 3999, increased: 4399 },
+        ipl:           { original: 2999, increased: 3299 }
+      };
+
+      // Valid coupon codes
+      const VALID_COUPONS = {
+        'NYDC2026':          { type: 'revert', label: 'NYDC2026 — Early Bird Discount' },
+        'PRISHA-NYDC26':     { type: 'revert', label: 'Prisha Hastir — Campus Ambassador' },
+        'VANEE-NYDC26':      { type: 'revert', label: 'Vanee Jain — Campus Ambassador' },
+        'GOURICA-NYDC26':    { type: 'revert', label: 'Gourica Vij — Campus Ambassador' },
+        'AKSHAT-NYDC26':     { type: 'revert', label: 'Akshat Agarwal — Campus Ambassador' },
+        'JANNAT-NYDC26':     { type: 'revert', label: 'Jannat Praveen — Campus Ambassador' },
+        'SNIGDHA-NYDC26':    { type: 'revert', label: 'Snigdha Bohat — Campus Ambassador' },
+        'DHATHRI-NYDC26':    { type: 'revert', label: 'Dhathri — Campus Ambassador' },
+        'HARSHAL-NYDC26':    { type: 'revert', label: 'Harshal Lohia — Campus Ambassador' },
+        'RHYAH-NYDC26':      { type: 'revert', label: 'Rhyah Singh — Campus Ambassador' },
+        'RISHIKA-NYDC26':    { type: 'revert', label: 'Rishika Jain — Campus Ambassador' },
+        'RANVIR-NYDC26':     { type: 'revert', label: 'Ranvir Bajwa — Campus Ambassador' },
+        'DIKSHA-NYDC26':     { type: 'revert', label: 'Diksha — Campus Ambassador' },
+        'JIVANSH-NYDC26':    { type: 'revert', label: 'Jivansh — Campus Ambassador' },
+        'PRITHIKA-NYDC26':   { type: 'revert', label: 'Prithika — Campus Ambassador' },
+        'PARTHW-NYDC26':     { type: 'revert', label: 'Parth Walia — Campus Ambassador' },
+        'APARNA-NYDC26':     { type: 'revert', label: 'Aparna Makan — Campus Ambassador' },
+        'ADVAITA-NYDC26':    { type: 'revert', label: 'Advaita Vashista — Campus Ambassador' },
+        'MANSEERAT-NYDC26':  { type: 'revert', label: 'Manseerat Singh — Campus Ambassador' },
+        'ADONIKA-NYDC26':    { type: 'revert', label: 'Adonika — Campus Ambassador' },
+        'ANSHU-NYDC26':      { type: 'revert', label: 'Anshu Rao — Campus Ambassador' },
+        'DHAIRYA-NYDC26':    { type: 'revert', label: 'Dhairya Setia — Campus Ambassador' },
+        'VANSH-NYDC26':      { type: 'revert', label: 'Vansh Solanki — Campus Ambassador' },
+        'RIDDHIMA-NYDC26':   { type: 'revert', label: 'Riddhima Ramrakhiani — Campus Ambassador' },
+        'DEVESH-NYDC26':     { type: 'revert', label: 'Devesh Dixit — Campus Ambassador' },
+        'PARTHB-NYDC26':     { type: 'revert', label: 'Parth Bhardwaj — Campus Ambassador' },
+        'RAKSHIT-NYDC26':    { type: 'revert', label: 'Rakshit Tiwari — Campus Ambassador' },
+        'DHAMIN-NYDC26':     { type: 'revert', label: 'Dhamin Dhankher — Campus Ambassador' },
+        'KARAN-NYDC26':      { type: 'revert', label: 'Karan Dwivedi — Campus Ambassador' },
+        'SAUMYA-NYDC26':     { type: 'revert', label: 'Saumya Prasad — Campus Ambassador' },
+        'NIKHILESH-NYDC26':  { type: 'revert', label: 'Nikhilesh — Campus Ambassador' },
+        'AAYUSH-NYDC26':     { type: 'revert', label: 'Aayush Jain — Campus Ambassador' },
+        'JAGNEET-NYDC26':    { type: 'revert', label: 'Jagneet Singh — Campus Ambassador' },
+        'ASMIT-NYDC26':      { type: 'revert', label: 'Asmit Kumar Sahoo — Campus Ambassador' },
+        'REVANT-NYDC26':     { type: 'revert', label: 'Revant Bhatt — Campus Ambassador' },
+        'SUVARCHA-NYDC26':   { type: 'revert', label: 'Suvarcha — Campus Ambassador' },
+        'GAURI-NYDC26':      { type: 'revert', label: 'Gauri — Campus Ambassador' },
+        'BHAVYA-NYDC26':     { type: 'revert', label: 'Bhavya Bhardwaj — Campus Ambassador' },
+        'JANAYA-NYDC26':     { type: 'revert', label: 'Janaya Sachdeva — Campus Ambassador' },
+        'PRAKHAR-NYDC26':    { type: 'revert', label: 'Prakhar Sagar — Campus Ambassador' }
+      };
+
+      let couponApplied = false;
+      let appliedCouponCode = '';
+
+      // ─── Guard: redirect if no personal data ───
+      const stored = sessionStorage.getItem('nydc_registration');
+      if (!stored) {
+        window.location.href = '../registration.html';
+      } else {
+        const personal = JSON.parse(stored);
+        document.getElementById('user-greeting').innerHTML =
+          'Welcome, <strong>' + personal.firstName + '</strong> — pick the event you\'d like to attend';
+      }
+
+      // ─── Format currency ───
+      function formatPrice(amount) {
+        return '₹' + amount.toLocaleString('en-IN');
+      }
+
+      // ─── Update all event labels to show correct price ───
+      function updatePriceLabels() {
+        document.querySelectorAll('.event-price').forEach(span => {
+          const eventKey = span.dataset.event;
+          if (PRICES[eventKey]) {
+            const price = couponApplied ? PRICES[eventKey].original : PRICES[eventKey].increased;
+            span.textContent = '(' + formatPrice(price) + ')';
+            if (couponApplied) {
+              span.classList.add('discounted');
+            } else {
+              span.classList.remove('discounted');
+            }
+          }
+        });
+      }
+
+      // ─── Update the price summary panel ───
+      function updatePriceSummary() {
+        const selected = document.querySelector('input[name="events"]:checked');
+        const summaryEl = document.getElementById('price-summary');
+
+        if (!selected || !couponApplied) {
+          summaryEl.style.display = 'none';
+          return;
+        }
+
+        const eventKey = selected.value;
+        const priceData = PRICES[eventKey];
+        if (!priceData) { summaryEl.style.display = 'none'; return; }
+
+        const increased = priceData.increased;
+        const original  = priceData.original;
+        const discount  = increased - original;
+
+        document.getElementById('price-original').textContent = formatPrice(increased);
+        document.getElementById('price-discount').textContent = '- ' + formatPrice(discount);
+        document.getElementById('price-final').textContent = formatPrice(original);
+
+        summaryEl.style.display = 'block';
+      }
+
+      // ─── Coupon Apply Logic ───
+      const couponInput  = document.getElementById('coupon-input');
+      const couponBtn    = document.getElementById('coupon-apply-btn');
+      const couponStatus = document.getElementById('coupon-status');
+
+      couponBtn.addEventListener('click', () => {
+        const code = couponInput.value.trim().toUpperCase();
+
+        if (!code) {
+          couponStatus.textContent = 'Please enter a coupon code.';
+          couponStatus.className = 'coupon-status error';
+          return;
+        }
+
+        if (VALID_COUPONS[code]) {
+          couponApplied = true;
+          appliedCouponCode = code;
+          couponStatus.textContent = '✓ ' + VALID_COUPONS[code].label + ' applied!';
+          couponStatus.className = 'coupon-status success';
+          couponInput.disabled = true;
+          couponInput.value = code;
+          couponBtn.textContent = 'Applied ✓';
+          couponBtn.disabled = true;
+          couponBtn.classList.add('applied');
+
+          // Update prices everywhere
+          updatePriceLabels();
+          updatePriceSummary();
+
+          // Save coupon to sessionStorage
+          sessionStorage.setItem('nydc_coupon', JSON.stringify({
+            code: code,
+            applied: true
+          }));
+        } else {
+          couponApplied = false;
+          appliedCouponCode = '';
+          couponStatus.textContent = '✕ Invalid coupon code. Please try again.';
+          couponStatus.className = 'coupon-status error';
+          couponInput.classList.add('shake');
+          setTimeout(() => couponInput.classList.remove('shake'), 500);
+          sessionStorage.removeItem('nydc_coupon');
+          updatePriceLabels();
+          updatePriceSummary();
+        }
+      });
+
+      // Allow pressing Enter to apply coupon
+      couponInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          couponBtn.click();
+        }
+      });
+
+      // Update price summary when event selection changes
+      document.querySelectorAll('input[name="events"]').forEach(radio => {
+        radio.addEventListener('change', updatePriceSummary);
+      });
+
+      // ─── Restore coupon from sessionStorage if user goes back ───
+      const savedCoupon = sessionStorage.getItem('nydc_coupon');
+      if (savedCoupon) {
+        const couponData = JSON.parse(savedCoupon);
+        if (couponData.applied && VALID_COUPONS[couponData.code]) {
+          couponApplied = true;
+          appliedCouponCode = couponData.code;
+          couponInput.value = couponData.code;
+          couponInput.disabled = true;
+          couponBtn.textContent = 'Applied ✓';
+          couponBtn.disabled = true;
+          couponBtn.classList.add('applied');
+          couponStatus.textContent = '✓ ' + VALID_COUPONS[couponData.code].label + ' applied!';
+          couponStatus.className = 'coupon-status success';
+          updatePriceLabels();
+        }
+      }
+
+      // ─── Save selected event & redirect to team page ───
+      const form = document.getElementById('event-form');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const selected = document.querySelector('input[name="events"]:checked');
+        if (!selected) {
+          alert('Please select an event to continue.');
+          return;
+        }
+
+        const eventKey = selected.value;
+        const priceData = PRICES[eventKey];
+        const finalPrice = couponApplied ? priceData.original : priceData.increased;
+
+        // Save event choice + experience + price info
+        const eventData = {
+          event: selected.value,
+          experience: document.getElementById('experience').value.trim(),
+          price: finalPrice,
+          couponApplied: couponApplied,
+          couponCode: appliedCouponCode || null
+        };
+        sessionStorage.setItem('nydc_event', JSON.stringify(eventData));
+
+        // Route MUN to the committee selection page, otherwise to team selection
+        if (selected.value === 'mun') {
+          window.location.href = 'mun.html';
+        } else {
+          window.location.href = 'selection.html';
+        }
+      });
+    </script>
+
+</body>
+</html>
