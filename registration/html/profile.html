@@ -273,6 +273,31 @@
                 }
 
                 const data = chosenDoc.data();
+                const chosenDocId = chosenDoc.id;
+
+                // ── REJECTED: let them register again ──
+                if ((data.status || '').toLowerCase() === 'rejected') {
+                    loadSec.style.display = 'none';
+                    profSec.style.display = 'block';
+
+                    // Populate name so the header shows correctly
+                    document.getElementById('profile-name').innerHTML = `${data.firstName} <span>${data.lastName}</span>`;
+                    document.getElementById('profile-email').textContent = data.email;
+
+                    // Replace the status badge area with rejection message + button
+                    // We insert a special block before the profile sections
+                    const profSectionEl = document.getElementById('profile-section');
+                    const rejBanner = document.createElement('div');
+                    rejBanner.style.cssText = 'background:rgba(139,26,26,0.08);border:1px solid rgba(139,26,26,0.3);border-radius:14px;padding:24px;margin-bottom:28px;text-align:center;';
+                    rejBanner.innerHTML = `
+                        <div style="font-size:2rem;margin-bottom:12px;">❌</div>
+                        <h3 style="font-family:\'Cormorant Garamond\',serif;font-size:1.4rem;font-weight:300;color:#fff;margin-bottom:8px;">Registration <span style="color:#8b1a1a;">Rejected</span></h3>
+                        <p style="font-size:13px;color:rgba(156,163,175,0.8);margin-bottom:20px;line-height:1.6;">Your previous registration was not approved. You can register again for a different event.</p>
+                        <button onclick="window.reRegister('${chosenDocId}', ${JSON.stringify(data).replace(/'/g, "&apos;")})" style="background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-family:\'Outfit\',sans-serif;font-size:14px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;box-shadow:0 0 20px rgba(139,26,26,0.3);transition:all 0.3s;" onmouseover="this.style.transform=\'translateY(-2px)\';this.style.boxShadow=\'0 0 30px rgba(139,26,26,0.5)\'" onmouseout="this.style.transform=\'\';this.style.boxShadow=\'0 0 20px rgba(139,26,26,0.3)\'">Register Again &rarr;</button>
+                    `;
+                    profSectionEl.insertBefore(rejBanner, profSectionEl.firstChild);
+                    return; // Stop here — don't populate the rest of the profile
+                }
 
                 // Populate UI
                 document.getElementById('profile-name').innerHTML = `${data.firstName} <span>${data.lastName}</span>`;
@@ -376,6 +401,52 @@
         document.getElementById('logout-btn').addEventListener('click', async () => {
             await signOut(auth);
         });
+
+        // ── Re-Register after rejection ──
+        window.reRegister = async function(docId, data) {
+            const btn = event.currentTarget;
+            btn.disabled = true;
+            btn.textContent = 'Clearing old registration…';
+            try {
+                // Delete the rejected doc
+                await deleteDoc(doc(db, 'registrations', docId));
+
+                // Restore personal info in session so event.html can use it
+                sessionStorage.setItem('nydc_registration', JSON.stringify({
+                    uid:       data.uid,
+                    firstName: data.firstName,
+                    lastName:  data.lastName,
+                    email:     data.email,
+                    phone:     data.phone  || '',
+                    school:    data.school || '',
+                    grade:     data.grade  || '',
+                    city:      data.city   || ''
+                }));
+                // Clear old event/MUN choices so they pick fresh
+                sessionStorage.removeItem('nydc_event');
+                sessionStorage.removeItem('nydc_mun_selection');
+                sessionStorage.removeItem('nydc_doc_id');
+                sessionStorage.removeItem('nydc_coupon');
+
+                // Create new draft doc for this fresh attempt
+                const { getFirestore: _gf, collection: _col, addDoc: _add, serverTimestamp: _ts } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
+                const newDraft = {
+                    uid: data.uid, firstName: data.firstName, lastName: data.lastName,
+                    email: data.email, phone: data.phone || '', school: data.school || '',
+                    grade: data.grade || '', city: data.city || '',
+                    status: 'draft'
+                };
+                const newDocRef = await _add(_col(db, 'registrations'), newDraft);
+                sessionStorage.setItem('nydc_doc_id', newDocRef.id);
+
+                window.location.href = 'event.html';
+            } catch (err) {
+                console.error('Re-register error:', err);
+                btn.disabled = false;
+                btn.textContent = 'Register Again →';
+                alert('Something went wrong. Please try again.');
+            }
+        };
 
     </script>
 </body>
