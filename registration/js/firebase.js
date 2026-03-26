@@ -43,6 +43,46 @@ if (form) {
   const eventData    = JSON.parse(storedEvent);
   const munPortfolios = storedMun ? JSON.parse(storedMun) : null;
 
+  // ─── IPL Capacity Logic ───
+  if (eventData.event === 'ipl') {
+    const iplQuery = query(collection(db, 'registrations'), where('event', '==', 'ipl'));
+    getDocs(iplQuery).then(snap => {
+      const takenTeams = new Set();
+      snap.forEach(docSnap => {
+        const data = docSnap.data();
+        // A team is taken if the document status is anything OTHER than 'rejected'
+        if ((data.status || '').toLowerCase() !== 'rejected' && data.iplTeam) {
+          // If a draft belongs to the currently logged-in user, they should still be able to select it (re-selecting their own draft team is fine or they might change it)
+          // Wait, actually if they are resuming their own draft, they ALREADY own it.
+          // Let's just grey it out if someone ELSE owns it, or if they own it we can just auto-select it.
+          // But to be safe, if `uid` doesn't match current user, mark it taken. 
+          // We don't have user.uid easily synchronously here without auth listener, but we have data.uid.
+          const currentUid = personalData.uid || '';
+          if (data.uid !== currentUid) {
+            takenTeams.add(data.iplTeam);
+          }
+        }
+      });
+      
+      const iplRadios = document.querySelectorAll('input[name="ipl_team"]');
+      iplRadios.forEach(radio => {
+        if (takenTeams.has(radio.value)) {
+          radio.disabled = true;
+          const label = document.querySelector(`label[for="${radio.id}"]`);
+          if (label) {
+            label.style.opacity = '0.4';
+            label.style.cursor = 'not-allowed';
+            label.style.filter = 'grayscale(100%)';
+            const nameSpan = label.querySelector('.team-name');
+            if (nameSpan) {
+              nameSpan.innerHTML += ' <span style="color:#f87171;font-size:10px;text-transform:uppercase;letter-spacing:1px;margin-left:6px;">(Taken)</span>';
+            }
+          }
+        }
+      });
+    }).catch(err => console.error("Error fetching taken IPL teams:", err));
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
