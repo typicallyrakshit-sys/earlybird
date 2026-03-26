@@ -482,8 +482,11 @@
               window.location.href = 'event.html';
             }
 
+          } else if (status === 'rejected') {
+            // Rejected — send to profile where "Register Again" button awaits
+            window.location.href = 'profile.html';
           } else {
-            // Registration is complete (pending / approved / rejected) → profile
+            // Pending / Approved — show profile normally
             window.location.href = 'profile.html';
           }
 
