@@ -36,7 +36,7 @@
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" onclick="scrollToSection('partners')">Partners</button>
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" onclick="scrollToSection('footer')">Contact Us</button>
           <a href="registration/html/agenda.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Portfolios</a>
-          <a href="registration/html/profile.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Profile</a>
+          <a href="registration/html/login.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Login</a>
           <a href="registration/registration.html" class="font-body text-base uppercase tracking-widest rounded-full transition-all duration-300" style="text-decoration:none;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;border:1px solid #8b1a1a;box-shadow:0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3);letter-spacing:0.15em;font-weight:600;padding:10px 15px;" onmouseover="this.style.boxShadow='0 0 25px rgba(139,26,26,0.7),0 6px 20px rgba(0,0,0,0.4)';this.style.transform='translateY(-2px) scale(1.05)';" onmouseout="this.style.boxShadow='0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3)';this.style.transform='translateY(0) scale(1)';">Register</a>
         </div>
 
@@ -58,7 +58,7 @@
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" onclick="scrollToSection('partners')">Partners</button>
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" onclick="scrollToSection('footer')">Contact Us</button>
           <a href="registration/html/agenda.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Portfolios</a>
-          <a href="registration/html/profile.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Profile</a>
+          <a href="registration/html/login.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Login</a>
           <a href="registration/registration.html" class="font-body text-sm uppercase tracking-widest text-left px-6 py-2.5 rounded-full transition-all duration-300" style="text-decoration:none;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;border:1px solid #8b1a1a;display:inline-block;text-align:center;box-shadow:0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3);letter-spacing:0.15em;">Register</a>
         </div>
       </div>
@@ -202,38 +202,29 @@
             </div>
           </div>
 
-          <div class="lg:w-1/2 w-full fade-up">
-            <div class="relative border border-[#8b1a1a]/30 bg-black/40 backdrop-blur-sm p-4 md:p-6 rounded-xl flex flex-col min-h-[500px] max-h-[500px]" style="box-shadow:inset 0 0 40px rgba(139,26,26,0.05);">
-               <div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-[#8b1a1a]/20 to-transparent rounded-tr-xl pointer-events-none"></div>
-               
-               <!-- Committee Selector -->
-               <div class="flex gap-2 mb-4 overflow-x-auto pb-2 scrollbar-none" id="home-mun-tabs" style="scrollbar-width: none;">
-                  <!-- JS Injected Tabs -->
-               </div>
-
-               <!-- Stats -->
-               <div class="flex flex-wrap gap-2 justify-between items-center mb-4 px-2 border-b border-[#8b1a1a]/20 pb-4">
-                 <h4 class="font-display text-xl text-white tracking-wider" id="home-mun-active-title">UN GA</h4>
-                 <div class="flex gap-4 text-xs font-mono bg-black/50 px-3 py-1.5 rounded-lg border border-[#8b1a1a]/20">
-                   <span class="text-green-500/80 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500/80"></span><span id="home-mun-avail-count">--</span> Avail</span>
-                   <span class="text-red-500/80 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-red-500/80"></span><span id="home-mun-taken-count">--</span> Taken</span>
-                 </div>
-               </div>
-
-               <!-- Grid -->
-               <style>
-                 .home-scroll-y::-webkit-scrollbar { width: 5px; }
-                 .home-scroll-y::-webkit-scrollbar-track { background: transparent; }
-                 .home-scroll-y::-webkit-scrollbar-thumb { background: rgba(139,26,26,0.4); border-radius: 4px; }
-                 .home-scroll-y::-webkit-scrollbar-thumb:hover { background: rgba(139,26,26,0.7); }
-                 .home-scroll-y { scrollbar-width: thin; scrollbar-color: rgba(139,26,26,0.4) transparent; }
-               </style>
-               <div class="flex-1 overflow-y-auto pr-2 home-scroll-y" id="home-mun-grid">
-                  <div class="h-full flex flex-col items-center justify-center text-[#8b1a1a]/60">
-                     <div class="w-8 h-8 rounded-full border-2 border-[#8b1a1a]/40 border-t-[#8b1a1a] animate-spin mb-4"></div>
-                     <span class="font-mono text-xs uppercase tracking-widest">Syncing Live Data...</span>
+          <div class="lg:w-1/2 w-full">
+            <div class="fade-up relative aspect-video md:aspect-square lg:aspect-[4/3] border border-[#8b1a1a]/30 bg-black/40 backdrop-blur-sm p-1">
+              <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#8b1a1a]"></div>
+              <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#8b1a1a]"></div>
+              <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#8b1a1a]"></div>
+              <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#8b1a1a]"></div>
+              <div class="w-full h-full border border-[#8b1a1a]/10 flex flex-col items-center justify-center relative overflow-hidden group">
+                <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(139,26,26,0.05)_2px,rgba(139,26,26,0.05)_4px)] pointer-events-none"></div>
+                <div class="relative z-10 text-center p-8">
+                  <div class="mb-6 flex justify-center">
+                    <div class="relative">
+                      <div class="w-20 h-20 rounded-full border border-[#8b1a1a]/40 flex items-center justify-center animate-[spin_10s_linear_infinite]">
+                        <div class="w-1 h-10 bg-[#8b1a1a] origin-bottom"></div>
+                      </div>
+                      <div class="absolute inset-0 flex items-center justify-center">
+                        <span class="text-2xl">⚖️</span>
+                      </div>
+                    </div>
                   </div>
-               </div>
+                  <h3 class="font-display text-4xl md:text-5xl text-white font-bold mb-4 tracking-tight">LAUNCHING <span class="text-[#8b1a1a]">SOON</span></h3>
+                </div>
+                <div class="absolute top-4 right-4 font-mono text-[8px] text-[#8b1a1a]/40 text-right uppercase">Encrypted Protocol<br />Level 7 Clearance</div>
+              </div>
             </div>
           </div>
         </div>
@@ -326,84 +317,6 @@
   </main>
 
   <!-- ==================== JAVASCRIPT ==================== -->
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
-    import { getFirestore, collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
-
-    const app = initializeApp({
-      apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
-      authDomain: "nydc-72b34.firebaseapp.com",
-      projectId: "nydc-72b34",
-      storageBucket: "nydc-72b34.firebasestorage.app",
-      messagingSenderId: "935882112599",
-      appId: "1:935882112599:web:f04b660e233f21a46f2d12"
-    });
-    const db = getFirestore(app);
-
-    const COMMITTEES = {
-      unga: { title: 'UNGA', portfolios: ['Afghanistan','Albania','Algeria','Andorra','Angola','Antigua and Barbuda','Argentina','Armenia','Australia','Austria','Azerbaijan','Bahamas','Bahrain','Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bhutan','Bolivia','Bosnia and Herzegovina','Botswana','Brazil','Brunei','Bulgaria','Burkina Faso','Burundi','Cabo Verde','Cambodia','Cameroon','Canada','Central African Republic','Chad','Chile','China','Colombia','Comoros','Congo','Costa Rica','Côte d\u2019Ivoire','Croatia','Cuba','Cyprus','Czechia','Democratic Republic of the Congo','Denmark','Djibouti','Dominica','Dominican Republic','Ecuador','Egypt','El Salvador','Equatorial Guinea','Eritrea','Estonia','Eswatini','Ethiopia','Fiji','Finland','France','Gabon','Gambia','Georgia','Germany','Ghana','Greece','Grenada','Guatemala','Guinea','Guinea-Bissau','Guyana','Haiti','Honduras','Hungary','Iceland','India','Indonesia','Iran','Iraq','Ireland','Israel','Italy','Jamaica','Japan','Jordan','Kazakhstan','Kenya','Kiribati','Kuwait','Kyrgyzstan','Laos','Latvia','Lebanon','Lesotho','Liberia','Libya','Liechtenstein','Lithuania','Luxembourg','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Marshall Islands','Mauritania','Mauritius','Mexico','Micronesia','Moldova','Monaco','Mongolia','Montenegro','Morocco','Mozambique','Myanmar','Namibia','Nauru','Nepal','Netherlands','New Zealand','Nicaragua','Niger','Nigeria','North Korea','North Macedonia','Norway','Oman','Pakistan','Palau','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Qatar','Romania','Russia','Rwanda','Saint Kitts and Nevis','Saint Lucia','Saint Vincent and the Grenadines','Samoa','San Marino','Sao Tome and Principe','Saudi Arabia','Senegal','Serbia','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','Solomon Islands','Somalia','South Africa','South Sudan','Spain','Sri Lanka','Sudan','Suriname','Sweden','Switzerland','Syria','Tajikistan','Tanzania','Thailand','Timor-Leste','Togo','Tonga','Trinidad and Tobago','Tunisia','Turkey','Turkmenistan','Tuvalu','Uganda','Ukraine','United Arab Emirates','United Kingdom','United States','Uruguay','Uzbekistan','Vanuatu','Venezuela','Vietnam','Yemen','Zambia','Zimbabwe'] },
-      uncsw: { title: 'UNCSW', portfolios: ['Angola','Burkina Faso','Cameroon','Chad','Comoros','Congo','Côte d\u2019Ivoire','Equatorial Guinea','Kenya','Liberia','Madagascar','Niger','United Republic of Tanzania','Bangladesh','China','India','Indonesia','Iran','Japan','Lebanon','Mongolia','Pakistan','Philippines','Saudi Arabia','Argentina','Bolivia','Brazil','Colombia','Cuba','Dominican Republic','El Salvador','Mexico','Paraguay','Austria','Belgium','Canada','France','Germany','Italy','Sweden','United States','Armenia','Poland','Romania','Russian Federation'] },
-      unhrc: { title: 'UNHRC', portfolios: ['Albania','Angola','Benin','Bolivia (Plurinational State of)','Brazil','Bulgaria','Burundi','Chile','China','Colombia','Côte d\u2019Ivoire','Cuba','Cyprus','Czechia','Democratic Republic of the Congo','Dominican Republic','Ecuador','Egypt','Estonia','Ethiopia','France','Gambia','Ghana','Iceland','India','Indonesia','Iraq','Italy','Japan','Kenya','Kuwait','Malawi','Marshall Islands','Mauritius','Mexico','Netherlands (Kingdom of the)','North Macedonia','Pakistan','Qatar','Republic of Korea','Slovenia','South Africa','Spain','Switzerland','Thailand','United Kingdom of Great Britain and Northern Ireland','Viet Nam'] },
-      who: { title: 'WHO', portfolios: ['Afghanistan','Albania','Algeria','Andorra','Angola','Antigua and Barbuda','Argentina','Armenia','Australia','Austria','Azerbaijan','Bahamas','Bahrain','Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bhutan','Bolivia','Bosnia and Herzegovina','Botswana','Brazil','Brunei','Bulgaria','Burkina Faso','Burundi','Cabo Verde','Cambodia','Cameroon','Canada','Central African Republic','Chad','Chile','China','Colombia','Comoros','Congo','Costa Rica','Côte d\u2019Ivoire','Croatia','Cuba','Cyprus','Czechia','Democratic Republic of the Congo','Denmark','Djibouti','Dominica','Dominican Republic','Ecuador','Egypt','El Salvador','Equatorial Guinea','Eritrea','Estonia','Eswatini','Ethiopia','Fiji','Finland','France','Gabon','Gambia','Georgia','Germany','Ghana','Greece','Grenada','Guatemala','Guinea','Guinea-Bissau','Guyana','Haiti','Honduras','Hungary','Iceland','India','Indonesia','Iran','Iraq','Ireland','Israel','Italy','Jamaica','Japan','Jordan','Kazakhstan','Kenya','Kiribati','Kuwait','Kyrgyzstan','Laos','Latvia','Lebanon','Lesotho','Liberia','Libya','Liechtenstein','Lithuania','Luxembourg','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Marshall Islands','Mauritania','Mauritius','Mexico','Micronesia','Moldova','Monaco','Mongolia','Montenegro','Morocco','Mozambique','Myanmar','Namibia','Nauru','Nepal','Netherlands','New Zealand','Nicaragua','Niger','Nigeria','North Korea','North Macedonia','Norway','Oman','Pakistan','Palau','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Qatar','Romania','Russia','Rwanda','Saint Kitts and Nevis','Saint Lucia','Saint Vincent and the Grenadines','Samoa','San Marino','Sao Tome and Principe','Saudi Arabia','Senegal','Serbia','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','Solomon Islands','Somalia','South Africa','South Sudan','Spain','Sri Lanka','Sudan','Suriname','Sweden','Switzerland','Syria','Tajikistan','Tanzania','Thailand','Timor-Leste','Togo','Tonga','Trinidad and Tobago','Tunisia','Turkey','Turkmenistan','Tuvalu','Uganda','Ukraine','United Arab Emirates','United Kingdom','United States','Uruguay','Uzbekistan','Vanuatu','Venezuela','Vietnam','Yemen','Zambia','Zimbabwe'] },
-      aippm: { title: 'AIPPM', portfolios: ['Narendra Modi','Rajnath Singh','Amit Shah','Nirmala Sitharaman','S. Jaishankar','Nitin Gadkari','Piyush Goyal','Ashwini Vaishnaw','Dharmendra Pradhan','Hardeep Singh Puri','Jyotiraditya Scindia','Sarbananda Sonowal','Gajendra Singh Shekhawat','Bhupender Yadav','Mansukh Mandaviya','Kiren Rijiju','J. P. Nadda','Rahul Gandhi','Mallikarjun Kharge','Shashi Tharoor','Adhir Ranjan Chowdhury','Arvind Kejriwal','Atishi','Mamata Banerjee','Akhilesh Yadav','Tejashwi Yadav','Nitish Kumar','Uddhav Thackeray','Eknath Shinde','Devendra Fadnavis','Yogi Adityanath','K. Chandrashekar Rao','M. K. Stalin','Pinarayi Vijayan','Chirag Paswan','Asaduddin Owaisi','Sukhbir Singh Badal','Hemant Soren'] }
-    };
-
-    const takenMap = { unga: new Set(), uncsw: new Set(), unhrc: new Set(), who: new Set(), aippm: new Set() };
-    
-    async function fetchHomePortfolios() {
-      try {
-        const q = query(collection(db, 'registrations'), where('event', '==', 'mun'));
-        const snap = await getDocs(q);
-        snap.forEach(d => {
-          const data = d.data();
-          if (data.status === 'rejected') return;
-          if (data.munPortfolios && Array.isArray(data.munPortfolios)) {
-            data.munPortfolios.forEach(p => {
-              const comId = (p.committeeId || '').toLowerCase();
-              if (takenMap[comId]) takenMap[comId].add(p.portfolioName);
-            });
-          }
-        });
-        renderHomeMun('unga');
-      } catch (err) { console.error('Error fetching MUN:', err); }
-    }
-
-    function renderHomeMun(activeId) {
-      const tabsEl = document.getElementById('home-mun-tabs');
-      const gridEl = document.getElementById('home-mun-grid');
-      if (!tabsEl || !gridEl) return;
-
-      // Render Tabs
-      tabsEl.innerHTML = Object.keys(COMMITTEES).map(id => `
-        <button onclick="window.__setHomeMun('${id}')" class="whitespace-nowrap px-4 py-2 rounded-full font-body text-xs md:text-sm tracking-widest uppercase transition-all duration-300 ${id === activeId ? 'bg-[#8b1a1a] text-white border border-[#8b1a1a]' : 'bg-black/40 text-gray-400 hover:text-white hover:bg-black/60 border border-white/5'}">${COMMITTEES[id].title}</button>
-      `).join('');
-
-      // Render Active Grid
-      const com = COMMITTEES[activeId];
-      const taken = takenMap[activeId];
-      
-      document.getElementById('home-mun-active-title').textContent = com.title;
-      document.getElementById('home-mun-taken-count').textContent = taken.size;
-      document.getElementById('home-mun-avail-count').textContent = com.portfolios.length - taken.size;
-
-      const sorted = [...com.portfolios].sort((a,b) => (taken.has(a)?1:0) - (taken.has(b)?1:0) || a.localeCompare(b));
-      
-      gridEl.className = 'flex-1 overflow-y-auto pr-2 grid grid-cols-2 md:grid-cols-3 gap-3 origin-top home-scroll-y pb-4';
-      gridEl.innerHTML = sorted.map(name => {
-        const isTaken = taken.has(name);
-        return \`<div class="p-3 rounded-lg border flex flex-col justify-between transition-colors duration-300 \${isTaken ? 'border-red-900/50 bg-red-950/20 opacity-60 cursor-not-allowed' : 'border-green-800/40 bg-green-900/10 hover:border-green-600/60 shadow-[inset_0_0_15px_rgba(34,197,94,0.05)]'}">
-          <span class="font-body text-xs lg:text-sm text-gray-200 line-clamp-2 leading-tight mb-2" title="\${name}">\${name}</span>
-          <span class="text-[10px] uppercase font-mono tracking-wider \${isTaken ? 'text-red-400/80' : 'text-green-400'}">\${isTaken ? 'Taken' : 'Available'}</span>
-        </div>\`;
-      }).join('');
-    }
-
-    // Expose to window for inline onclick handler
-    window.__setHomeMun = function(id) { renderHomeMun(id); };
-
-    // Start fetch on load
-    window.addEventListener('DOMContentLoaded', fetchHomePortfolios);
-  </script>
   <script>
     // ---- Event Cards Data ----
     const events = [
