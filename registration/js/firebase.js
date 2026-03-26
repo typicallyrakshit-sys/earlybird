@@ -1,6 +1,6 @@
 // Firebase configuration & Firestore registration handler
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
-import { getFirestore, collection, addDoc, updateDoc, doc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+import { getFirestore, collection, addDoc, updateDoc, doc, serverTimestamp, getDocs, query, where, deleteDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 import { getAuth } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
 
 const firebaseConfig = {
@@ -146,10 +146,30 @@ if (form) {
         }
       }
 
+      // ─── Cleanup: delete any other draft docs for this UID ───
+      // Prevents duplicates showing up in profile when user changed event mid-way
+      try {
+        const uid = registrationData.uid;
+        if (uid) {
+          const draftsQ = query(collection(db, 'registrations'), where('uid', '==', uid), where('status', '==', 'draft'));
+          const draftsSnap = await getDocs(draftsQ);
+          for (const draftDoc of draftsSnap.docs) {
+            // Don't delete the doc we just saved/updated
+            if (draftDoc.id !== FinalDocId) {
+              await deleteDoc(doc(db, 'registrations', draftDoc.id));
+              console.log('Deleted orphan draft:', draftDoc.id);
+            }
+          }
+        }
+      } catch (cleanupErr) {
+        console.warn('Draft cleanup failed (non-critical):', cleanupErr);
+      }
+
       // Clear all sessionStorage
       sessionStorage.removeItem('nydc_registration');
       sessionStorage.removeItem('nydc_event');
       sessionStorage.removeItem('nydc_mun_selection');
+      sessionStorage.removeItem('nydc_doc_id');
 
       // Show success
       const card = document.querySelector('.registration-card');
