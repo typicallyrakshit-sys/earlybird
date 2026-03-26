@@ -127,8 +127,13 @@
                 </div>
 
                 <!-- Submit -->
-                <button type="submit" class="submit-btn">Continue to Events →</button>
+                <button type="submit" class="submit-btn" style="margin-bottom: 20px;">Continue to Events →</button>
             </form>
+
+            <!-- Resume Link -->
+            <p style="text-align: center; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text-muted); margin-bottom: 25px;">
+                Already started? <a href="html/login.html" style="color: #8b1a1a; text-decoration: none; font-weight: 600;">Log in to resume</a>
+            </p>
 
             <!-- Step Indicator -->
             <p class="step-indicator">Step 1 of 3 — Personal Details</p>
@@ -139,6 +144,7 @@
     <script type="module">
       import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
       import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
+      import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
       const firebaseConfig = {
         apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
@@ -152,6 +158,7 @@
 
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
+      const db = getFirestore(app);
 
       // ── Password toggle ──
       document.querySelectorAll('.password-toggle').forEach(btn => {
@@ -230,9 +237,16 @@
             phone:     document.getElementById('phone').value.trim(),
             school:    document.getElementById('school').value.trim(),
             grade:     document.getElementById('grade').value,
-            city:      document.getElementById('city').value.trim()
+            city:      document.getElementById('city').value.trim(),
+            status:    'draft',
+            createdAt: serverTimestamp()
           };
+
+          // Save draft to Firestore immediately so they can resume via login
+          const docRef = await addDoc(collection(db, 'registrations'), data);
+
           sessionStorage.setItem('nydc_registration', JSON.stringify(data));
+          sessionStorage.setItem('nydc_doc_id', docRef.id);
           window.location.href = 'html/event.html';
         } catch (error) {
           console.error("Firebase Auth Error:", error);
