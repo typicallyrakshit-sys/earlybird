@@ -555,6 +555,17 @@ const COMMITTEES = [
     }
 ];
 
+// ─── Add WHO Committee automatically using UNGA countries ───
+COMMITTEES.splice(1, 0, {
+    id: 'who',
+    name: 'World Health Organization (WHO)',
+    portfolios: COMMITTEES[0].portfolios.map(p => ({
+        id: 'who_' + p.id,
+        name: p.name,
+        status: 'available'
+    }))
+});
+
 // ─── Apply taken status from Firebase data ───
 if (window.__takenPortfolios) {
     const takenMap = window.__takenPortfolios;
@@ -757,14 +768,42 @@ function updateUIState() {
     const count = selectedPortfolios.length;
     countDisplay.textContent = count;
 
+    // ─── WHO Consent Logic ───
+    const isWho = count === 1 && selectedPortfolios[0].committeeId === 'who';
+    let consentBox = document.getElementById('who-consent-container');
+    let consentChecked = true;
+
+    if (isWho) {
+        if (!consentBox) {
+            consentBox = document.createElement('div');
+            consentBox.id = 'who-consent-container';
+            consentBox.innerHTML = `
+                <label style="display:flex; align-items:flex-start; gap:12px; background:rgba(139,26,26,0.1); border:1px solid rgba(139,26,26,0.3); padding:16px; border-radius:12px; margin-bottom:20px; cursor:pointer;">
+                    <input type="checkbox" id="who-consent-checkbox" style="margin-top:4px; width:18px; height:18px; accent-color:#8b1a1a;">
+                    <span style="font-size:13px; color:#e5e7eb; line-height:1.5;">
+                        <strong style="color:#f87171; display:block; margin-bottom:4px;">WHO Requirement:</strong>
+                        I provide my consent that if it is found on conference day that my experience is more than 10 MUN's, the organising team will reserve the right to cut my award.
+                    </span>
+                </label>
+            `;
+            submitBtn.parentNode.insertBefore(consentBox, submitBtn);
+            document.getElementById('who-consent-checkbox').addEventListener('change', updateUIState);
+        }
+        consentBox.style.display = 'block';
+        consentChecked = document.getElementById('who-consent-checkbox').checked;
+    } else if (consentBox) {
+        consentBox.style.display = 'none';
+        document.getElementById('who-consent-checkbox').checked = false;
+    }
+
     if (count === 1) {
         statusBadge.classList.add('complete');
-        submitBtn.disabled = false;
+        submitBtn.disabled = !consentChecked;
         submitBtn.textContent = 'Continue to Personal Details →';
     } else {
         statusBadge.classList.remove('complete');
         submitBtn.disabled = true;
-        submitBtn.textContent = `Select 1 portfolio...`;
+        submitBtn.textContent = 'Select 1 portfolio...';
     }
 }
 
