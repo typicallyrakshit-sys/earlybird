@@ -555,16 +555,7 @@ const COMMITTEES = [
     }
 ];
 
-// ─── Add WHO Committee automatically using UNGA countries ───
-COMMITTEES.splice(1, 0, {
-    id: 'who',
-    name: 'World Health Organization (WHO)',
-    portfolios: COMMITTEES[0].portfolios.map(p => ({
-        id: 'who_' + p.id,
-        name: p.name,
-        status: 'available'
-    }))
-});
+
 
 // ─── Apply taken status from Firebase data ───
 if (window.__takenPortfolios) {
