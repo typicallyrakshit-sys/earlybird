@@ -164,7 +164,7 @@
                         </div>
                     </div>
 
-                    <a href="#" id="upi-pay-link" class="upi-pay-btn" target="_blank">
+                    <a href="#" id="upi-pay-link" class="upi-pay-btn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
                             <line x1="1" y1="10" x2="23" y2="10"></line>
@@ -399,8 +399,13 @@
       }
 
       // UPI deep link
-      const upiLink = `upi://pay?pa=${UPI_ID}&am=${paymentPrice}&cu=INR`;
-      document.getElementById('upi-pay-link').href = upiLink;
+      const upiLink = `upi://pay?pa=${UPI_ID}&pn=NYDC%202026&am=${paymentPrice}&cu=INR&tn=NYDC%202026%20Registration`;
+      const upiAnchor = document.getElementById('upi-pay-link');
+      upiAnchor.href = upiLink;
+      upiAnchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = upiLink;
+      });
 
       // ─── Transaction ID ───
       window.__paymentPrice = paymentPrice;
