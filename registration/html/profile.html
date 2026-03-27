@@ -254,10 +254,14 @@
                     const draftData = draftDocs[0].data();
                     const draftId   = draftDocs[0].id;
                     sessionStorage.setItem('nydc_registration', JSON.stringify({
-                        uid: draftData.uid, firstName: draftData.firstName,
-                        lastName: draftData.lastName, email: draftData.email,
-                        phone: draftData.phone || '', school: draftData.school || '',
-                        grade: draftData.grade || '', city: draftData.city || ''
+                        uid:       draftData.uid       || '',
+                        firstName: draftData.firstName || '',
+                        lastName:  draftData.lastName  || '',
+                        email:     draftData.email     || '',
+                        phone:     draftData.phone     || '',
+                        school:    draftData.school    || '',
+                        grade:     draftData.grade     || '',
+                        city:      draftData.city      || ''
                     }));
                     sessionStorage.setItem('nydc_doc_id', draftId);
                     if (draftData.event) {
