@@ -171,7 +171,16 @@
                         </svg>
                         Pay via UPI
                     </a>
-                    <p class="payment-hint">Click above to pay, then enter your UPI Transaction ID below </p>
+                    <p class="payment-hint">Scan the QR or click the button above to pay, then enter your Transaction ID below.</p>
+
+                    <!-- UPI QR Code -->
+                    <div id="upi-qr-wrapper" style="display:flex;flex-direction:column;align-items:center;margin:18px 0 10px;">
+                        <div style="background:#fff;border-radius:14px;padding:12px;box-shadow:0 4px 24px rgba(0,0,0,0.35);display:inline-block;">
+                            <img id="upi-qr-img" src="" alt="UPI QR Code" width="180" height="180" style="display:block;border-radius:6px;">
+                        </div>
+                        <p style="font-family:'Outfit',sans-serif;font-size:11px;color:rgba(156,163,175,0.7);margin-top:10px;letter-spacing:0.05em;">Scan with any UPI app to pay</p>
+                    </div>
+
                     <p style="font-weight: 600; color: #8b1a1a; font-size: 12px; margin-top: 10px; margin-bottom: 20px; text-align: center;">Note: The payment can only be completed from moblie phone with any UPI app installed. If your are doing the registration from a laptop or PC you can login to your account on your mobile phone and continue to payment</p>
 
                     <!-- Transaction ID Input -->
@@ -284,26 +293,26 @@
             <div class="form-row">
               <div class="form-group">
                 <label>First Name</label>
-                <input type="text" name="member_first_${index}" placeholder="First name" value="${prefill ? safeVal(prefill.firstName) : ''}" required ${isLeader ? 'readonly' : ''}>
+                <input type="text" name="member_first_${index}" placeholder="First name" value="${prefill ? safeVal(prefill.firstName) : ''}" required ${isLeader && safeVal(prefill?.firstName) ? 'readonly' : ''}>
               </div>
               <div class="form-group">
                 <label>Last Name</label>
-                <input type="text" name="member_last_${index}" placeholder="Last name" value="${prefill ? safeVal(prefill.lastName) : ''}" required ${isLeader ? 'readonly' : ''}>
+                <input type="text" name="member_last_${index}" placeholder="Last name" value="${prefill ? safeVal(prefill.lastName) : ''}" required ${isLeader && safeVal(prefill?.lastName) ? 'readonly' : ''}>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
                 <label>Email</label>
-                <input type="email" name="member_email_${index}" placeholder="Email address" value="${prefill ? safeVal(prefill.email) : ''}" required ${isLeader ? 'readonly' : ''}>
+                <input type="email" name="member_email_${index}" placeholder="Email address" value="${prefill ? safeVal(prefill.email) : ''}" required ${isLeader && safeVal(prefill?.email) ? 'readonly' : ''}>
               </div>
               <div class="form-group">
                 <label>Phone</label>
-                <input type="tel" name="member_phone_${index}" placeholder="Phone number" value="${prefill ? safeVal(prefill.phone) : ''}" required ${isLeader ? 'readonly' : ''}>
+                <input type="tel" name="member_phone_${index}" placeholder="Phone number" value="${prefill ? safeVal(prefill.phone) : ''}" required ${isLeader && safeVal(prefill?.phone) ? 'readonly' : ''}>
               </div>
             </div>
             <div class="form-group">
               <label>School / Institution</label>
-              <input type="text" name="member_school_${index}" placeholder="School name" value="${prefill ? safeVal(prefill.school) : ''}" required ${isLeader ? 'readonly' : ''}>
+              <input type="text" name="member_school_${index}" placeholder="School name" value="${prefill ? safeVal(prefill.school) : ''}" required ${isLeader && safeVal(prefill?.school) ? 'readonly' : ''}>
             </div>
           </div>
         `;
@@ -347,12 +356,45 @@
       }
 
       // ─── Initialize: first card is the registrant ───
+      // If session is missing name fields (e.g. after browser restart + re-login),
+      // fetch the draft doc from Firestore to fill them in.
       const container = document.getElementById('members-container');
-      container.appendChild(createMemberCard(0, personal));
-      memberCount = 1;
 
-      // Hide add button for solo events
-      updateAddButton();
+      async function initLeaderCard() {
+        let leader = { ...personal };
+
+        const missingFields = !leader.firstName || !leader.lastName || !leader.phone;
+        const storedDocId   = sessionStorage.getItem('nydc_doc_id');
+
+        if (missingFields && storedDocId) {
+          try {
+            const { initializeApp: _iA, getApps } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js');
+            const { getFirestore: _gF, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
+            const _app = getApps().length ? getApps()[0] : _iA({ apiKey:"AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",authDomain:"nydc-72b34.firebaseapp.com",projectId:"nydc-72b34",storageBucket:"nydc-72b34.firebasestorage.app",messagingSenderId:"935882112599",appId:"1:935882112599:web:f04b660e233f21a46f2d12" });
+            const _db  = _gF(_app);
+            const snap = await getDoc(doc(_db, 'registrations', storedDocId));
+            if (snap.exists()) {
+              const d = snap.data();
+              leader.firstName = leader.firstName || d.firstName || '';
+              leader.lastName  = leader.lastName  || d.lastName  || '';
+              leader.phone     = leader.phone     || d.phone     || '';
+              leader.school    = leader.school    || d.school    || '';
+              leader.email     = leader.email     || d.email     || '';
+              // Update sessionStorage so subsequent checks work
+              sessionStorage.setItem('nydc_registration', JSON.stringify(leader));
+            }
+          } catch(err) {
+            console.warn('Could not fetch leader details from Firestore:', err);
+          }
+        }
+
+        container.appendChild(createMemberCard(0, leader));
+        memberCount = 1;
+        updateAddButton();
+      }
+
+      initLeaderCard();
+
 
       // ─── Add member ───
       document.getElementById('add-member-btn').addEventListener('click', () => {
@@ -407,6 +449,10 @@
         window.location.href = upiLink;
       });
 
+      // Generate QR code from UPI link
+      const qrImg = document.getElementById('upi-qr-img');
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiLink)}&bgcolor=ffffff&color=000000&margin=2`;
+
       // ─── Transaction ID ───
       window.__paymentPrice = paymentPrice;
     </script>
@@ -439,17 +485,17 @@
 
       const submitBtn = form.querySelector('.submit-btn');
 
-      const storedPersonal = sessionStorage.getItem('nydc_registration');
-      const storedEvent    = sessionStorage.getItem('nydc_event');
+      const storedPersonal2 = sessionStorage.getItem('nydc_registration');
+      const storedEvent2    = sessionStorage.getItem('nydc_event');
       const storedMun      = sessionStorage.getItem('nydc_mun_selection');
       const storedCoupon   = sessionStorage.getItem('nydc_coupon');
 
-      if (!storedPersonal || !storedEvent) {
+      if (!storedPersonal2 || !storedEvent2) {
         window.location.href = '../registration.html';
       }
 
-      const personalData  = storedPersonal ? JSON.parse(storedPersonal) : {};
-      const evData        = storedEvent ? JSON.parse(storedEvent) : {};
+      const personalData  = storedPersonal2 ? JSON.parse(storedPersonal2) : {};
+      const evData        = storedEvent2 ? JSON.parse(storedEvent2) : {};
       const munPortfolios = storedMun ? JSON.parse(storedMun) : null;
       const couponInfo    = storedCoupon ? JSON.parse(storedCoupon) : null;
 
