@@ -15,9 +15,49 @@
     <title>Register — NYDC 2026</title>
     <meta name="description" content="Register for the National Youth Development Conference 2026">
     <link rel="stylesheet" href="css/registration.css">
+    <link rel="stylesheet" href="css/institutional.css">
     <link rel="icon" href="../NYDC-Final-main/images/nydc-logo.png" type="image/png" />
 </head>
 <body>
+
+    <!-- ── Registration Type Chooser Modal ── -->
+    <div class="reg-type-overlay" id="reg-type-overlay">
+        <div class="reg-type-modal">
+            <span class="reg-type-tag">July 2026 • Delhi NCR</span>
+            <h2>Join <span>NYDC 2026</span></h2>
+            <p>Are you registering as an individual participant, or on behalf of a school/institution?</p>
+
+            <div class="reg-type-cards">
+                <!-- Individual -->
+                <a href="#" class="reg-type-card" id="choose-individual">
+                    <div class="reg-type-icon">🎓</div>
+                    <div class="reg-type-card-title">Individual</div>
+                    <div class="reg-type-card-desc">Register yourself for a single event at NYDC 2026.</div>
+                    <span class="reg-type-badge">1 Participant</span>
+                </a>
+
+                <!-- Institutional -->
+                <a href="html/institutional.html" class="reg-type-card" id="choose-institutional">
+                    <div class="reg-type-icon">🏫</div>
+                    <div class="reg-type-card-title">Institutional</div>
+                    <div class="reg-type-card-desc">Register multiple students from your school or college.</div>
+                    <span class="reg-type-badge">Multiple Participants</span>
+                </a>
+            </div>
+
+            <p class="reg-type-already">Already started? <a href="html/login.html">Log in to resume</a></p>
+        </div>
+    </div>
+
+    <script>
+      document.getElementById('choose-individual').addEventListener('click', function(e) {
+        e.preventDefault();
+        const overlay = document.getElementById('reg-type-overlay');
+        overlay.style.opacity = '0';
+        overlay.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => overlay.style.display = 'none', 320);
+      });
+    </script>
 
     <!-- Background Ambience -->
     <div class="bg-ambience"></div>
