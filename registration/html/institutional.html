@@ -139,6 +139,7 @@
                             <option value="" disabled selected>Select type</option>
                             <option value="school">School (Grades 6–12)</option>
                             <option value="college">College / University</option>
+                            <option value="other">Other</option>
                         </select>
                     </div>
 
@@ -165,9 +166,9 @@
                 <div class="inst-pricing-info" id="pricing-info-box">
                     <div class="pricing-tier-header">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                        &nbsp; Institutional Pricing — Discounted evnt price per participant
+                        &nbsp; Institutional Pricing — Discounted event price per participant
                     </div>
-                    <p class="pricing-tier-note">Add participants below. Each participant pays the discounted event price. Select the event when adding each participant.</p>
+                    <p class="pricing-tier-note">Add participants below. Each participant pays the discounted price. Select the event when adding each participant.</p>
                 </div>
 
                 <!-- Participants container -->
@@ -304,17 +305,17 @@
                         <label>Select Event</label>
                         <select class="p-event" required>
                             <option value="" disabled selected>Choose event</option>
-                            <option value="mun">Model United Nations — ₹1,869</option>
-                            <option value="moot_court">Moot Court — ₹3,849</option>
-                            <option value="debate">Conventional Debate — ₹1,759</option>
-                            <option value="spark_tank">Spark Tank — ₹3,519</option>
-                            <option value="marketing">Marketing — ₹1,099</option>
-                            <option value="paper_trading">Paper Trading — ₹1,319</option>
-                            <option value="film_making">Film Making — ₹3,299</option>
-                            <option value="Navras">Navras — ₹1,649</option>
-                            <option value="poetry">Poetry — ₹1,099</option>
-                            <option value="raag_jaam">Raag Jaam — ₹4,399</option>
-                            <option value="ipl">IPL Auction — ₹3,299</option>
+                            <option value="mun">Model United Nations — ₹1,699</option>
+                            <option value="moot_court">Moot Court — ₹3,499</option>
+                            <option value="debate">Conventional Debate — ₹1,599</option>
+                            <option value="spark_tank">Spark Tank — ₹3,199</option>
+                            <option value="marketing">Marketing — ₹999</option>
+                            <option value="paper_trading">Paper Trading — ₹1,199</option>
+                            <option value="film_making">Film Making — ₹2,999</option>
+                            <option value="Navras">Navras — ₹1,499</option>
+                            <option value="poetry">Poetry — ₹999</option>
+                            <option value="raag_jaam">Raag Jaam — ₹3,999</option>
+                            <option value="ipl">IPL Auction — ₹2,999</option>
                         </select>
                     </div>
                 </div>
@@ -423,20 +424,20 @@
     })();
 
     // ──────────────────────────────────────────────
-    // PRICE CONFIG (same as individual flow)
+    // PRICE CONFIG — Institutional Prices
     // ──────────────────────────────────────────────
     const PRICES = {
-        mun:           { original: 1699, increased: 1869 },
-        moot_court:    { original: 3499, increased: 3849 },
-        debate:        { original: 1599, increased: 1759 },
-        spark_tank:    { original: 3199, increased: 3519 },
-        marketing:     { original: 999,  increased: 1099 },
-        paper_trading: { original: 1199, increased: 1319 },
-        film_making:   { original: 2999, increased: 3299 },
-        Navras:        { original: 1499, increased: 1649 },
-        poetry:        { original: 999,  increased: 1099 },
-        raag_jaam:     { original: 3999, increased: 4399 },
-        ipl:           { original: 2999, increased: 3299 }
+        mun:           1699,
+        moot_court:    3499,
+        debate:        1599,
+        spark_tank:    3199,
+        marketing:     999,
+        paper_trading: 1199,
+        film_making:   2999,
+        Navras:        1499,
+        poetry:        999,
+        raag_jaam:     3999,
+        ipl:           2999
     };
 
     const EVENT_NAMES = {
@@ -446,75 +447,6 @@
         paper_trading: 'Paper Trading', film_making: 'Film Making',
         Navras: 'Navras', poetry: 'Poetry',
         raag_jaam: 'Raag Jaam', ipl: 'IPL Auction'
-    };
-
-    const VALID_COUPONS = {
-        'NYDC2026':          { type: 'revert', label: 'NYDC2026 — Early Bird Discount' },
-        'PRISHA-NYDC26':     { type: 'revert', label: 'Prisha Hastir — Campus Ambassador' },
-        'VANEE-NYDC26':      { type: 'revert', label: 'Vanee Jain — Campus Ambassador' },
-        'GOURICA-NYDC26':    { type: 'revert', label: 'Gourica Vij — Campus Ambassador' },
-        'AKSHAT-NYDC26':     { type: 'revert', label: 'Akshat Agarwal — Campus Ambassador' },
-        'JANNAT-NYDC26':     { type: 'revert', label: 'Jannat Praveen — Campus Ambassador' },
-        'SNIGDHA-NYDC26':    { type: 'revert', label: 'Snigdha Bohat — Campus Ambassador' },
-        'DHATHRI-NYDC26':    { type: 'revert', label: 'Dhathri — Campus Ambassador' },
-        'HARSHAL-NYDC26':    { type: 'revert', label: 'Harshal Lohia — Campus Ambassador' },
-        'RHYAH-NYDC26':      { type: 'revert', label: 'Rhyah Singh — Campus Ambassador' },
-        'RISHIKA-NYDC26':    { type: 'revert', label: 'Rishika Jain — Campus Ambassador' },
-        'RANVIR-NYDC26':     { type: 'revert', label: 'Ranvir Bajwa — Campus Ambassador' },
-        'DIKSHA-NYDC26':     { type: 'revert', label: 'Diksha — Campus Ambassador' },
-        'JIVANSH-NYDC26':    { type: 'revert', label: 'Jivansh — Campus Ambassador' },
-        'PRITHIKA-NYDC26':   { type: 'revert', label: 'Prithika — Campus Ambassador' },
-        'PARTHW-NYDC26':     { type: 'revert', label: 'Parth Walia — Campus Ambassador' },
-        'APARNA-NYDC26':     { type: 'revert', label: 'Aparna Makan — Campus Ambassador' },
-        'ADVAITA-NYDC26':    { type: 'revert', label: 'Advaita Vashista — Campus Ambassador' },
-        'MANSEERAT-NYDC26':  { type: 'revert', label: 'Manseerat Singh — Campus Ambassador' },
-        'ADONIKA-NYDC26':    { type: 'revert', label: 'Adonika — Campus Ambassador' },
-        'ANSHU-NYDC26':      { type: 'revert', label: 'Anshu Rao — Campus Ambassador' },
-        'DHAIRYA-NYDC26':    { type: 'revert', label: 'Dhairya Setia — Campus Ambassador' },
-        'VANSH-NYDC26':      { type: 'revert', label: 'Vansh Solanki — Campus Ambassador' },
-        'RIDDHIMA-NYDC26':   { type: 'revert', label: 'Riddhima Ramrakhiani — Campus Ambassador' },
-        'DEVESH-NYDC26':     { type: 'revert', label: 'Devesh Dixit — Campus Ambassador' },
-        'PARTHB-NYDC26':     { type: 'revert', label: 'Parth Bhardwaj — Campus Ambassador' },
-        'RAKSHIT-NYDC26':    { type: 'revert', label: 'Rakshit Tiwari — Campus Ambassador' },
-        'DHAMIN-NYDC26':     { type: 'revert', label: 'Dhamin Dhankher — Campus Ambassador' },
-        'KARAN-NYDC26':      { type: 'revert', label: 'Karan Dwivedi — Campus Ambassador' },
-        'SAUMYA-NYDC26':     { type: 'revert', label: 'Saumya Prasad — Campus Ambassador' },
-        'NIKHILESH-NYDC26':  { type: 'revert', label: 'Nikhilesh — Campus Ambassador' },
-        'AAYUSH-NYDC26':     { type: 'revert', label: 'Aayush Jain — Campus Ambassador' },
-        'JAGNEET-NYDC26':    { type: 'revert', label: 'Jagneet Singh — Campus Ambassador' },
-        'ASMIT-NYDC26':      { type: 'revert', label: 'Asmit Kumar Sahoo — Campus Ambassador' },
-        'REVANT-NYDC26':     { type: 'revert', label: 'Revant Bhatt — Campus Ambassador' },
-        'SUVARCHA-NYDC26':   { type: 'revert', label: 'Suvarcha — Campus Ambassador' },
-        'GAURI-NYDC26':      { type: 'revert', label: 'Gauri — Campus Ambassador' },
-        'BHAVYA-NYDC26':     { type: 'revert', label: 'Bhavya Bhardwaj — Campus Ambassador' },
-        'JANAYA-NYDC26':     { type: 'revert', label: 'Janaya Sachdeva — Campus Ambassador' },
-        'PRAKHAR-NYDC26':    { type: 'revert', label: 'Prakhar Sagar — Campus Ambassador' },
-        'CHARAN-NYDC26':     { type: 'revert', label: 'SG Charan Tej — Campus Ambassador' },
-        'VEDHA-NYDC26':      { type: 'revert', label: 'Vedha Hamsini Kethepalli — Campus Ambassador' },
-        'HEMA-NYDC26':       { type: 'revert', label: 'Hemachandra Jalasutram — Campus Ambassador' },
-        'MANLEEN-NYDC26':    { type: 'revert', label: 'Manleen Kaur — Campus Ambassador' },
-        'SHIVALIKA-NYDC26':  { type: 'revert', label: 'Shivalika — Campus Ambassador' },
-        'VANSHIKA-NYDC26':   { type: 'revert', label: 'Vanshika Narang — Campus Ambassador' },
-        'ALSHIFA-NYDC26':    { type: 'revert', label: 'Alshifa — Campus Ambassador' },
-        'SOHAM-NYDC26':      { type: 'revert', label: 'Soham Vashistha — Campus Ambassador' },
-        'DIMPLE-NYDC26':     { type: 'revert', label: 'Dimple Malhotra — Campus Ambassador' },
-        'HARGUNN-NYDC26':    { type: 'revert', label: 'Hargunn Kaur — Campus Ambassador' },
-        'SHREY-NYDC26':      { type: 'revert', label: 'Shrey Sehgal — Campus Ambassador' },
-        'NISHIT-NYDC26':     { type: 'revert', label: 'Nishit Mishra — Campus Ambassador' },
-        'ABHIGNAV-NYDC26':   { type: 'revert', label: 'Abhignav — Campus Ambassador' },
-        'ARYAN-NYDC26':      { type: 'revert', label: 'Aryan Kumar — Campus Ambassador' },
-        'YUVRAJ-NYDC26':     { type: 'revert', label: 'Yuvraj Veltoori — Campus Ambassador' },
-        'SOUMYA-NYDC26':     { type: 'revert', label: 'Soumya Bhardwaj — Campus Ambassador' },
-        'MARWA-NYDC26':      { type: 'revert', label: 'Marwa Fatima — Campus Ambassador' },
-        'NANDIKA-NYDC26':    { type: 'revert', label: 'Nandika Sondhi — Campus Ambassador' },
-        'LEISHNA-NYDC26':    { type: 'revert', label: 'Leishna Aheibam — Campus Ambassador' },
-        'SHARANYA-NYDC26':   { type: 'revert', label: 'Sharanya — Campus Ambassador' },
-        'KHWAISH-NYDC26':    { type: 'revert', label: 'Khwaish Malhotra — Campus Ambassador' },
-        'ROSHIT-NYDC26':     { type: 'revert', label: 'Roshit Verma — Campus Ambassador' },
-        'PARTHG-NYDC26':     { type: 'revert', label: 'Parth Garg — Campus Ambassador' },
-        'CHATURYA-NYDC26':   { type: 'revert', label: 'Chaturya Tirupathi — Campus Ambassador' },
-        'SAMRIDDHI-NYDC26':  { type: 'revert', label: 'Samriddhi Rathaur — Campus Ambassador' },
-        'PRANAYA-NYDC26':    { type: 'revert', label: 'Pranaya Batra — Campus Ambassador' }
     };
 
     function formatPrice(amount) {
@@ -618,7 +550,7 @@
         document.querySelectorAll('.participant-card').forEach(card => {
             const eventSel = card.querySelector('.p-event').value;
             if (eventSel && PRICES[eventSel]) {
-                total += PRICES[eventSel].increased;
+                total += PRICES[eventSel];
             }
         });
         return total;
@@ -787,7 +719,7 @@
         eventSel.addEventListener('change', () => {
             const k = eventSel.value;
             if (k && PRICES[k]) {
-                priceVal.textContent = formatPrice(PRICES[k].increased);
+                priceVal.textContent = formatPrice(PRICES[k]);
             } else {
                 priceVal.textContent = '—';
             }
@@ -891,7 +823,7 @@
                             <strong>${p.firstName} ${p.lastName}</strong>
                             <span>${EVENT_NAMES[p.event] || p.event}${p.munCommittee ? ' · ' + p.munCommittee + (p.munPortfolio ? ' — ' + p.munPortfolio : '') : ''}${p.iplTeam ? ' · ' + p.iplTeam : ''}</span>
                         </div>
-                        <span class="ps-price">${formatPrice(PRICES[p.event].increased)}</span>
+                        <span class="ps-price">${formatPrice(PRICES[p.event])}</span>
                     </div>
                 `).join('')}
             </div>
