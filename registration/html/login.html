@@ -423,12 +423,40 @@
           const uid  = cred.user.uid;
           btn.textContent = 'Loading your registration…';
 
-          // Find all docs for this UID (in case of multiple attempts)
-          const q  = query(collection(db, 'registrations'), where('uid', '==', uid));
+          // ── 1. Check INSTITUTIONAL registrations first ──
+          let instDoc = null;
+          try {
+            const instQ    = query(collection(db, 'institutional_registrations'), where('uid', '==', uid));
+            const instSnap = await getDocs(instQ);
+            if (!instSnap.empty) {
+              instSnap.forEach(d => { if (!instDoc) instDoc = d; });
+            }
+          } catch(ie) { console.warn('Inst check err:', ie); }
+
+          if (instDoc) {
+            // This is an institutional coordinator → redirect to institutional page
+            const instData = instDoc.data();
+            sessionStorage.setItem('nydc_inst_returning', JSON.stringify({
+              uid,
+              email,
+              institutionName:  instData.institutionName  || '',
+              institutionCity:  instData.institutionCity  || '',
+              coordinatorFirst: instData.coordinatorFirst || '',
+              coordinatorLast:  instData.coordinatorLast  || '',
+              phone:            instData.phone || '',
+              status:           instData.status || 'pending',
+              docId:            instDoc.id
+            }));
+            window.location.href = 'institutional.html?returning=1';
+            return;
+          }
+
+          // ── 2. Check INDIVIDUAL registrations ──
+          const q    = query(collection(db, 'registrations'), where('uid', '==', uid));
           const snap = await getDocs(q);
 
           if (snap.empty) {
-            // Auth account exists but no Firestore record at all — send to event selection
+            // Auth account exists but no Firestore record — send to event selection
             const personalData = { uid, email };
             sessionStorage.setItem('nydc_registration', JSON.stringify(personalData));
             window.location.href = 'event.html';
@@ -436,14 +464,13 @@
           }
 
           // Find the most recent doc — prefer non-draft if available
-          let docToUse = null;
+          let docToUse   = null;
           let completedDoc = null;
-          let draftDoc = null;
+          let draftDoc   = null;
 
           snap.forEach(d => {
             const s = (d.data().status || '').toLowerCase();
             if (s !== 'draft') {
-              // Prefer the completed registration
               if (!completedDoc) completedDoc = d;
             } else {
               if (!draftDoc) draftDoc = d;
@@ -451,51 +478,40 @@
           });
 
           docToUse = completedDoc || draftDoc;
-          const data = docToUse.data();
+          const data   = docToUse.data();
           const status = (data.status || '').toLowerCase();
 
           if (status === 'draft') {
-            // --- RESUME INCOMPLETE REGISTRATION ---
-            // Restore personal details
             sessionStorage.setItem('nydc_registration', JSON.stringify({
               uid:       data.uid,
               firstName: data.firstName,
               lastName:  data.lastName,
               email:     data.email,
-              phone:     data.phone    || '',
-              school:    data.school   || '',
-              grade:     data.grade    || '',
-              city:      data.city     || ''
+              phone:     data.phone  || '',
+              school:    data.school || '',
+              grade:     data.grade  || '',
+              city:      data.city   || ''
             }));
-            // Store doc ID so the final step uses updateDoc, not addDoc
             sessionStorage.setItem('nydc_doc_id', docToUse.id);
 
-            // Restore event choice if it was already saved in the draft
             if (data.event) {
               sessionStorage.setItem('nydc_event', JSON.stringify({ event: data.event }));
             }
-            // Restore MUN selections if saved in the draft
             if (data.munPortfolios && data.munPortfolios.length > 0) {
               sessionStorage.setItem('nydc_mun_selection', JSON.stringify(data.munPortfolios));
             }
 
-            // Determine which step to resume at
             if (data.event && data.event === 'mun' && (!data.munPortfolios || data.munPortfolios.length === 0)) {
-              // Has event = MUN but no portfolios yet → go to MUN selection
               window.location.href = 'mun.html';
             } else if (data.event) {
-              // Has event → go to final team/payment form
               window.location.href = 'selection.html';
             } else {
-              // Nothing selected yet → go to event selection
               window.location.href = 'event.html';
             }
 
           } else if (status === 'rejected') {
-            // Rejected — send to profile where "Register Again" button awaits
             window.location.href = 'profile.html';
           } else {
-            // Pending / Approved — show profile normally
             window.location.href = 'profile.html';
           }
 
