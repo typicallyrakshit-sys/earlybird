@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PRV6H5CSWT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-PRV6H5CSWT');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institutional Registration — NYDC 2026</title>
+    <meta name="description" content="Register your institution for the National Youth Development Conference 2026">
+    <link rel="stylesheet" href="../css/registration.css">
+    <link rel="stylesheet" href="../css/institutional.css">
+    <link rel="icon" href="../../NYDC-Final-main/images/nydc-logo.png" type="image/png" />
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+    <!-- Background Ambience -->
+    <div class="bg-ambience"></div>
+
+    <!-- Decorative Frame -->
+    <div class="border-frame"></div>
+
+    <!-- Grainy Side Borders -->
+    <div class="grainy-border-left"></div>
+    <div class="grainy-border-right"></div>
+
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <p>NYDC 2026 POWERED BY GENSPARK</p>
+    </div>
+
+    <main class="registration-wrapper">
+        <div class="registration-card inst-card" id="main-card">
+
+            <!-- Back Link -->
+            <a href="../registration.html" class="back-link">← Back to Registration</a>
+            <a href="../../index.html" class="back-link" style="margin-left:16px;">🏠 Main Page</a>
+
+            <!-- Header -->
+            <div class="card-header">
+                <span class="card-tag">Institutional • NYDC 2026</span>
+                <h1>Institutional <span>Registration</span></h1>
+                <p class="card-subtitle greeting">
+                    <span class="pulse-dot"></span>
+                    &nbsp; Register your school or college
+                </p>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- ── STEP 1: Coordinator & Institution Details ── -->
+            <div id="step-1">
+                <p class="inst-step-label">Step 1 of 3 — Coordinator &amp; Institution Details</p>
+
+                <!-- Institution Notice -->
+                <div class="inst-notice">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    One account per institution. If your institution is already registered, please log in instead.
+                </div>
+
+                <form id="coordinator-form">
+
+                    <!-- Coordinator Name -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="coord-first">Coordinator First Name</label>
+                            <input type="text" id="coord-first" placeholder="First name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="coord-last">Coordinator Last Name</label>
+                            <input type="text" id="coord-last" placeholder="Last name" required>
+                        </div>
+                    </div>
+
+                    <!-- Email & Phone -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="coord-email">Official Email</label>
+                            <input type="email" id="coord-email" placeholder="coordinator@school.edu" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="coord-phone">Phone Number</label>
+                            <input type="tel" id="coord-phone" placeholder="+91 98765 43210" required>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="coord-password">Password</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="coord-password" placeholder="Min 6 characters" required minlength="6">
+                                <button type="button" class="password-toggle" data-target="coord-password" aria-label="Toggle password visibility">
+                                    <svg class="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    <svg class="eye-off-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                                </button>
+                            </div>
+                            <div class="password-strength" id="inst-password-strength">
+                                <div class="strength-bar"><div class="strength-fill" id="inst-strength-fill"></div></div>
+                                <span class="strength-text" id="inst-strength-text"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="coord-confirm-password">Confirm Password</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="coord-confirm-password" placeholder="Re-enter password" required minlength="6">
+                                <button type="button" class="password-toggle" data-target="coord-confirm-password" aria-label="Toggle password visibility">
+                                    <svg class="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    <svg class="eye-off-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                                </button>
+                            </div>
+                            <p class="password-error" id="inst-password-error"></p>
+                        </div>
+                    </div>
+
+                    <!-- Institution Name & City -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="inst-name">Institution Name</label>
+                            <input type="text" id="inst-name" placeholder="e.g. Delhi Public School, R.K. Puram" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inst-city">City</label>
+                            <input type="text" id="inst-city" placeholder="New Delhi" required>
+                        </div>
+                    </div>
+
+                    <!-- Institution Type -->
+                    <div class="form-group">
+                        <label for="inst-type">Institution Type</label>
+                        <select id="inst-type" required>
+                            <option value="" disabled selected>Select type</option>
+                            <option value="school">School (Grades 8–12)</option>
+                            <option value="college">College / University</option>
+                            <option value="coaching">Coaching Institute</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <p class="password-error" id="coord-general-error"></p>
+
+                    <button type="submit" class="submit-btn" id="coord-submit-btn">Continue to Participants →</button>
+                </form>
+
+                <p style="text-align: center; font-family: 'Outfit', sans-serif; font-size: 14px; color: var(--text-muted); margin-top: 20px; margin-bottom: 25px;">
+                    Already registered your institution? <a href="login.html?type=institutional" style="color: #8b1a1a; text-decoration: none; font-weight: 600;">Log in to resume</a>
+                </p>
+            </div>
+
+            <!-- ── STEP 2: Participant List ── -->
+            <div id="step-2" style="display:none;">
+                <p class="inst-step-label">Step 2 of 3 — Add Participants</p>
+
+                <div class="inst-institution-badge" id="inst-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span id="inst-badge-name">Institution Name</span>
+                </div>
+
+                <!-- Pricing tiers info -->
+                <div class="inst-pricing-info" id="pricing-info-box">
+                    <div class="pricing-tier-header">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        &nbsp; Institutional Pricing — Same event price per participant
+                    </div>
+                    <p class="pricing-tier-note">Add participants below. Each participant pays the full event price. Select the event when adding each participant. Coupon codes apply at checkout.</p>
+                </div>
+
+                <!-- Participants container -->
+                <div id="participants-container"></div>
+
+                <!-- Add Participant Button -->
+                <button type="button" class="add-participant-btn" id="add-participant-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Add Participant
+                </button>
+
+                <!-- Summary Bar -->
+                <div class="inst-summary-bar" id="inst-summary-bar">
+                    <div class="summary-left">
+                        <span id="participant-count-label">0 Participants</span>
+                    </div>
+                    <div class="summary-right">
+                        <span class="summary-label">Total</span>
+                        <span class="summary-amount" id="total-amount">₹0</span>
+                    </div>
+                </div>
+
+                <!-- Coupon Code Section -->
+                <div class="coupon-section" id="inst-coupon-section">
+                    <span class="events-label">🎟️ Have a Coupon Code?</span>
+                    <div class="coupon-input-row">
+                        <input type="text" id="inst-coupon-input" class="coupon-input" placeholder="Enter coupon code" autocomplete="off" spellcheck="false">
+                        <button type="button" id="inst-coupon-apply-btn" class="coupon-apply-btn">Apply</button>
+                    </div>
+                    <p class="coupon-status" id="inst-coupon-status"></p>
+                    <div class="price-summary" id="inst-price-summary" style="display:none;">
+                        <div class="price-row">
+                            <span>Original Total</span>
+                            <span class="price-original" id="inst-price-original"></span>
+                        </div>
+                        <div class="price-row price-discount-row">
+                            <span>Coupon Discount</span>
+                            <span class="price-discount" id="inst-price-discount"></span>
+                        </div>
+                        <div class="price-row price-final-row">
+                            <span>You Pay (per UPI)</span>
+                            <span class="price-final" id="inst-price-final"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="submit-btn" id="go-to-payment-btn" style="margin-bottom:20px;" disabled>Continue to Payment →</button>
+                <p class="step-indicator">Step 2 of 3 — Participants</p>
+            </div>
+
+            <!-- ── STEP 3: Payment & Submit ── -->
+            <div id="step-3" style="display:none;">
+                <p class="inst-step-label">Step 3 of 3 — Payment &amp; Confirm</p>
+
+                <!-- Participant Summary -->
+                <div class="participant-summary-box" id="participant-summary-box"></div>
+
+                <!-- Payment Section -->
+                <div class="payment-section">
+                    <div class="divider" style="margin: 28px 0;"></div>
+                    <span class="events-label">💳 Payment</span>
+
+                    <div class="payment-info-box">
+                        <div class="payment-price-row">
+                            <span>Total Amount to Pay</span>
+                            <span class="payment-amount" id="inst-payment-amount">—</span>
+                        </div>
+                        <div class="payment-price-row" style="color:#9ca3af;font-size:0.8rem;">
+                            <span>Participants</span>
+                            <span id="inst-payment-count">—</span>
+                        </div>
+                        <div class="payment-coupon-row" id="inst-payment-coupon-row" style="display:none;">
+                            <span>Coupon Applied</span>
+                            <span class="payment-coupon-badge" id="inst-payment-coupon-badge"></span>
+                        </div>
+                    </div>
+
+                    <a href="#" id="inst-upi-pay-link" class="upi-pay-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                            <line x1="1" y1="10" x2="23" y2="10"></line>
+                        </svg>
+                        Pay via UPI
+                    </a>
+                    <p class="payment-hint">Scan the QR or click the button above to pay, then enter your Transaction ID below.</p>
+
+                    <!-- UPI QR Code -->
+                    <div id="inst-upi-qr-wrapper" style="display:flex;flex-direction:column;align-items:center;margin:18px 0 10px;">
+                        <div style="background:#fff;border-radius:14px;padding:12px;box-shadow:0 4px 24px rgba(0,0,0,0.35);display:inline-block;">
+                            <img id="inst-upi-qr-img" src="" alt="UPI QR Code" width="180" height="180" style="display:block;border-radius:6px;">
+                        </div>
+                        <p style="font-family:'Outfit',sans-serif;font-size:11px;color:rgba(156,163,175,0.7);margin-top:10px;letter-spacing:0.05em;">Scan with any UPI app to pay</p>
+                    </div>
+
+                    <p style="font-weight: 600; color: #8b1a1a; font-size: 12px; margin-top: 10px; margin-bottom: 20px; text-align: center;">Note: The payment can only be completed from a mobile phone with any UPI app installed. If you are registering from a laptop or PC, log in on your mobile and continue to payment.</p>
+
+                    <!-- Transaction ID -->
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label for="inst-transaction-id">UPI Transaction ID / Reference Number</label>
+                        <input type="text" id="inst-transaction-id" placeholder="e.g. 512345678901" required autocomplete="off" spellcheck="false" style="letter-spacing:0.1em;">
+                    </div>
+                </div>
+
+                <p class="password-error" id="inst-submit-error"></p>
+                <button type="button" class="submit-btn" id="inst-submit-btn" style="margin-bottom:20px;">Submit Institutional Registration</button>
+                <p style="text-align:center;">
+                    <a href="#" id="back-to-participants" style="color:var(--text-muted);font-size:0.8rem;text-decoration:none;letter-spacing:0.04em;">← Edit Participants</a>
+                </p>
+                <p class="step-indicator">Step 3 of 3 — Payment</p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Participant card template (hidden) -->
+    <template id="participant-card-template">
+        <div class="participant-card" data-index="">
+            <div class="participant-card-header">
+                <span class="participant-number">Participant 1</span>
+                <button type="button" class="remove-participant-btn" title="Remove participant">✕</button>
+            </div>
+            <div class="participant-fields">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" class="p-first" placeholder="First name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" class="p-last" placeholder="Last name" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="p-email" placeholder="Email address" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" class="p-phone" placeholder="Phone number" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Grade / Year</label>
+                        <select class="p-grade" required>
+                            <option value="" disabled selected>Select grade</option>
+                            <option value="8">Grade 8</option>
+                            <option value="9">Grade 9</option>
+                            <option value="10">Grade 10</option>
+                            <option value="11">Grade 11</option>
+                            <option value="12">Grade 12</option>
+                            <option value="college">College</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Event</label>
+                        <select class="p-event" required>
+                            <option value="" disabled selected>Choose event</option>
+                            <option value="mun">Model United Nations — ₹1,869</option>
+                            <option value="moot_court">Moot Court — ₹3,849</option>
+                            <option value="debate">Conventional Debate — ₹1,759</option>
+                            <option value="spark_tank">Spark Tank — ₹3,519</option>
+                            <option value="marketing">Marketing — ₹1,099</option>
+                            <option value="paper_trading">Paper Trading — ₹1,319</option>
+                            <option value="film_making">Film Making — ₹3,299</option>
+                            <option value="Navras">Navras — ₹1,649</option>
+                            <option value="poetry">Poetry — ₹1,099</option>
+                            <option value="raag_jaam">Raag Jaam — ₹4,399</option>
+                            <option value="ipl">IPL Auction — ₹3,299</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="participant-price-tag">
+                    <span class="p-price-label">Event Price:</span>
+                    <span class="p-price-value">—</span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+    // ──────────────────────────────────────────────
+    // PRICE CONFIG (same as individual flow)
+    // ──────────────────────────────────────────────
+    const PRICES = {
+        mun:           { original: 1699, increased: 1869 },
+        moot_court:    { original: 3499, increased: 3849 },
+        debate:        { original: 1599, increased: 1759 },
+        spark_tank:    { original: 3199, increased: 3519 },
+        marketing:     { original: 999,  increased: 1099 },
+        paper_trading: { original: 1199, increased: 1319 },
+        film_making:   { original: 2999, increased: 3299 },
+        Navras:        { original: 1499, increased: 1649 },
+        poetry:        { original: 999,  increased: 1099 },
+        raag_jaam:     { original: 3999, increased: 4399 },
+        ipl:           { original: 2999, increased: 3299 }
+    };
+
+    const EVENT_NAMES = {
+        mun: 'Model United Nations', moot_court: 'Moot Court',
+        hackathon: 'Hackathon', debate: 'Conventional Debate',
+        spark_tank: 'Spark Tank', marketing: 'Marketing',
+        paper_trading: 'Paper Trading', film_making: 'Film Making',
+        Navras: 'Navras', poetry: 'Poetry',
+        raag_jaam: 'Raag Jaam', ipl: 'IPL Auction'
+    };
+
+    const VALID_COUPONS = {
+        'NYDC2026':          { type: 'revert', label: 'NYDC2026 — Early Bird Discount' },
+        'PRISHA-NYDC26':     { type: 'revert', label: 'Prisha Hastir — Campus Ambassador' },
+        'VANEE-NYDC26':      { type: 'revert', label: 'Vanee Jain — Campus Ambassador' },
+        'GOURICA-NYDC26':    { type: 'revert', label: 'Gourica Vij — Campus Ambassador' },
+        'AKSHAT-NYDC26':     { type: 'revert', label: 'Akshat Agarwal — Campus Ambassador' },
+        'JANNAT-NYDC26':     { type: 'revert', label: 'Jannat Praveen — Campus Ambassador' },
+        'SNIGDHA-NYDC26':    { type: 'revert', label: 'Snigdha Bohat — Campus Ambassador' },
+        'DHATHRI-NYDC26':    { type: 'revert', label: 'Dhathri — Campus Ambassador' },
+        'HARSHAL-NYDC26':    { type: 'revert', label: 'Harshal Lohia — Campus Ambassador' },
+        'RHYAH-NYDC26':      { type: 'revert', label: 'Rhyah Singh — Campus Ambassador' },
+        'RISHIKA-NYDC26':    { type: 'revert', label: 'Rishika Jain — Campus Ambassador' },
+        'RANVIR-NYDC26':     { type: 'revert', label: 'Ranvir Bajwa — Campus Ambassador' },
+        'DIKSHA-NYDC26':     { type: 'revert', label: 'Diksha — Campus Ambassador' },
+        'JIVANSH-NYDC26':    { type: 'revert', label: 'Jivansh — Campus Ambassador' },
+        'PRITHIKA-NYDC26':   { type: 'revert', label: 'Prithika — Campus Ambassador' },
+        'PARTHW-NYDC26':     { type: 'revert', label: 'Parth Walia — Campus Ambassador' },
+        'APARNA-NYDC26':     { type: 'revert', label: 'Aparna Makan — Campus Ambassador' },
+        'ADVAITA-NYDC26':    { type: 'revert', label: 'Advaita Vashista — Campus Ambassador' },
+        'MANSEERAT-NYDC26':  { type: 'revert', label: 'Manseerat Singh — Campus Ambassador' },
+        'ADONIKA-NYDC26':    { type: 'revert', label: 'Adonika — Campus Ambassador' },
+        'ANSHU-NYDC26':      { type: 'revert', label: 'Anshu Rao — Campus Ambassador' },
+        'DHAIRYA-NYDC26':    { type: 'revert', label: 'Dhairya Setia — Campus Ambassador' },
+        'VANSH-NYDC26':      { type: 'revert', label: 'Vansh Solanki — Campus Ambassador' },
+        'RIDDHIMA-NYDC26':   { type: 'revert', label: 'Riddhima Ramrakhiani — Campus Ambassador' },
+        'DEVESH-NYDC26':     { type: 'revert', label: 'Devesh Dixit — Campus Ambassador' },
+        'PARTHB-NYDC26':     { type: 'revert', label: 'Parth Bhardwaj — Campus Ambassador' },
+        'RAKSHIT-NYDC26':    { type: 'revert', label: 'Rakshit Tiwari — Campus Ambassador' },
+        'DHAMIN-NYDC26':     { type: 'revert', label: 'Dhamin Dhankher — Campus Ambassador' },
+        'KARAN-NYDC26':      { type: 'revert', label: 'Karan Dwivedi — Campus Ambassador' },
+        'SAUMYA-NYDC26':     { type: 'revert', label: 'Saumya Prasad — Campus Ambassador' },
+        'NIKHILESH-NYDC26':  { type: 'revert', label: 'Nikhilesh — Campus Ambassador' },
+        'AAYUSH-NYDC26':     { type: 'revert', label: 'Aayush Jain — Campus Ambassador' },
+        'JAGNEET-NYDC26':    { type: 'revert', label: 'Jagneet Singh — Campus Ambassador' },
+        'ASMIT-NYDC26':      { type: 'revert', label: 'Asmit Kumar Sahoo — Campus Ambassador' },
+        'REVANT-NYDC26':     { type: 'revert', label: 'Revant Bhatt — Campus Ambassador' },
+        'SUVARCHA-NYDC26':   { type: 'revert', label: 'Suvarcha — Campus Ambassador' },
+        'GAURI-NYDC26':      { type: 'revert', label: 'Gauri — Campus Ambassador' },
+        'BHAVYA-NYDC26':     { type: 'revert', label: 'Bhavya Bhardwaj — Campus Ambassador' },
+        'JANAYA-NYDC26':     { type: 'revert', label: 'Janaya Sachdeva — Campus Ambassador' },
+        'PRAKHAR-NYDC26':    { type: 'revert', label: 'Prakhar Sagar — Campus Ambassador' },
+        'CHARAN-NYDC26':     { type: 'revert', label: 'SG Charan Tej — Campus Ambassador' },
+        'VEDHA-NYDC26':      { type: 'revert', label: 'Vedha Hamsini Kethepalli — Campus Ambassador' },
+        'HEMA-NYDC26':       { type: 'revert', label: 'Hemachandra Jalasutram — Campus Ambassador' },
+        'MANLEEN-NYDC26':    { type: 'revert', label: 'Manleen Kaur — Campus Ambassador' },
+        'SHIVALIKA-NYDC26':  { type: 'revert', label: 'Shivalika — Campus Ambassador' },
+        'VANSHIKA-NYDC26':   { type: 'revert', label: 'Vanshika Narang — Campus Ambassador' },
+        'ALSHIFA-NYDC26':    { type: 'revert', label: 'Alshifa — Campus Ambassador' },
+        'SOHAM-NYDC26':      { type: 'revert', label: 'Soham Vashistha — Campus Ambassador' },
+        'DIMPLE-NYDC26':     { type: 'revert', label: 'Dimple Malhotra — Campus Ambassador' },
+        'HARGUNN-NYDC26':    { type: 'revert', label: 'Hargunn Kaur — Campus Ambassador' },
+        'SHREY-NYDC26':      { type: 'revert', label: 'Shrey Sehgal — Campus Ambassador' },
+        'NISHIT-NYDC26':     { type: 'revert', label: 'Nishit Mishra — Campus Ambassador' },
+        'ABHIGNAV-NYDC26':   { type: 'revert', label: 'Abhignav — Campus Ambassador' },
+        'ARYAN-NYDC26':      { type: 'revert', label: 'Aryan Kumar — Campus Ambassador' },
+        'YUVRAJ-NYDC26':     { type: 'revert', label: 'Yuvraj Veltoori — Campus Ambassador' },
+        'SOUMYA-NYDC26':     { type: 'revert', label: 'Soumya Bhardwaj — Campus Ambassador' },
+        'MARWA-NYDC26':      { type: 'revert', label: 'Marwa Fatima — Campus Ambassador' },
+        'NANDIKA-NYDC26':    { type: 'revert', label: 'Nandika Sondhi — Campus Ambassador' },
+        'LEISHNA-NYDC26':    { type: 'revert', label: 'Leishna Aheibam — Campus Ambassador' },
+        'SHARANYA-NYDC26':   { type: 'revert', label: 'Sharanya — Campus Ambassador' },
+        'KHWAISH-NYDC26':    { type: 'revert', label: 'Khwaish Malhotra — Campus Ambassador' },
+        'ROSHIT-NYDC26':     { type: 'revert', label: 'Roshit Verma — Campus Ambassador' },
+        'PARTHG-NYDC26':     { type: 'revert', label: 'Parth Garg — Campus Ambassador' },
+        'CHATURYA-NYDC26':   { type: 'revert', label: 'Chaturya Tirupathi — Campus Ambassador' },
+        'SAMRIDDHI-NYDC26':  { type: 'revert', label: 'Samriddhi Rathaur — Campus Ambassador' },
+        'PRANAYA-NYDC26':    { type: 'revert', label: 'Pranaya Batra — Campus Ambassador' }
+    };
+
+    function formatPrice(amount) {
+        return '₹' + amount.toLocaleString('en-IN');
+    }
+
+    // ──────────────────────────────────────────────
+    // PASSWORD TOGGLE
+    // ──────────────────────────────────────────────
+    document.querySelectorAll('.password-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const input = document.getElementById(btn.dataset.target);
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            btn.querySelector('.eye-icon').style.display = isPassword ? 'none' : 'block';
+            btn.querySelector('.eye-off-icon').style.display = isPassword ? 'block' : 'none';
+        });
+    });
+
+    // Password strength
+    const pwdInput = document.getElementById('coord-password');
+    pwdInput.addEventListener('input', () => {
+        const val = pwdInput.value;
+        let score = 0;
+        if (val.length >= 6) score++;
+        if (val.length >= 10) score++;
+        if (/[A-Z]/.test(val)) score++;
+        if (/[0-9]/.test(val)) score++;
+        if (/[^A-Za-z0-9]/.test(val)) score++;
+        const levels = [
+            { width: '0%', color: 'transparent', label: '' },
+            { width: '20%', color: '#ef4444', label: 'Weak' },
+            { width: '40%', color: '#f97316', label: 'Fair' },
+            { width: '60%', color: '#eab308', label: 'Good' },
+            { width: '80%', color: '#22c55e', label: 'Strong' },
+            { width: '100%', color: '#16a34a', label: 'Very Strong' }
+        ];
+        const level = levels[score];
+        document.getElementById('inst-strength-fill').style.width = level.width;
+        document.getElementById('inst-strength-fill').style.background = level.color;
+        document.getElementById('inst-strength-text').textContent = level.label;
+        document.getElementById('inst-strength-text').style.color = level.color;
+    });
+
+    // ──────────────────────────────────────────────
+    // STEP 1: COORDINATOR FORM
+    // ──────────────────────────────────────────────
+    let coordData = null;
+
+    document.getElementById('coordinator-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const pwdEl    = document.getElementById('coord-password');
+        const confEl   = document.getElementById('coord-confirm-password');
+        const errEl    = document.getElementById('inst-password-error');
+        const genErr   = document.getElementById('coord-general-error');
+        const submitBtn = document.getElementById('coord-submit-btn');
+
+        errEl.textContent = '';
+        genErr.textContent = '';
+
+        if (pwdEl.value !== confEl.value) {
+            errEl.textContent = 'Passwords do not match';
+            confEl.classList.add('input-error');
+            return;
+        }
+        confEl.classList.remove('input-error');
+
+        const email = document.getElementById('coord-email').value.trim();
+        const instName = document.getElementById('inst-name').value.trim();
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Checking…';
+
+        // Check if institution already has an account (via Firebase — done in module script below)
+        window._pendingCoordData = {
+            firstName:   document.getElementById('coord-first').value.trim(),
+            lastName:    document.getElementById('coord-last').value.trim(),
+            email,
+            phone:       document.getElementById('coord-phone').value.trim(),
+            password:    pwdEl.value,
+            instName,
+            instCity:    document.getElementById('inst-city').value.trim(),
+            instType:    document.getElementById('inst-type').value
+        };
+
+        // Trigger Firebase check (handled below in module script)
+        window.dispatchEvent(new CustomEvent('inst-coord-submit'));
+    });
+
+    // ──────────────────────────────────────────────
+    // STEP 2: PARTICIPANTS
+    // ──────────────────────────────────────────────
+    let participantCount = 0;
+    let couponApplied = false;
+    let appliedCouponCode = '';
+
+    const container = document.getElementById('participants-container');
+    const template  = document.getElementById('participant-card-template');
+
+    function getTotalOriginal() {
+        let total = 0;
+        document.querySelectorAll('.participant-card').forEach(card => {
+            const eventSel = card.querySelector('.p-event').value;
+            if (eventSel && PRICES[eventSel]) {
+                total += PRICES[eventSel].increased;
+            }
+        });
+        return total;
+    }
+
+    function getTotalFinal() {
+        let total = 0;
+        document.querySelectorAll('.participant-card').forEach(card => {
+            const eventSel = card.querySelector('.p-event').value;
+            if (eventSel && PRICES[eventSel]) {
+                total += couponApplied ? PRICES[eventSel].original : PRICES[eventSel].increased;
+            }
+        });
+        return total;
+    }
+
+    function updateSummary() {
+        const cards = document.querySelectorAll('.participant-card');
+        const count = cards.length;
+        const finalTotal = getTotalFinal();
+        const originalTotal = getTotalOriginal();
+
+        document.getElementById('participant-count-label').textContent =
+            count + (count === 1 ? ' Participant' : ' Participants');
+        document.getElementById('total-amount').textContent = formatPrice(finalTotal);
+
+        // Coupon summary panel
+        if (couponApplied && count > 0 && originalTotal > 0) {
+            document.getElementById('inst-price-original').textContent = formatPrice(originalTotal);
+            document.getElementById('inst-price-discount').textContent = '- ' + formatPrice(originalTotal - finalTotal);
+            document.getElementById('inst-price-final').textContent = formatPrice(finalTotal);
+            document.getElementById('inst-price-summary').style.display = 'block';
+        } else {
+            document.getElementById('inst-price-summary').style.display = 'none';
+        }
+
+        // Enable/disable continue button
+        const allFilled = count > 0 && Array.from(cards).every(card => {
+            return card.querySelector('.p-first').value.trim() &&
+                   card.querySelector('.p-last').value.trim() &&
+                   card.querySelector('.p-email').value.trim() &&
+                   card.querySelector('.p-phone').value.trim() &&
+                   card.querySelector('.p-grade').value &&
+                   card.querySelector('.p-event').value;
+        });
+        document.getElementById('go-to-payment-btn').disabled = !allFilled || count === 0;
+    }
+
+    function renumberParticipants() {
+        document.querySelectorAll('.participant-card').forEach((card, i) => {
+            card.querySelector('.participant-number').textContent = 'Participant ' + (i + 1);
+            card.setAttribute('data-index', i);
+        });
+        updateSummary();
+    }
+
+    function addParticipantCard() {
+        const clone = template.content.cloneNode(true);
+        const card  = clone.querySelector('.participant-card');
+        card.setAttribute('data-index', participantCount);
+        card.querySelector('.participant-number').textContent = 'Participant ' + (participantCount + 1);
+
+        // Event change → update price tag + summary
+        const eventSel = card.querySelector('.p-event');
+        const priceVal = card.querySelector('.p-price-value');
+        eventSel.addEventListener('change', () => {
+            const k = eventSel.value;
+            if (k && PRICES[k]) {
+                const price = couponApplied ? PRICES[k].original : PRICES[k].increased;
+                priceVal.textContent = formatPrice(price);
+            } else {
+                priceVal.textContent = '—';
+            }
+            updateSummary();
+        });
+
+        // Any field change → recheck summary
+        card.querySelectorAll('input, select').forEach(el => {
+            el.addEventListener('input', updateSummary);
+            el.addEventListener('change', updateSummary);
+        });
+
+        // Remove button
+        card.querySelector('.remove-participant-btn').addEventListener('click', () => {
+            card.classList.add('removing');
+            setTimeout(() => {
+                card.remove();
+                participantCount--;
+                renumberParticipants();
+            }, 300);
+        });
+
+        container.appendChild(card);
+        participantCount++;
+        updateSummary();
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => card.querySelector('input').focus(), 400);
+    }
+
+    document.getElementById('add-participant-btn').addEventListener('click', addParticipantCard);
+
+    // ──────────────────────────────────────────────
+    // COUPON LOGIC (Step 2)
+    // ──────────────────────────────────────────────
+    const couponInput  = document.getElementById('inst-coupon-input');
+    const couponBtn    = document.getElementById('inst-coupon-apply-btn');
+    const couponStatus = document.getElementById('inst-coupon-status');
+
+    couponBtn.addEventListener('click', () => {
+        const code = couponInput.value.trim().toUpperCase();
+        if (!code) {
+            couponStatus.textContent = 'Please enter a coupon code.';
+            couponStatus.className = 'coupon-status error';
+            return;
+        }
+
+        if (VALID_COUPONS[code]) {
+            couponApplied = true;
+            appliedCouponCode = code;
+            couponStatus.textContent = '✓ ' + VALID_COUPONS[code].label + ' applied!';
+            couponStatus.className = 'coupon-status success';
+            couponInput.disabled = true;
+            couponInput.value = code;
+            couponBtn.textContent = 'Applied ✓';
+            couponBtn.disabled = true;
+            couponBtn.classList.add('applied');
+            // Refresh event price tags
+            document.querySelectorAll('.participant-card').forEach(card => {
+                const k = card.querySelector('.p-event').value;
+                const pv = card.querySelector('.p-price-value');
+                if (k && PRICES[k]) pv.textContent = formatPrice(PRICES[k].original);
+            });
+            updateSummary();
+        } else {
+            couponApplied = false;
+            appliedCouponCode = '';
+            couponStatus.textContent = '✕ Invalid coupon code. Please try again.';
+            couponStatus.className = 'coupon-status error';
+            couponInput.classList.add('shake');
+            setTimeout(() => couponInput.classList.remove('shake'), 500);
+            document.querySelectorAll('.participant-card').forEach(card => {
+                const k = card.querySelector('.p-event').value;
+                const pv = card.querySelector('.p-price-value');
+                if (k && PRICES[k]) pv.textContent = formatPrice(PRICES[k].increased);
+            });
+            updateSummary();
+        }
+    });
+
+    couponInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); couponBtn.click(); }
+    });
+
+    // ──────────────────────────────────────────────
+    // GO TO PAYMENT (Step 2 → Step 3)
+    // ──────────────────────────────────────────────
+    document.getElementById('go-to-payment-btn').addEventListener('click', () => {
+        const cards = document.querySelectorAll('.participant-card');
+        const participants = [];
+        let valid = true;
+
+        cards.forEach((card, i) => {
+            const first  = card.querySelector('.p-first').value.trim();
+            const last   = card.querySelector('.p-last').value.trim();
+            const email  = card.querySelector('.p-email').value.trim();
+            const phone  = card.querySelector('.p-phone').value.trim();
+            const grade  = card.querySelector('.p-grade').value;
+            const event  = card.querySelector('.p-event').value;
+
+            if (!first || !last || !email || !phone || !grade || !event) {
+                valid = false;
+                card.querySelectorAll('input, select').forEach(el => {
+                    if (!el.value.trim()) el.classList.add('input-error');
+                    else el.classList.remove('input-error');
+                });
+            } else {
+                participants.push({ firstName: first, lastName: last, email, phone, grade, event });
+            }
+        });
+
+        if (!valid) {
+            alert('Please fill in all participant details before continuing.');
+            return;
+        }
+
+        const finalTotal   = getTotalFinal();
+        const originalTotal = getTotalOriginal();
+
+        // Save to session
+        sessionStorage.setItem('nydc_inst_participants', JSON.stringify(participants));
+        sessionStorage.setItem('nydc_inst_total', finalTotal);
+        sessionStorage.setItem('nydc_inst_original_total', originalTotal);
+        if (couponApplied) {
+            sessionStorage.setItem('nydc_inst_coupon', JSON.stringify({ code: appliedCouponCode, applied: true }));
+        } else {
+            sessionStorage.removeItem('nydc_inst_coupon');
+        }
+
+        // Build participant summary
+        const summaryBox = document.getElementById('participant-summary-box');
+        summaryBox.innerHTML = `
+            <div class="ps-header">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                &nbsp; ${participants.length} Participant${participants.length !== 1 ? 's' : ''} — ${coordData.instName}
+            </div>
+            <div class="ps-list">
+                ${participants.map((p, i) => `
+                    <div class="ps-item">
+                        <span class="ps-num">${i + 1}</span>
+                        <div class="ps-info">
+                            <strong>${p.firstName} ${p.lastName}</strong>
+                            <span>${EVENT_NAMES[p.event] || p.event}</span>
+                        </div>
+                        <span class="ps-price">${formatPrice(couponApplied ? PRICES[p.event].original : PRICES[p.event].increased)}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        // Setup UPI
+        const UPI_ID = 'gupta-damini@ptyes';
+        const upiLink = `upi://pay?pa=${UPI_ID}&pn=NYDC%202026&am=${finalTotal}&cu=INR&tn=NYDC%202026%20Institutional%20Registration`;
+        const upiAnchor = document.getElementById('inst-upi-pay-link');
+        upiAnchor.href = upiLink;
+        upiAnchor.onclick = e => { e.preventDefault(); window.location.href = upiLink; };
+
+        // QR code
+        document.getElementById('inst-upi-qr-img').src =
+            `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiLink)}&bgcolor=ffffff&color=000000&margin=2`;
+
+        // Payment info
+        document.getElementById('inst-payment-amount').textContent = formatPrice(finalTotal);
+        document.getElementById('inst-payment-count').textContent = participants.length + ' participant' + (participants.length !== 1 ? 's' : '');
+
+        if (couponApplied) {
+            document.getElementById('inst-payment-coupon-row').style.display = 'flex';
+            document.getElementById('inst-payment-coupon-badge').textContent = appliedCouponCode;
+        }
+
+        // Show step 3
+        document.getElementById('step-2').style.display = 'none';
+        document.getElementById('step-3').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Back to participants
+    document.getElementById('back-to-participants').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('step-3').style.display = 'none';
+        document.getElementById('step-2').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Submit button wires to module script event
+    document.getElementById('inst-submit-btn').addEventListener('click', () => {
+        const txnId = document.getElementById('inst-transaction-id').value.trim();
+        if (!txnId) {
+            document.getElementById('inst-submit-error').textContent = 'Please enter your UPI Transaction ID.';
+            document.getElementById('inst-transaction-id').focus();
+            return;
+        }
+        document.getElementById('inst-submit-error').textContent = '';
+        window._instTransactionId = txnId;
+        window.dispatchEvent(new CustomEvent('inst-final-submit'));
+    });
+    </script>
+
+    <!-- Firebase Module Script -->
+    <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
+    import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
+    import { getFirestore, collection, addDoc, getDocs, query, where, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
+        authDomain: "nydc-72b34.firebaseapp.com",
+        projectId: "nydc-72b34",
+        storageBucket: "nydc-72b34.firebasestorage.app",
+        messagingSenderId: "935882112599",
+        appId: "1:935882112599:web:f04b660e233f21a46f2d12",
+        measurementId: "G-5G8Z44578K"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    // ── STEP 1: Coordinator form submit ──
+    window.addEventListener('inst-coord-submit', async () => {
+        const data      = window._pendingCoordData;
+        const submitBtn = document.getElementById('coord-submit-btn');
+        const genErr    = document.getElementById('coord-general-error');
+
+        try {
+            // Check if institution already has a registration (by institution name)
+            const instQuery = query(
+                collection(db, 'institutional_registrations'),
+                where('institutionName', '==', data.instName)
+            );
+            const existing = await getDocs(instQuery);
+
+            if (!existing.empty) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Continue to Participants →';
+                genErr.textContent = '⚠ This institution is already registered. Please log in to add more participants.';
+                return;
+            }
+
+            // Create Firebase Auth account
+            const userCred = await createUserWithEmailAndPassword(auth, data.email, data.password);
+            const uid = userCred.user.uid;
+
+            // Save coordinator data globally
+            window.coordData = { ...data, uid };
+
+            // Update badge
+            document.getElementById('inst-badge-name').textContent = data.instName;
+
+            // Show step 2
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('step-2').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        } catch (error) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Continue to Participants →';
+            let msg = 'Error: ' + error.message;
+            if (error.code === 'auth/email-already-in-use') msg = 'This email is already registered. Try logging in instead.';
+            else if (error.code === 'auth/weak-password') msg = 'Password too weak. Use at least 6 characters.';
+            else if (error.code === 'auth/invalid-email') msg = 'Please enter a valid email address.';
+            genErr.textContent = msg;
+        }
+    });
+
+    // ── STEP 3: Final submission ──
+    window.addEventListener('inst-final-submit', async () => {
+        const submitBtn = document.getElementById('inst-submit-btn');
+        const errEl     = document.getElementById('inst-submit-error');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting…';
+
+        try {
+            const coordInfo     = window.coordData;
+            const participants  = JSON.parse(sessionStorage.getItem('nydc_inst_participants') || '[]');
+            const totalAmount   = parseFloat(sessionStorage.getItem('nydc_inst_total') || '0');
+            const originalTotal = parseFloat(sessionStorage.getItem('nydc_inst_original_total') || '0');
+            const couponRaw     = sessionStorage.getItem('nydc_inst_coupon');
+            const couponInfo    = couponRaw ? JSON.parse(couponRaw) : null;
+            const txnId         = window._instTransactionId;
+
+            const regData = {
+                // Type flag
+                registrationType: 'institutional',
+                // Coordinator
+                uid:              coordInfo.uid,
+                coordinatorFirst: coordInfo.firstName,
+                coordinatorLast:  coordInfo.lastName,
+                email:            coordInfo.email,
+                phone:            coordInfo.phone,
+                // Institution
+                institutionName:  coordInfo.instName,
+                institutionCity:  coordInfo.instCity,
+                institutionType:  coordInfo.instType,
+                // Participants
+                participants,
+                participantCount: participants.length,
+                // Payment
+                totalAmount,
+                originalTotal,
+                couponApplied:    couponInfo ? couponInfo.applied : false,
+                couponCode:       couponInfo ? couponInfo.code : null,
+                transactionId:    txnId,
+                // Metadata
+                status:           'pending',
+                registeredAt:     serverTimestamp()
+            };
+
+            const docRef = await addDoc(collection(db, 'institutional_registrations'), regData);
+            console.log('Institutional registration saved:', docRef.id);
+
+            // Clear session
+            sessionStorage.removeItem('nydc_inst_participants');
+            sessionStorage.removeItem('nydc_inst_total');
+            sessionStorage.removeItem('nydc_inst_original_total');
+            sessionStorage.removeItem('nydc_inst_coupon');
+
+            // Show success screen
+            const card = document.getElementById('main-card');
+            card.innerHTML = `
+                <div style="text-align:center; padding:60px 20px;">
+                    <div style="width:70px;height:70px;border-radius:50%;background:rgba(234,179,8,0.15);border:2px solid #eab308;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;margin-bottom:12px;">
+                        Registration <span style="color:#eab308;">Pending</span>
+                    </h2>
+                    <p style="font-family:'Outfit',sans-serif;color:#9ca3af;font-size:0.95rem;line-height:1.7;max-width:420px;margin:0 auto;">
+                        Thank you, <strong style="color:#fff;">${coordInfo.firstName}</strong>!<br>
+                        Your institutional registration for <strong style="color:#fff;">${coordInfo.instName}</strong> with 
+                        <strong style="color:#fff;">${participants.length} participant${participants.length !== 1 ? 's' : ''}</strong> is 
+                        <strong style="color:#eab308;">pending approval</strong>.<br><br>
+                        Transaction ID: <strong style="color:#fff;">${txnId}</strong><br>
+                        We'll verify your payment and send confirmation to <strong style="color:#fff;">${coordInfo.email}</strong>.
+                    </p>
+                    <p style="font-family:'Outfit',sans-serif;color:#6b7280;font-size:0.75rem;margin-top:20px;letter-spacing:0.1em;text-transform:uppercase;">
+                        Registration ID: ${docRef.id}
+                    </p>
+                    <a href="../../index.html" style="display:inline-block;margin-top:32px;padding:12px 32px;background:#8b1a1a;color:#fff;font-family:'Outfit',sans-serif;font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.2em;text-decoration:none;border-radius:8px;">Return to Main Page</a>
+                </div>
+            `;
+
+        } catch (error) {
+            console.error('Institutional registration error:', error);
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Institutional Registration';
+            errEl.textContent = 'Submission failed: ' + error.message + '. Please try again.';
+        }
+    });
+
+    // Expose coordData reference globally
+    Object.defineProperty(window, 'coordData', {
+        get() { return window._coordDataStore; },
+        set(v) { window._coordDataStore = v; }
+    });
+    </script>
+
+</body>
+</html>
