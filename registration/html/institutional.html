@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="../css/institutional.css">
     <link rel="icon" href="../../NYDC-Final-main/images/nydc-logo.png" type="image/png" />
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="../js/mun-data.js"></script>
 </head>
 <body>
 
@@ -679,6 +680,36 @@
     const MUN_COMMITTEES = ['UNGA', 'UNCSW', 'UNHRC', 'WHO', 'AIPPM', 'International Press (IP)'];
     const IPL_TEAMS = ['Mumbai Indians','Chennai Super Kings','Royal Challengers Bangalore','Kolkata Knight Riders','Delhi Capitals','Rajasthan Royals','Punjab Kings','Sunrisers Hyderabad','Gujarat Titans','Lucknow Super Giants'];
 
+    // ── Helper: build/refresh portfolio options for a given select ──
+    function buildPortfolioOptions(portSel, committeeName, currentCard) {
+        const committees = window.__MUN_COMMITTEES || [];
+        const committee  = committees.find(c => c.name === committeeName);
+        if (!committee) return;
+
+        // Globally taken (from Firestore)
+        const globalTaken = ((window.__instTakenPortfolios || {})[committeeName]) || new Set();
+
+        // Locally taken (other participant cards on this form that have same committee selected)
+        const localTaken = new Set();
+        document.querySelectorAll('.participant-card').forEach(otherCard => {
+            if (otherCard === currentCard) return;
+            const oc = otherCard.querySelector('.p-mun-committee');
+            const op = otherCard.querySelector('.p-mun-portfolio');
+            if (oc && op && oc.value === committeeName && op.value) {
+                localTaken.add(op.value);
+            }
+        });
+
+        const prevVal = portSel.value;
+        portSel.innerHTML = `<option value="" disabled selected>Select portfolio</option>` +
+            committee.portfolios.map(name => {
+                const taken = globalTaken.has(name) || localTaken.has(name);
+                const sel   = (name === prevVal && !taken) ? ' selected' : '';
+                return `<option value="${name}"${taken ? ' disabled' : ''}${sel}>${name}${taken ? ' \u2014 Taken' : ''}</option>`;
+            }).join('');
+        portSel.disabled = false;
+    }
+
     function buildEventSubfields(card, eventKey) {
         // Remove any existing sub-field section
         const existing = card.querySelector('.p-subfields');
@@ -690,33 +721,60 @@
             const div = document.createElement('div');
             div.className = 'p-subfields';
             div.style.cssText = 'margin-top:10px;padding:12px;background:rgba(139,26,26,0.06);border:1px solid rgba(139,26,26,0.2);border-radius:8px;animation:fadeSlideIn 0.3s ease;';
+
+            const committees = window.__MUN_COMMITTEES || [];
+            const committeeOpts = committees.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+
             div.innerHTML = `
-              <p style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:600;color:#8b1a1a;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;">🏛 MUN Preferences</p>
+              <p style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:600;color:#8b1a1a;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;">\ud83c\udfdb MUN Preferences</p>
               <div class="form-row">
                 <div class="form-group">
                   <label>Committee</label>
                   <select class="p-mun-committee" required>
                     <option value="" disabled selected>Select committee</option>
-                    ${MUN_COMMITTEES.map(c => `<option value="${c}">${c}</option>`).join('')}
+                    ${committeeOpts}
                   </select>
                 </div>
                 <div class="form-group">
-                  <label>Country / Portfolio Preference</label>
-                  <input type="text" class="p-mun-portfolio" placeholder="e.g. India, USA, Narendra Modi" required>
+                  <label>Portfolio <span style="font-size:0.65rem;color:#6b7280;">(select committee first)</span></label>
+                  <select class="p-mun-portfolio" required disabled>
+                    <option value="" disabled selected>\u2014 select committee first \u2014</option>
+                  </select>
                 </div>
               </div>
             `;
+
             card.querySelector('.participant-fields').insertBefore(div, priceTag);
-            div.querySelectorAll('input, select').forEach(el => {
-                el.addEventListener('input', updateSummary);
-                el.addEventListener('change', updateSummary);
+
+            const commSel = div.querySelector('.p-mun-committee');
+            const portSel = div.querySelector('.p-mun-portfolio');
+
+            // Committee selected → populate portfolio dropdown
+            commSel.addEventListener('change', () => {
+                buildPortfolioOptions(portSel, commSel.value, card);
+                updateSummary();
             });
+
+            // Portfolio selected → refresh other cards' portfolios for same committee
+            portSel.addEventListener('change', () => {
+                const cName = commSel.value;
+                document.querySelectorAll('.participant-card').forEach(otherCard => {
+                    if (otherCard === card) return;
+                    const oc = otherCard.querySelector('.p-mun-committee');
+                    const op = otherCard.querySelector('.p-mun-portfolio');
+                    if (oc && op && oc.value === cName && !op.disabled) {
+                        buildPortfolioOptions(op, cName, otherCard);
+                    }
+                });
+                updateSummary();
+            });
+
         } else if (eventKey === 'ipl') {
             const div = document.createElement('div');
             div.className = 'p-subfields';
             div.style.cssText = 'margin-top:10px;padding:12px;background:rgba(139,26,26,0.06);border:1px solid rgba(139,26,26,0.2);border-radius:8px;animation:fadeSlideIn 0.3s ease;';
             div.innerHTML = `
-              <p style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:600;color:#8b1a1a;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;">🏏 IPL Team Preference</p>
+              <p style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:600;color:#8b1a1a;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;">\ud83c\udfd0 IPL Team Preference</p>
               <div class="form-group">
                 <label>Preferred IPL Team</label>
                 <select class="p-ipl-team" required>
@@ -980,6 +1038,52 @@
     const app  = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db   = getFirestore(app);
+
+    // ── Fetch taken MUN portfolios from both individual + institutional ──
+    // Stored as { committeeName: Set(portfolioName) }, e.g. { 'UNGA': Set(['India','France'...]) }
+    const MUN_ID_TO_NAME = {
+        'unga':'UNGA','uncsw':'UNCSW','unhrc':'UNHRC',
+        'who':'WHO','aippm':'AIPPM','ip':'International Press (IP)'
+    };
+    window.__instTakenPortfolios = {};
+
+    (async () => {
+        const takenMap = {};
+        // 1. Individual registrations
+        try {
+            const q    = query(collection(db, 'registrations'), where('event', '==', 'mun'));
+            const snap = await getDocs(q);
+            snap.forEach(d => {
+                const data = d.data();
+                if (data.status === 'rejected') return;
+                (data.munPortfolios || []).forEach(p => {
+                    const cName = MUN_ID_TO_NAME[(p.committeeId || '').toLowerCase()] || p.committeeId;
+                    if (!takenMap[cName]) takenMap[cName] = new Set();
+                    takenMap[cName].add(p.portfolioName);
+                });
+            });
+        } catch(e) { console.warn('Inst fetch individual MUN taken:', e); }
+
+        // 2. Institutional registrations
+        try {
+            const iq    = query(collection(db, 'institutional_registrations'));
+            const isnap = await getDocs(iq);
+            isnap.forEach(d => {
+                const data = d.data();
+                if (data.status === 'rejected') return;
+                (data.participants || []).forEach(p => {
+                    if (p.event === 'mun' && p.munCommittee && p.munPortfolio) {
+                        const cName = p.munCommittee; // already a name like 'UNGA'
+                        if (!takenMap[cName]) takenMap[cName] = new Set();
+                        takenMap[cName].add(p.munPortfolio);
+                    }
+                });
+            });
+        } catch(e) { console.warn('Inst fetch institutional MUN taken:', e); }
+
+        window.__instTakenPortfolios = takenMap;
+        console.log('✅ Inst taken portfolios ready:', takenMap);
+    })();
 
     // ── STEP 1: Coordinator form submit ──
     window.addEventListener('inst-coord-submit', async () => {
