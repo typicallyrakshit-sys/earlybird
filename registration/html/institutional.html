@@ -491,7 +491,8 @@
     // ──────────────────────────────────────────────
     // STEP 1: COORDINATOR FORM
     // ──────────────────────────────────────────────
-    let coordData = null;
+    // coordData is set by the Firebase module script via window._instCoordData
+    // We access it through window._instCoordData to avoid cross-script scope issues
 
     document.getElementById('coordinator-form').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -585,14 +586,23 @@
             document.getElementById('inst-price-summary').style.display = 'none';
         }
 
-        // Enable/disable continue button
+        // Enable/disable continue button — also check sub-fields
         const allFilled = count > 0 && Array.from(cards).every(card => {
-            return card.querySelector('.p-first').value.trim() &&
-                   card.querySelector('.p-last').value.trim() &&
-                   card.querySelector('.p-email').value.trim() &&
-                   card.querySelector('.p-phone').value.trim() &&
-                   card.querySelector('.p-grade').value &&
-                   card.querySelector('.p-event').value;
+            const baseOk = card.querySelector('.p-first').value.trim() &&
+                           card.querySelector('.p-last').value.trim() &&
+                           card.querySelector('.p-email').value.trim() &&
+                           card.querySelector('.p-phone').value.trim() &&
+                           card.querySelector('.p-grade').value &&
+                           card.querySelector('.p-event').value;
+            if (!baseOk) return false;
+            // MUN sub-fields
+            const munCom = card.querySelector('.p-mun-committee');
+            const munPort = card.querySelector('.p-mun-portfolio');
+            if (munCom && (!munCom.value || !munPort.value.trim())) return false;
+            // IPL sub-field
+            const iplTeam = card.querySelector('.p-ipl-team');
+            if (iplTeam && !iplTeam.value) return false;
+            return true;
         });
         document.getElementById('go-to-payment-btn').disabled = !allFilled || count === 0;
     }
@@ -605,13 +615,69 @@
         updateSummary();
     }
 
+    const MUN_COMMITTEES = ['UNGA', 'UNCSW', 'UNHRC', 'WHO', 'AIPPM', 'International Press (IP)'];
+    const IPL_TEAMS = ['Mumbai Indians','Chennai Super Kings','Royal Challengers Bangalore','Kolkata Knight Riders','Delhi Capitals','Rajasthan Royals','Punjab Kings','Sunrisers Hyderabad','Gujarat Titans','Lucknow Super Giants'];
+
+    function buildEventSubfields(card, eventKey) {
+        // Remove any existing sub-field section
+        const existing = card.querySelector('.p-subfields');
+        if (existing) existing.remove();
+
+        const priceTag = card.querySelector('.participant-price-tag');
+
+        if (eventKey === 'mun') {
+            const div = document.createElement('div');
+            div.className = 'p-subfields';
+            div.style.cssText = 'margin-top:10px;padding:12px;background:rgba(139,26,26,0.06);border:1px solid rgba(139,26,26,0.2);border-radius:8px;animation:fadeSlideIn 0.3s ease;';
+            div.innerHTML = `
+              <p style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:600;color:#8b1a1a;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;">🏛 MUN Preferences</p>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Committee</label>
+                  <select class="p-mun-committee" required>
+                    <option value="" disabled selected>Select committee</option>
+                    ${MUN_COMMITTEES.map(c => `<option value="${c}">${c}</option>`).join('')}
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Country / Portfolio Preference</label>
+                  <input type="text" class="p-mun-portfolio" placeholder="e.g. India, USA, Narendra Modi" required>
+                </div>
+              </div>
+            `;
+            card.querySelector('.participant-fields').insertBefore(div, priceTag);
+            div.querySelectorAll('input, select').forEach(el => {
+                el.addEventListener('input', updateSummary);
+                el.addEventListener('change', updateSummary);
+            });
+        } else if (eventKey === 'ipl') {
+            const div = document.createElement('div');
+            div.className = 'p-subfields';
+            div.style.cssText = 'margin-top:10px;padding:12px;background:rgba(139,26,26,0.06);border:1px solid rgba(139,26,26,0.2);border-radius:8px;animation:fadeSlideIn 0.3s ease;';
+            div.innerHTML = `
+              <p style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:600;color:#8b1a1a;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;">🏏 IPL Team Preference</p>
+              <div class="form-group">
+                <label>Preferred IPL Team</label>
+                <select class="p-ipl-team" required>
+                  <option value="" disabled selected>Select team</option>
+                  ${IPL_TEAMS.map(t => `<option value="${t}">${t}</option>`).join('')}
+                </select>
+              </div>
+            `;
+            card.querySelector('.participant-fields').insertBefore(div, priceTag);
+            div.querySelectorAll('select').forEach(el => {
+                el.addEventListener('change', updateSummary);
+            });
+        }
+    }
+
     function addParticipantCard() {
         const clone = template.content.cloneNode(true);
         const card  = clone.querySelector('.participant-card');
         card.setAttribute('data-index', participantCount);
         card.querySelector('.participant-number').textContent = 'Participant ' + (participantCount + 1);
 
-        // Event change → update price tag + summary
+        // Event change → update price tag + sub-fields + summary
         const eventSel = card.querySelector('.p-event');
         const priceVal = card.querySelector('.p-price-value');
         eventSel.addEventListener('change', () => {
@@ -622,6 +688,7 @@
             } else {
                 priceVal.textContent = '—';
             }
+            buildEventSubfields(card, k);
             updateSummary();
         });
 
@@ -718,14 +785,31 @@
             const grade  = card.querySelector('.p-grade').value;
             const event  = card.querySelector('.p-event').value;
 
-            if (!first || !last || !email || !phone || !grade || !event) {
+            // MUN & IPL sub-fields
+            const munCommittee = card.querySelector('.p-mun-committee');
+            const munPortfolio = card.querySelector('.p-mun-portfolio');
+            const iplTeamSel   = card.querySelector('.p-ipl-team');
+
+            const munCommitteeVal = munCommittee ? munCommittee.value : null;
+            const munPortfolioVal = munPortfolio ? munPortfolio.value.trim() : null;
+            const iplTeamVal      = iplTeamSel   ? iplTeamSel.value      : null;
+
+            const munRequired = event === 'mun' && (!munCommitteeVal || !munPortfolioVal);
+            const iplRequired = event === 'ipl' && !iplTeamVal;
+
+            if (!first || !last || !email || !phone || !grade || !event || munRequired || iplRequired) {
                 valid = false;
                 card.querySelectorAll('input, select').forEach(el => {
                     if (!el.value.trim()) el.classList.add('input-error');
                     else el.classList.remove('input-error');
                 });
             } else {
-                participants.push({ firstName: first, lastName: last, email, phone, grade, event });
+                participants.push({
+                    firstName: first, lastName: last, email, phone, grade, event,
+                    munCommittee: munCommitteeVal || null,
+                    munPortfolio: munPortfolioVal || null,
+                    iplTeam:      iplTeamVal      || null
+                });
             }
         });
 
@@ -752,7 +836,7 @@
         summaryBox.innerHTML = `
             <div class="ps-header">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                &nbsp; ${participants.length} Participant${participants.length !== 1 ? 's' : ''} — ${coordData.instName}
+                &nbsp; ${participants.length} Participant${participants.length !== 1 ? 's' : ''} — ${(window._instCoordData || {}).instName || 'Institution'}
             </div>
             <div class="ps-list">
                 ${participants.map((p, i) => `
@@ -760,7 +844,7 @@
                         <span class="ps-num">${i + 1}</span>
                         <div class="ps-info">
                             <strong>${p.firstName} ${p.lastName}</strong>
-                            <span>${EVENT_NAMES[p.event] || p.event}</span>
+                            <span>${EVENT_NAMES[p.event] || p.event}${p.munCommittee ? ' · ' + p.munCommittee + (p.munPortfolio ? ' — ' + p.munPortfolio : '') : ''}${p.iplTeam ? ' · ' + p.iplTeam : ''}</span>
                         </div>
                         <span class="ps-price">${formatPrice(couponApplied ? PRICES[p.event].original : PRICES[p.event].increased)}</span>
                     </div>
