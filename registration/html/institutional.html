@@ -352,6 +352,67 @@
 
     <script>
     // ──────────────────────────────────────────────
+    // RETURNING COORDINATOR — show status screen
+    // ──────────────────────────────────────────────
+    (function() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('returning') !== '1') return;
+
+        const raw = sessionStorage.getItem('nydc_inst_returning');
+        if (!raw) return;
+        const d = JSON.parse(raw);
+
+        const statusColors = {
+            pending:  { color: '#eab308', bg: 'rgba(234,179,8,0.12)',  border: 'rgba(234,179,8,0.3)',  icon: '⏳', label: 'Pending Verification' },
+            approved: { color: '#22c55e', bg: 'rgba(34,197,94,0.12)', border: 'rgba(34,197,94,0.3)',  icon: '✅', label: 'Approved' },
+            rejected: { color: '#ef4444', bg: 'rgba(239,68,68,0.12)', border: 'rgba(239,68,68,0.3)',  icon: '❌', label: 'Rejected' }
+        };
+        const s = statusColors[d.status] || statusColors['pending'];
+
+        document.getElementById('main-card').innerHTML = `
+            <a href="../../index.html" class="back-link">🏠 Main Page</a>
+            <div style="text-align:center;padding:40px 10px;">
+                <div style="display:inline-flex;align-items:center;gap:10px;padding:8px 20px;background:${s.bg};border:1px solid ${s.border};border-radius:9999px;margin-bottom:28px;">
+                    <span style="font-size:1.1rem;">${s.icon}</span>
+                    <span style="font-family:'Outfit',sans-serif;font-size:0.8rem;font-weight:700;color:${s.color};letter-spacing:0.1em;text-transform:uppercase;">${s.label}</span>
+                </div>
+                <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;margin-bottom:8px;">Welcome back, <span style="color:#8b1a1a;">${d.coordinatorFirst || 'Coordinator'}</span></h2>
+                <p style="font-family:'Outfit',sans-serif;font-size:0.88rem;color:#9ca3af;margin-bottom:32px;line-height:1.6;">
+                    Your institutional registration for<br>
+                    <strong style="color:#fff;font-size:1rem;">${d.institutionName}</strong> · ${d.institutionCity}
+                </p>
+
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.09);border-radius:12px;padding:20px;text-align:left;margin-bottom:28px;">
+                    <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                        <span style="font-family:'Outfit',sans-serif;font-size:0.78rem;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;">Coordinator</span>
+                        <span style="font-family:'Outfit',sans-serif;font-size:0.85rem;color:#fff;">${d.coordinatorFirst} ${d.coordinatorLast}</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                        <span style="font-family:'Outfit',sans-serif;font-size:0.78rem;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;">Email</span>
+                        <span style="font-family:'Outfit',sans-serif;font-size:0.85rem;color:#fff;">${d.email}</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:10px 0;">
+                        <span style="font-family:'Outfit',sans-serif;font-size:0.78rem;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;">Registration ID</span>
+                        <span style="font-family:'Space Mono',monospace;font-size:0.75rem;color:#9ca3af;">${d.docId}</span>
+                    </div>
+                </div>
+
+                ${d.status === 'pending' ? `<p style="font-family:'Outfit',sans-serif;font-size:0.8rem;color:#9ca3af;line-height:1.7;margin-bottom:24px;">
+                    Your payment is being verified. You'll receive a confirmation email at <strong style="color:#fff;">${d.email}</strong> once approved.
+                </p>` : ''}
+                ${d.status === 'approved' ? `<p style="font-family:'Outfit',sans-serif;font-size:0.8rem;color:#22c55e;line-height:1.7;margin-bottom:24px;">
+                    🎉 Your registration is confirmed! See you at NYDC 2026.
+                </p>` : ''}
+                ${d.status === 'rejected' ? `<p style="font-family:'Outfit',sans-serif;font-size:0.8rem;color:#ef4444;line-height:1.7;margin-bottom:24px;">
+                    Your registration was rejected. Payment could not be verified. Please contact us if this is an error.
+                </p>` : ''}
+
+                <a href="../../index.html" style="display:inline-block;padding:12px 32px;background:#8b1a1a;color:#fff;font-family:'Outfit',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.2em;text-decoration:none;border-radius:8px;">Return to Main Page</a>
+            </div>
+        `;
+    })();
+
+    // ──────────────────────────────────────────────
     // PRICE CONFIG (same as individual flow)
     // ──────────────────────────────────────────────
     const PRICES = {
