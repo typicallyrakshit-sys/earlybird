@@ -99,14 +99,13 @@
       });
       const db = getFirestore(app);
 
-      // Fetch MUN registrations that are NOT rejected
+      // ── 1. Individual registrations ──
       const takenMap = {}; // { committeeId: Set(portfolioName) }
       try {
         const q = query(collection(db, 'registrations'), where('event', '==', 'mun'));
         const snap = await getDocs(q);
         snap.forEach(d => {
           const data = d.data();
-          // Only count pending + approved as taken; rejected = available
           if (data.status === 'rejected') return;
           if (data.munPortfolios && Array.isArray(data.munPortfolios)) {
             data.munPortfolios.forEach(p => {
@@ -116,9 +115,33 @@
             });
           }
         });
-        console.log('✅ Taken portfolios loaded:', takenMap);
+        console.log('✅ Individual taken portfolios loaded:', takenMap);
       } catch (err) {
-        console.error('Failed to fetch taken portfolios:', err);
+        console.error('Failed to fetch individual taken portfolios:', err);
+      }
+
+      // ── 2. Institutional registrations (also mark as taken) ──
+      const MUN_NAME_TO_ID = {
+        'UNGA':'unga','UNCSW':'uncsw','UNHRC':'unhrc',
+        'WHO':'who','AIPPM':'aippm','International Press (IP)':'ip'
+      };
+      try {
+        const iq   = query(collection(db, 'institutional_registrations'));
+        const isnap = await getDocs(iq);
+        isnap.forEach(d => {
+          const data = d.data();
+          if (data.status === 'rejected') return;
+          (data.participants || []).forEach(p => {
+            if (p.event === 'mun' && p.munCommittee && p.munPortfolio) {
+              const comId = MUN_NAME_TO_ID[p.munCommittee] || p.munCommittee.toLowerCase();
+              if (!takenMap[comId]) takenMap[comId] = new Set();
+              takenMap[comId].add(p.munPortfolio);
+            }
+          });
+        });
+        console.log('✅ Institutional taken portfolios merged into takenMap');
+      } catch (err) {
+        console.warn('Could not fetch institutional taken portfolios:', err);
       }
 
       // Store globally for mun.js
