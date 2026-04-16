@@ -945,8 +945,8 @@
             const userCred = await createUserWithEmailAndPassword(auth, data.email, data.password);
             const uid = userCred.user.uid;
 
-            // Save coordinator data globally
-            window.coordData = { ...data, uid };
+            // Save coordinator data globally (accessible from inline script)
+            window._instCoordData = { ...data, uid };
 
             // Update badge
             document.getElementById('inst-badge-name').textContent = data.instName;
@@ -975,7 +975,7 @@
         submitBtn.textContent = 'Submitting…';
 
         try {
-            const coordInfo     = window.coordData;
+            const coordInfo     = window._instCoordData;
             const participants  = JSON.parse(sessionStorage.getItem('nydc_inst_participants') || '[]');
             const totalAmount   = parseFloat(sessionStorage.getItem('nydc_inst_total') || '0');
             const originalTotal = parseFloat(sessionStorage.getItem('nydc_inst_original_total') || '0');
@@ -1056,11 +1056,7 @@
         }
     });
 
-    // Expose coordData reference globally
-    Object.defineProperty(window, 'coordData', {
-        get() { return window._coordDataStore; },
-        set(v) { window._coordDataStore = v; }
-    });
+
     </script>
 
 </body>
