@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PRV6H5CSWT"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-PRV6H5CSWT');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PRV6H5CSWT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-PRV6H5CSWT');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Institutional Registration — NYDC 2026</title>
@@ -19,6 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="../js/mun-data.js"></script>
 </head>
+
 <body>
 
     <!-- Background Ambience -->
@@ -61,7 +63,12 @@
 
                 <!-- Institution Notice -->
                 <div class="inst-notice">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
                     One account per institution. If your institution is already registered, please log in instead.
                 </div>
 
@@ -96,24 +103,52 @@
                         <div class="form-group">
                             <label for="coord-password">Password</label>
                             <div class="password-wrapper">
-                                <input type="password" id="coord-password" placeholder="Min 6 characters" required minlength="6">
-                                <button type="button" class="password-toggle" data-target="coord-password" aria-label="Toggle password visibility">
-                                    <svg class="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    <svg class="eye-off-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                                <input type="password" id="coord-password" placeholder="Min 6 characters" required
+                                    minlength="6">
+                                <button type="button" class="password-toggle" data-target="coord-password"
+                                    aria-label="Toggle password visibility">
+                                    <svg class="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                    <svg class="eye-off-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" style="display:none">
+                                        <path
+                                            d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                                        <line x1="1" y1="1" x2="23" y2="23" />
+                                    </svg>
                                 </button>
                             </div>
                             <div class="password-strength" id="inst-password-strength">
-                                <div class="strength-bar"><div class="strength-fill" id="inst-strength-fill"></div></div>
+                                <div class="strength-bar">
+                                    <div class="strength-fill" id="inst-strength-fill"></div>
+                                </div>
                                 <span class="strength-text" id="inst-strength-text"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="coord-confirm-password">Confirm Password</label>
                             <div class="password-wrapper">
-                                <input type="password" id="coord-confirm-password" placeholder="Re-enter password" required minlength="6">
-                                <button type="button" class="password-toggle" data-target="coord-confirm-password" aria-label="Toggle password visibility">
-                                    <svg class="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    <svg class="eye-off-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                                <input type="password" id="coord-confirm-password" placeholder="Re-enter password"
+                                    required minlength="6">
+                                <button type="button" class="password-toggle" data-target="coord-confirm-password"
+                                    aria-label="Toggle password visibility">
+                                    <svg class="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                    <svg class="eye-off-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" style="display:none">
+                                        <path
+                                            d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                                        <line x1="1" y1="1" x2="23" y2="23" />
+                                    </svg>
                                 </button>
                             </div>
                             <p class="password-error" id="inst-password-error"></p>
@@ -124,7 +159,8 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="inst-name">Institution Name</label>
-                            <input type="text" id="inst-name" placeholder="e.g. Delhi Public School, R.K. Puram" required>
+                            <input type="text" id="inst-name" placeholder="e.g. Delhi Public School, R.K. Puram"
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="inst-city">City</label>
@@ -148,8 +184,10 @@
                     <button type="submit" class="submit-btn" id="coord-submit-btn">Continue to Participants →</button>
                 </form>
 
-                <p style="text-align: center; font-family: 'Outfit', sans-serif; font-size: 14px; color: var(--text-muted); margin-top: 20px; margin-bottom: 25px;">
-                    Already registered your institution? <a href="login.html?type=institutional" style="color: #8b1a1a; text-decoration: none; font-weight: 600;">Log in to resume</a>
+                <p
+                    style="text-align: center; font-family: 'Outfit', sans-serif; font-size: 14px; color: var(--text-muted); margin-top: 20px; margin-bottom: 25px;">
+                    Already registered your institution? <a href="login.html?type=institutional"
+                        style="color: #8b1a1a; text-decoration: none; font-weight: 600;">Log in to resume</a>
                 </p>
             </div>
 
@@ -158,17 +196,26 @@
                 <p class="inst-step-label">Step 2 of 3 — Add Participants</p>
 
                 <div class="inst-institution-badge" id="inst-badge">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
                     <span id="inst-badge-name">Institution Name</span>
                 </div>
 
                 <!-- Pricing tiers info -->
                 <div class="inst-pricing-info" id="pricing-info-box">
                     <div class="pricing-tier-header">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23" />
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                        </svg>
                         &nbsp; Institutional Pricing — Discounted event price per participant
                     </div>
-                    <p class="pricing-tier-note">Add participants below. Each participant pays the discounted price. Select the event when adding each participant.</p>
+                    <p class="pricing-tier-note">Add participants below. Each participant pays the discounted price.
+                        Select the event when adding each participant.</p>
                 </div>
 
                 <!-- Participants container -->
@@ -176,7 +223,11 @@
 
                 <!-- Add Participant Button -->
                 <button type="button" class="add-participant-btn" id="add-participant-btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
                     Add Participant
                 </button>
 
@@ -193,7 +244,8 @@
 
 
 
-                <button type="button" class="submit-btn" id="go-to-payment-btn" style="margin-bottom:20px;" disabled>Continue to Payment →</button>
+                <button type="button" class="submit-btn" id="go-to-payment-btn" style="margin-bottom:20px;"
+                    disabled>Continue to Payment →</button>
                 <p class="step-indicator">Step 2 of 3 — Participants</p>
             </div>
 
@@ -222,35 +274,49 @@
                     </div>
 
                     <a href="#" id="inst-upi-pay-link" class="upi-pay-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
                             <line x1="1" y1="10" x2="23" y2="10"></line>
                         </svg>
                         Pay via UPI
                     </a>
-                    <p class="payment-hint">Scan the QR or click the button above to pay, then enter your Transaction ID below.</p>
+                    <p class="payment-hint">Scan the QR or click the button above to pay, then enter your Transaction ID
+                        below.</p>
 
                     <!-- UPI QR Code -->
-                    <div id="inst-upi-qr-wrapper" style="display:flex;flex-direction:column;align-items:center;margin:18px 0 10px;">
-                        <div style="background:#fff;border-radius:14px;padding:12px;box-shadow:0 4px 24px rgba(0,0,0,0.35);display:inline-block;">
-                            <img id="inst-upi-qr-img" src="" alt="UPI QR Code" width="180" height="180" style="display:block;border-radius:6px;">
+                    <div id="inst-upi-qr-wrapper"
+                        style="display:flex;flex-direction:column;align-items:center;margin:18px 0 10px;">
+                        <div
+                            style="background:#fff;border-radius:14px;padding:12px;box-shadow:0 4px 24px rgba(0,0,0,0.35);display:inline-block;">
+                            <img id="inst-upi-qr-img" src="" alt="UPI QR Code" width="180" height="180"
+                                style="display:block;border-radius:6px;">
                         </div>
-                        <p style="font-family:'Outfit',sans-serif;font-size:11px;color:rgba(156,163,175,0.7);margin-top:10px;letter-spacing:0.05em;">Scan with any UPI app to pay</p>
+                        <p
+                            style="font-family:'Outfit',sans-serif;font-size:11px;color:rgba(156,163,175,0.7);margin-top:10px;letter-spacing:0.05em;">
+                            Scan with any UPI app to pay</p>
                     </div>
 
-                    <p style="font-weight: 600; color: #8b1a1a; font-size: 12px; margin-top: 10px; margin-bottom: 20px; text-align: center;">Note: The payment can only be completed from a mobile phone with any UPI app installed. If you are registering from a laptop or PC, log in on your mobile and continue to payment.</p>
+                    <p
+                        style="font-weight: 600; color: #8b1a1a; font-size: 12px; margin-top: 10px; margin-bottom: 20px; text-align: center;">
+                        Note: The payment can only be completed from a mobile phone with any UPI app installed. If you
+                        are registering from a laptop or PC, log in on your mobile and continue to payment.</p>
 
                     <!-- Transaction ID -->
                     <div class="form-group" style="margin-bottom:0;">
                         <label for="inst-transaction-id">UPI Transaction ID / Reference Number</label>
-                        <input type="text" id="inst-transaction-id" placeholder="e.g. 512345678901" required autocomplete="off" spellcheck="false" style="letter-spacing:0.1em;">
+                        <input type="text" id="inst-transaction-id" placeholder="e.g. 512345678901" required
+                            autocomplete="off" spellcheck="false" style="letter-spacing:0.1em;">
                     </div>
                 </div>
 
                 <p class="password-error" id="inst-submit-error"></p>
-                <button type="button" class="submit-btn" id="inst-submit-btn" style="margin-bottom:20px;">Submit Institutional Registration</button>
+                <button type="button" class="submit-btn" id="inst-submit-btn" style="margin-bottom:20px;">Submit
+                    Institutional Registration</button>
                 <p style="text-align:center;">
-                    <a href="#" id="back-to-participants" style="color:var(--text-muted);font-size:0.8rem;text-decoration:none;letter-spacing:0.04em;">← Edit Participants</a>
+                    <a href="#" id="back-to-participants"
+                        style="color:var(--text-muted);font-size:0.8rem;text-decoration:none;letter-spacing:0.04em;">←
+                        Edit Participants</a>
                 </p>
                 <p class="step-indicator">Step 3 of 3 — Payment</p>
             </div>
@@ -328,59 +394,59 @@
     </template>
 
     <script>
-    // ──────────────────────────────────────────────
-    // RETURNING COORDINATOR — handle ?returning=1 and ?resume=1
-    // ──────────────────────────────────────────────
-    (function() {
-        const params = new URLSearchParams(window.location.search);
-        const raw    = sessionStorage.getItem('nydc_inst_returning');
-        if (!raw) return;
-        const d = JSON.parse(raw);
+        // ──────────────────────────────────────────────
+        // RETURNING COORDINATOR — handle ?returning=1 and ?resume=1
+        // ──────────────────────────────────────────────
+        (function () {
+            const params = new URLSearchParams(window.location.search);
+            const raw = sessionStorage.getItem('nydc_inst_returning');
+            if (!raw) return;
+            const d = JSON.parse(raw);
 
-        // ── ?resume=1: Draft registration — go straight to Step 2 ──
-        if (params.get('resume') === '1') {
-            // Restore coordinator data so Step 3 summary works
-            window._instCoordData = {
-                firstName: d.coordinatorFirst,
-                lastName:  d.coordinatorLast,
-                email:     d.email,
-                phone:     d.phone,
-                instName:  d.institutionName,
-                instCity:  d.institutionCity,
-                instType:  d.institutionType || '',
-                uid:       d.uid
+            // ── ?resume=1: Draft registration — go straight to Step 2 ──
+            if (params.get('resume') === '1') {
+                // Restore coordinator data so Step 3 summary works
+                window._instCoordData = {
+                    firstName: d.coordinatorFirst,
+                    lastName: d.coordinatorLast,
+                    email: d.email,
+                    phone: d.phone,
+                    instName: d.institutionName,
+                    instCity: d.institutionCity,
+                    instType: d.institutionType || '',
+                    uid: d.uid
+                };
+                window._instDraftDocId = d.docId; // so Step 3 updates instead of creates
+
+                // Update institution badge
+                const badge = document.getElementById('inst-badge-name');
+                if (badge) badge.textContent = d.institutionName;
+
+                // Show Step 2 directly
+                document.getElementById('step-1').style.display = 'none';
+                document.getElementById('step-2').style.display = 'block';
+
+                // Insert a resume banner at the top of Step 2
+                const step2 = document.getElementById('step-2');
+                const banner = document.createElement('div');
+                banner.style.cssText = 'background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:10px;padding:12px 16px;margin-bottom:20px;font-family:\'Outfit\',sans-serif;font-size:0.82rem;color:#86efac;display:flex;align-items:center;gap:10px;';
+                banner.innerHTML = `<span style="font-size:1.1rem;">👋</span> Welcome back, <strong style="color:#fff;">${d.coordinatorFirst}</strong>! Continue adding participants for <strong style="color:#fff;">${d.institutionName}</strong>.`;
+                step2.insertBefore(banner, step2.firstChild);
+                return;
+            }
+
+            // ── ?returning=1: Submitted registration — show status card ──
+            if (params.get('returning') !== '1') return;
+
+            const statusColors = {
+                pending: { color: '#eab308', bg: 'rgba(234,179,8,0.12)', border: 'rgba(234,179,8,0.3)', icon: '⏳', label: 'Pending Verification' },
+                approved: { color: '#22c55e', bg: 'rgba(34,197,94,0.12)', border: 'rgba(34,197,94,0.3)', icon: '✅', label: 'Approved' },
+                rejected: { color: '#ef4444', bg: 'rgba(239,68,68,0.12)', border: 'rgba(239,68,68,0.3)', icon: '❌', label: 'Rejected' },
+                draft: { color: '#60a5fa', bg: 'rgba(96,165,250,0.10)', border: 'rgba(96,165,250,0.25)', icon: '📝', label: 'Draft — Incomplete' }
             };
-            window._instDraftDocId = d.docId; // so Step 3 updates instead of creates
+            const s = statusColors[d.status] || statusColors['pending'];
 
-            // Update institution badge
-            const badge = document.getElementById('inst-badge-name');
-            if (badge) badge.textContent = d.institutionName;
-
-            // Show Step 2 directly
-            document.getElementById('step-1').style.display = 'none';
-            document.getElementById('step-2').style.display = 'block';
-
-            // Insert a resume banner at the top of Step 2
-            const step2 = document.getElementById('step-2');
-            const banner = document.createElement('div');
-            banner.style.cssText = 'background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:10px;padding:12px 16px;margin-bottom:20px;font-family:\'Outfit\',sans-serif;font-size:0.82rem;color:#86efac;display:flex;align-items:center;gap:10px;';
-            banner.innerHTML = `<span style="font-size:1.1rem;">👋</span> Welcome back, <strong style="color:#fff;">${d.coordinatorFirst}</strong>! Continue adding participants for <strong style="color:#fff;">${d.institutionName}</strong>.`;
-            step2.insertBefore(banner, step2.firstChild);
-            return;
-        }
-
-        // ── ?returning=1: Submitted registration — show status card ──
-        if (params.get('returning') !== '1') return;
-
-        const statusColors = {
-            pending:  { color: '#eab308', bg: 'rgba(234,179,8,0.12)',  border: 'rgba(234,179,8,0.3)',  icon: '⏳', label: 'Pending Verification' },
-            approved: { color: '#22c55e', bg: 'rgba(34,197,94,0.12)', border: 'rgba(34,197,94,0.3)',  icon: '✅', label: 'Approved' },
-            rejected: { color: '#ef4444', bg: 'rgba(239,68,68,0.12)', border: 'rgba(239,68,68,0.3)',  icon: '❌', label: 'Rejected' },
-            draft:    { color: '#60a5fa', bg: 'rgba(96,165,250,0.10)', border: 'rgba(96,165,250,0.25)', icon: '📝', label: 'Draft — Incomplete' }
-        };
-        const s = statusColors[d.status] || statusColors['pending'];
-
-        document.getElementById('main-card').innerHTML = `
+            document.getElementById('main-card').innerHTML = `
             <a href="../../index.html" class="back-link">🏠 Main Page</a>
             <div style="text-align:center;padding:40px 10px;">
                 <div style="display:inline-flex;align-items:center;gap:10px;padding:8px 20px;background:${s.bg};border:1px solid ${s.border};border-radius:9999px;margin-bottom:28px;">
@@ -421,228 +487,231 @@
                 <a href="../../index.html" style="display:inline-block;padding:12px 32px;background:#8b1a1a;color:#fff;font-family:'Outfit',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.2em;text-decoration:none;border-radius:8px;">Return to Main Page</a>
             </div>
         `;
-    })();
+        })();
 
-    // ──────────────────────────────────────────────
-    // PRICE CONFIG — Institutional Prices
-    // ──────────────────────────────────────────────
-    const PRICES = {
-        mun:           1699,
-        moot_court:    3499,
-        debate:        1599,
-        spark_tank:    3199,
-        marketing:     999,
-        paper_trading: 1199,
-        film_making:   2999,
-        Navras:        1499,
-        poetry:        999,
-        raag_jaam:     3999,
-        ipl:           2999
-    };
-
-    const EVENT_NAMES = {
-        mun: 'Model United Nations', moot_court: 'Moot Court',
-        hackathon: 'Hackathon', debate: 'Conventional Debate',
-        spark_tank: 'Spark Tank', marketing: 'Marketing',
-        paper_trading: 'Paper Trading', film_making: 'Film Making',
-        Navras: 'Navras', poetry: 'Poetry',
-        raag_jaam: 'Raag Jaam', ipl: 'IPL Auction'
-    };
-
-    function formatPrice(amount) {
-        return '₹' + amount.toLocaleString('en-IN');
-    }
-
-    // ──────────────────────────────────────────────
-    // PASSWORD TOGGLE
-    // ──────────────────────────────────────────────
-    document.querySelectorAll('.password-toggle').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const input = document.getElementById(btn.dataset.target);
-            const isPassword = input.type === 'password';
-            input.type = isPassword ? 'text' : 'password';
-            btn.querySelector('.eye-icon').style.display = isPassword ? 'none' : 'block';
-            btn.querySelector('.eye-off-icon').style.display = isPassword ? 'block' : 'none';
-        });
-    });
-
-    // Password strength
-    const pwdInput = document.getElementById('coord-password');
-    pwdInput.addEventListener('input', () => {
-        const val = pwdInput.value;
-        let score = 0;
-        if (val.length >= 6) score++;
-        if (val.length >= 10) score++;
-        if (/[A-Z]/.test(val)) score++;
-        if (/[0-9]/.test(val)) score++;
-        if (/[^A-Za-z0-9]/.test(val)) score++;
-        const levels = [
-            { width: '0%', color: 'transparent', label: '' },
-            { width: '20%', color: '#ef4444', label: 'Weak' },
-            { width: '40%', color: '#f97316', label: 'Fair' },
-            { width: '60%', color: '#eab308', label: 'Good' },
-            { width: '80%', color: '#22c55e', label: 'Strong' },
-            { width: '100%', color: '#16a34a', label: 'Very Strong' }
-        ];
-        const level = levels[score];
-        document.getElementById('inst-strength-fill').style.width = level.width;
-        document.getElementById('inst-strength-fill').style.background = level.color;
-        document.getElementById('inst-strength-text').textContent = level.label;
-        document.getElementById('inst-strength-text').style.color = level.color;
-    });
-
-    // ──────────────────────────────────────────────
-    // STEP 1: COORDINATOR FORM
-    // ──────────────────────────────────────────────
-    // coordData is set by the Firebase module script via window._instCoordData
-    // We access it through window._instCoordData to avoid cross-script scope issues
-
-    document.getElementById('coordinator-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const pwdEl    = document.getElementById('coord-password');
-        const confEl   = document.getElementById('coord-confirm-password');
-        const errEl    = document.getElementById('inst-password-error');
-        const genErr   = document.getElementById('coord-general-error');
-        const submitBtn = document.getElementById('coord-submit-btn');
-
-        errEl.textContent = '';
-        genErr.textContent = '';
-
-        if (pwdEl.value !== confEl.value) {
-            errEl.textContent = 'Passwords do not match';
-            confEl.classList.add('input-error');
-            return;
-        }
-        confEl.classList.remove('input-error');
-
-        const email = document.getElementById('coord-email').value.trim();
-        const instName = document.getElementById('inst-name').value.trim();
-
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Checking…';
-
-        // Check if institution already has an account (via Firebase — done in module script below)
-        window._pendingCoordData = {
-            firstName:   document.getElementById('coord-first').value.trim(),
-            lastName:    document.getElementById('coord-last').value.trim(),
-            email,
-            phone:       document.getElementById('coord-phone').value.trim(),
-            password:    pwdEl.value,
-            instName,
-            instCity:    document.getElementById('inst-city').value.trim(),
-            instType:    document.getElementById('inst-type').value
+        // ──────────────────────────────────────────────
+        // PRICE CONFIG — Institutional Prices
+        // ──────────────────────────────────────────────
+        const PRICES = {
+            mun: 1699,
+            moot_court: 3499,
+            debate: 1599,
+            spark_tank: 3199,
+            marketing: 999,
+            paper_trading: 1199,
+            film_making: 2999,
+            Navras: 1499,
+            poetry: 999,
+            raag_jaam: 3999,
+            ipl: 2999
         };
 
-        // Trigger Firebase check (handled below in module script)
-        window.dispatchEvent(new CustomEvent('inst-coord-submit'));
-    });
+        const EVENT_NAMES = {
+            mun: 'Model United Nations', moot_court: 'Moot Court',
+            hackathon: 'Hackathon', debate: 'Conventional Debate',
+            spark_tank: 'Spark Tank', marketing: 'Marketing',
+            paper_trading: 'Paper Trading', film_making: 'Film Making',
+            Navras: 'Navras', poetry: 'Poetry',
+            raag_jaam: 'Raag Jaam', ipl: 'IPL Auction'
+        };
 
-    // ──────────────────────────────────────────────
-    // STEP 2: PARTICIPANTS
-    // ──────────────────────────────────────────────
-    let participantCount = 0;
+        function formatPrice(amount) {
+            return '₹' + amount.toLocaleString('en-IN');
+        }
 
-    const container = document.getElementById('participants-container');
-    const template  = document.getElementById('participant-card-template');
+        // ──────────────────────────────────────────────
+        // PASSWORD TOGGLE
+        // ──────────────────────────────────────────────
+        document.querySelectorAll('.password-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const input = document.getElementById(btn.dataset.target);
+                const isPassword = input.type === 'password';
+                input.type = isPassword ? 'text' : 'password';
+                btn.querySelector('.eye-icon').style.display = isPassword ? 'none' : 'block';
+                btn.querySelector('.eye-off-icon').style.display = isPassword ? 'block' : 'none';
+            });
+        });
 
-    function getTotalFinal() {
-        let total = 0;
-        document.querySelectorAll('.participant-card').forEach(card => {
-            const eventSel = card.querySelector('.p-event').value;
-            if (eventSel && PRICES[eventSel]) {
-                total += PRICES[eventSel];
+        // Password strength
+        const pwdInput = document.getElementById('coord-password');
+        pwdInput.addEventListener('input', () => {
+            const val = pwdInput.value;
+            let score = 0;
+            if (val.length >= 6) score++;
+            if (val.length >= 10) score++;
+            if (/[A-Z]/.test(val)) score++;
+            if (/[0-9]/.test(val)) score++;
+            if (/[^A-Za-z0-9]/.test(val)) score++;
+            const levels = [
+                { width: '0%', color: 'transparent', label: '' },
+                { width: '20%', color: '#ef4444', label: 'Weak' },
+                { width: '40%', color: '#f97316', label: 'Fair' },
+                { width: '60%', color: '#eab308', label: 'Good' },
+                { width: '80%', color: '#22c55e', label: 'Strong' },
+                { width: '100%', color: '#16a34a', label: 'Very Strong' }
+            ];
+            const level = levels[score];
+            document.getElementById('inst-strength-fill').style.width = level.width;
+            document.getElementById('inst-strength-fill').style.background = level.color;
+            document.getElementById('inst-strength-text').textContent = level.label;
+            document.getElementById('inst-strength-text').style.color = level.color;
+        });
+
+        // ──────────────────────────────────────────────
+        // STEP 1: COORDINATOR FORM
+        // ──────────────────────────────────────────────
+        // coordData is set by the Firebase module script via window._instCoordData
+        // We access it through window._instCoordData to avoid cross-script scope issues
+
+        document.getElementById('coordinator-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const pwdEl = document.getElementById('coord-password');
+            const confEl = document.getElementById('coord-confirm-password');
+            const errEl = document.getElementById('inst-password-error');
+            const genErr = document.getElementById('coord-general-error');
+            const submitBtn = document.getElementById('coord-submit-btn');
+
+            errEl.textContent = '';
+            genErr.textContent = '';
+
+            if (pwdEl.value !== confEl.value) {
+                errEl.textContent = 'Passwords do not match';
+                confEl.classList.add('input-error');
+                return;
             }
-        });
-        return total;
-    }
+            confEl.classList.remove('input-error');
 
-    function updateSummary() {
-        const cards = document.querySelectorAll('.participant-card');
-        const count = cards.length;
-        const finalTotal = getTotalFinal();
+            const email = document.getElementById('coord-email').value.trim();
+            const instName = document.getElementById('inst-name').value.trim();
 
-        document.getElementById('participant-count-label').textContent =
-            count + (count === 1 ? ' Participant' : ' Participants');
-        document.getElementById('total-amount').textContent = formatPrice(finalTotal);
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Checking…';
 
-        // Enable/disable continue button — also check sub-fields
-        const allFilled = count > 0 && Array.from(cards).every(card => {
-            const baseOk = card.querySelector('.p-first').value.trim() &&
-                           card.querySelector('.p-last').value.trim() &&
-                           card.querySelector('.p-email').value.trim() &&
-                           card.querySelector('.p-phone').value.trim() &&
-                           card.querySelector('.p-grade').value &&
-                           card.querySelector('.p-event').value;
-            if (!baseOk) return false;
-            // MUN sub-fields
-            const munCom = card.querySelector('.p-mun-committee');
-            const munPort = card.querySelector('.p-mun-portfolio');
-            if (munCom && (!munCom.value || !munPort.value.trim())) return false;
-            // IPL sub-field
-            const iplTeam = card.querySelector('.p-ipl-team');
-            if (iplTeam && !iplTeam.value) return false;
-            return true;
-        });
-        document.getElementById('go-to-payment-btn').disabled = !allFilled || count === 0;
-    }
+            // Check if institution already has an account (via Firebase — done in module script below)
+            window._pendingCoordData = {
+                firstName: document.getElementById('coord-first').value.trim(),
+                lastName: document.getElementById('coord-last').value.trim(),
+                email,
+                phone: document.getElementById('coord-phone').value.trim(),
+                password: pwdEl.value,
+                instName,
+                instCity: document.getElementById('inst-city').value.trim(),
+                instType: document.getElementById('inst-type').value
+            };
 
-    function renumberParticipants() {
-        document.querySelectorAll('.participant-card').forEach((card, i) => {
-            card.querySelector('.participant-number').textContent = 'Participant ' + (i + 1);
-            card.setAttribute('data-index', i);
-        });
-        updateSummary();
-    }
-
-    const MUN_COMMITTEES = ['UNGA', 'UNCSW', 'UNHRC', 'WHO', 'AIPPM', 'International Press (IP)'];
-    const IPL_TEAMS = ['Mumbai Indians','Chennai Super Kings','Royal Challengers Bangalore','Kolkata Knight Riders','Delhi Capitals','Rajasthan Royals','Punjab Kings','Sunrisers Hyderabad','Gujarat Titans','Lucknow Super Giants'];
-
-    // ── Helper: build/refresh portfolio options for a given select ──
-    function buildPortfolioOptions(portSel, committeeName, currentCard) {
-        const committees = window.__MUN_COMMITTEES || [];
-        const committee  = committees.find(c => c.name === committeeName);
-        if (!committee) return;
-
-        // Globally taken (from Firestore)
-        const globalTaken = ((window.__instTakenPortfolios || {})[committeeName]) || new Set();
-
-        // Locally taken (other participant cards on this form that have same committee selected)
-        const localTaken = new Set();
-        document.querySelectorAll('.participant-card').forEach(otherCard => {
-            if (otherCard === currentCard) return;
-            const oc = otherCard.querySelector('.p-mun-committee');
-            const op = otherCard.querySelector('.p-mun-portfolio');
-            if (oc && op && oc.value === committeeName && op.value) {
-                localTaken.add(op.value);
-            }
+            // Trigger Firebase check (handled below in module script)
+            window.dispatchEvent(new CustomEvent('inst-coord-submit'));
         });
 
-        const prevVal = portSel.value;
-        portSel.innerHTML = `<option value="" disabled selected>Select portfolio</option>` +
-            committee.portfolios.map(name => {
-                const taken = globalTaken.has(name) || localTaken.has(name);
-                const sel   = (name === prevVal && !taken) ? ' selected' : '';
-                return `<option value="${name}"${taken ? ' disabled' : ''}${sel}>${name}${taken ? ' \u2014 Taken' : ''}</option>`;
-            }).join('');
-        portSel.disabled = false;
-    }
+        // ──────────────────────────────────────────────
+        // STEP 2: PARTICIPANTS
+        // ──────────────────────────────────────────────
+        let participantCount = 0;
 
-    function buildEventSubfields(card, eventKey) {
-        // Remove any existing sub-field section
-        const existing = card.querySelector('.p-subfields');
-        if (existing) existing.remove();
+        const container = document.getElementById('participants-container');
+        const template = document.getElementById('participant-card-template');
 
-        const priceTag = card.querySelector('.participant-price-tag');
+        function getTotalFinal() {
+            let total = 0;
+            document.querySelectorAll('.participant-card').forEach(card => {
+                const eventSel = card.querySelector('.p-event').value;
+                if (eventSel && PRICES[eventSel]) {
+                    total += PRICES[eventSel];
+                }
+            });
+            return total;
+        }
 
-        if (eventKey === 'mun') {
-            const div = document.createElement('div');
-            div.className = 'p-subfields';
-            div.style.cssText = 'margin-top:10px;padding:12px;background:rgba(139,26,26,0.06);border:1px solid rgba(139,26,26,0.2);border-radius:8px;animation:fadeSlideIn 0.3s ease;';
+        function updateSummary() {
+            const cards = document.querySelectorAll('.participant-card');
+            const count = cards.length;
+            const finalTotal = getTotalFinal();
 
+            document.getElementById('participant-count-label').textContent =
+                count + (count === 1 ? ' Participant' : ' Participants');
+            document.getElementById('total-amount').textContent = formatPrice(finalTotal);
+
+            // Enable/disable continue button — also check sub-fields and WHO consent
+            const allFilled = count > 0 && Array.from(cards).every(card => {
+                const baseOk = card.querySelector('.p-first').value.trim() &&
+                    card.querySelector('.p-last').value.trim() &&
+                    card.querySelector('.p-email').value.trim() &&
+                    card.querySelector('.p-phone').value.trim() &&
+                    card.querySelector('.p-grade').value &&
+                    card.querySelector('.p-event').value;
+                if (!baseOk) return false;
+                // MUN sub-fields
+                const munCom = card.querySelector('.p-mun-committee');
+                const munPort = card.querySelector('.p-mun-portfolio');
+                if (munCom && (!munCom.value || !munPort.value.trim())) return false;
+                // WHO consent
+                const whoConsent = card.querySelector('.p-who-consent');
+                if (whoConsent && !whoConsent.checked) return false;
+                // IPL sub-field
+                const iplTeam = card.querySelector('.p-ipl-team');
+                if (iplTeam && !iplTeam.value) return false;
+                return true;
+            });
+            document.getElementById('go-to-payment-btn').disabled = !allFilled || count === 0;
+        }
+
+        function renumberParticipants() {
+            document.querySelectorAll('.participant-card').forEach((card, i) => {
+                card.querySelector('.participant-number').textContent = 'Participant ' + (i + 1);
+                card.setAttribute('data-index', i);
+            });
+            updateSummary();
+        }
+
+        const MUN_COMMITTEES = ['UNGA', 'UNCSW', 'UNHRC', 'WHO', 'AIPPM', 'International Press (IP)'];
+        const IPL_TEAMS = ['Mumbai Indians', 'Chennai Super Kings', 'Royal Challengers Bangalore', 'Kolkata Knight Riders', 'Delhi Capitals', 'Rajasthan Royals', 'Punjab Kings', 'Sunrisers Hyderabad', 'Gujarat Titans', 'Lucknow Super Giants'];
+
+        // ── Helper: build/refresh portfolio options for a given select ──
+        function buildPortfolioOptions(portSel, committeeName, currentCard) {
             const committees = window.__MUN_COMMITTEES || [];
-            const committeeOpts = committees.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+            const committee = committees.find(c => c.name === committeeName);
+            if (!committee) return;
 
-            div.innerHTML = `
+            // Globally taken (from Firestore)
+            const globalTaken = ((window.__instTakenPortfolios || {})[committeeName]) || new Set();
+
+            // Locally taken (other participant cards on this form that have same committee selected)
+            const localTaken = new Set();
+            document.querySelectorAll('.participant-card').forEach(otherCard => {
+                if (otherCard === currentCard) return;
+                const oc = otherCard.querySelector('.p-mun-committee');
+                const op = otherCard.querySelector('.p-mun-portfolio');
+                if (oc && op && oc.value === committeeName && op.value) {
+                    localTaken.add(op.value);
+                }
+            });
+
+            const prevVal = portSel.value;
+            portSel.innerHTML = `<option value="" disabled selected>Select portfolio</option>` +
+                committee.portfolios.map(name => {
+                    const taken = globalTaken.has(name) || localTaken.has(name);
+                    const sel = (name === prevVal && !taken) ? ' selected' : '';
+                    return `<option value="${name}"${taken ? ' disabled' : ''}${sel}>${name}${taken ? ' \u2014 Taken' : ''}</option>`;
+                }).join('');
+            portSel.disabled = false;
+        }
+
+        function buildEventSubfields(card, eventKey) {
+            // Remove any existing sub-field section
+            const existing = card.querySelector('.p-subfields');
+            if (existing) existing.remove();
+
+            const priceTag = card.querySelector('.participant-price-tag');
+
+            if (eventKey === 'mun') {
+                const div = document.createElement('div');
+                div.className = 'p-subfields';
+                div.style.cssText = 'margin-top:10px;padding:12px;background:rgba(139,26,26,0.06);border:1px solid rgba(139,26,26,0.2);border-radius:8px;animation:fadeSlideIn 0.3s ease;';
+
+                const committees = window.__MUN_COMMITTEES || [];
+                const committeeOpts = committees.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+
+                div.innerHTML = `
               <p style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:600;color:#8b1a1a;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;">\ud83c\udfdb MUN Preferences</p>
               <div class="form-row">
                 <div class="form-group">
@@ -661,36 +730,37 @@
               </div>
             `;
 
-            card.querySelector('.participant-fields').insertBefore(div, priceTag);
+                card.querySelector('.participant-fields').insertBefore(div, priceTag);
 
-            const commSel = div.querySelector('.p-mun-committee');
-            const portSel = div.querySelector('.p-mun-portfolio');
+                const commSel = div.querySelector('.p-mun-committee');
+                const portSel = div.querySelector('.p-mun-portfolio');
 
-            // Committee selected → populate portfolio dropdown
-            commSel.addEventListener('change', () => {
-                buildPortfolioOptions(portSel, commSel.value, card);
-                updateSummary();
-            });
-
-            // Portfolio selected → refresh other cards' portfolios for same committee
-            portSel.addEventListener('change', () => {
-                const cName = commSel.value;
-                document.querySelectorAll('.participant-card').forEach(otherCard => {
-                    if (otherCard === card) return;
-                    const oc = otherCard.querySelector('.p-mun-committee');
-                    const op = otherCard.querySelector('.p-mun-portfolio');
-                    if (oc && op && oc.value === cName && !op.disabled) {
-                        buildPortfolioOptions(op, cName, otherCard);
-                    }
+                // Committee selected → populate portfolio dropdown + WHO consent
+                commSel.addEventListener('change', () => {
+                    buildPortfolioOptions(portSel, commSel.value, card);
+                    handleWhoConsent(commSel.value, div, card);
+                    updateSummary();
                 });
-                updateSummary();
-            });
 
-        } else if (eventKey === 'ipl') {
-            const div = document.createElement('div');
-            div.className = 'p-subfields';
-            div.style.cssText = 'margin-top:10px;padding:12px;background:rgba(139,26,26,0.06);border:1px solid rgba(139,26,26,0.2);border-radius:8px;animation:fadeSlideIn 0.3s ease;';
-            div.innerHTML = `
+                // Portfolio selected → refresh other cards' portfolios for same committee
+                portSel.addEventListener('change', () => {
+                    const cName = commSel.value;
+                    document.querySelectorAll('.participant-card').forEach(otherCard => {
+                        if (otherCard === card) return;
+                        const oc = otherCard.querySelector('.p-mun-committee');
+                        const op = otherCard.querySelector('.p-mun-portfolio');
+                        if (oc && op && oc.value === cName && !op.disabled) {
+                            buildPortfolioOptions(op, cName, otherCard);
+                        }
+                    });
+                    updateSummary();
+                });
+
+            } else if (eventKey === 'ipl') {
+                const div = document.createElement('div');
+                div.className = 'p-subfields';
+                div.style.cssText = 'margin-top:10px;padding:12px;background:rgba(139,26,26,0.06);border:1px solid rgba(139,26,26,0.2);border-radius:8px;animation:fadeSlideIn 0.3s ease;';
+                div.innerHTML = `
               <p style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:600;color:#8b1a1a;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;">\ud83c\udfd0 IPL Team Preference</p>
               <div class="form-group">
                 <label>Preferred IPL Team</label>
@@ -700,117 +770,145 @@
                 </select>
               </div>
             `;
-            card.querySelector('.participant-fields').insertBefore(div, priceTag);
-            div.querySelectorAll('select').forEach(el => {
+                card.querySelector('.participant-fields').insertBefore(div, priceTag);
+                div.querySelectorAll('select').forEach(el => {
+                    el.addEventListener('change', updateSummary);
+                });
+            }
+        }
+
+        // ── WHO Consent: show/hide inside each participant card's MUN subfield ──
+        function handleWhoConsent(committeeName, subfieldDiv, card) {
+            // Remove any existing WHO consent inside this card
+            const existing = subfieldDiv.querySelector('.who-consent-box');
+            if (existing) existing.remove();
+
+            if (committeeName === 'WHO') {
+                const consentBox = document.createElement('div');
+                consentBox.className = 'who-consent-box';
+                consentBox.style.cssText = 'margin-top:12px;';
+                consentBox.innerHTML = `
+                    <label style="display:flex;align-items:flex-start;gap:12px;background:rgba(139,26,26,0.1);border:1px solid rgba(139,26,26,0.3);padding:14px;border-radius:10px;cursor:pointer;">
+                        <input type="checkbox" class="p-who-consent" style="margin-top:4px;width:18px;height:18px;accent-color:#8b1a1a;flex-shrink:0;">
+                        <span style="font-size:12px;color:#e5e7eb;line-height:1.6;">
+                            <strong style="color:#f87171;display:block;margin-bottom:4px;">WHO Requirement:</strong>
+                            I provide my consent that if it is found on conference day that my experience is more than 10 MUN's, the organising team will reserve the right to cut my award.
+                        </span>
+                    </label>
+                `;
+                subfieldDiv.appendChild(consentBox);
+                consentBox.querySelector('.p-who-consent').addEventListener('change', updateSummary);
+            }
+        }
+
+        function addParticipantCard() {
+            const clone = template.content.cloneNode(true);
+            const card = clone.querySelector('.participant-card');
+            card.setAttribute('data-index', participantCount);
+            card.querySelector('.participant-number').textContent = 'Participant ' + (participantCount + 1);
+
+            // Event change → update price tag + sub-fields + summary
+            const eventSel = card.querySelector('.p-event');
+            const priceVal = card.querySelector('.p-price-value');
+            eventSel.addEventListener('change', () => {
+                const k = eventSel.value;
+                if (k && PRICES[k]) {
+                    priceVal.textContent = formatPrice(PRICES[k]);
+                } else {
+                    priceVal.textContent = '—';
+                }
+                buildEventSubfields(card, k);
+                updateSummary();
+            });
+
+            // Any field change → recheck summary
+            card.querySelectorAll('input, select').forEach(el => {
+                el.addEventListener('input', updateSummary);
                 el.addEventListener('change', updateSummary);
             });
-        }
-    }
 
-    function addParticipantCard() {
-        const clone = template.content.cloneNode(true);
-        const card  = clone.querySelector('.participant-card');
-        card.setAttribute('data-index', participantCount);
-        card.querySelector('.participant-number').textContent = 'Participant ' + (participantCount + 1);
+            // Remove button
+            card.querySelector('.remove-participant-btn').addEventListener('click', () => {
+                card.classList.add('removing');
+                setTimeout(() => {
+                    card.remove();
+                    participantCount--;
+                    renumberParticipants();
+                }, 300);
+            });
 
-        // Event change → update price tag + sub-fields + summary
-        const eventSel = card.querySelector('.p-event');
-        const priceVal = card.querySelector('.p-price-value');
-        eventSel.addEventListener('change', () => {
-            const k = eventSel.value;
-            if (k && PRICES[k]) {
-                priceVal.textContent = formatPrice(PRICES[k]);
-            } else {
-                priceVal.textContent = '—';
-            }
-            buildEventSubfields(card, k);
+            container.appendChild(card);
+            participantCount++;
             updateSummary();
-        });
-
-        // Any field change → recheck summary
-        card.querySelectorAll('input, select').forEach(el => {
-            el.addEventListener('input', updateSummary);
-            el.addEventListener('change', updateSummary);
-        });
-
-        // Remove button
-        card.querySelector('.remove-participant-btn').addEventListener('click', () => {
-            card.classList.add('removing');
-            setTimeout(() => {
-                card.remove();
-                participantCount--;
-                renumberParticipants();
-            }, 300);
-        });
-
-        container.appendChild(card);
-        participantCount++;
-        updateSummary();
-        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        setTimeout(() => card.querySelector('input').focus(), 400);
-    }
-
-    document.getElementById('add-participant-btn').addEventListener('click', addParticipantCard);
-
-    // ──────────────────────────────────────────────
-    // GO TO PAYMENT (Step 2 → Step 3)
-    // ──────────────────────────────────────────────
-    document.getElementById('go-to-payment-btn').addEventListener('click', () => {
-        const cards = document.querySelectorAll('.participant-card');
-        const participants = [];
-        let valid = true;
-
-        cards.forEach((card, i) => {
-            const first  = card.querySelector('.p-first').value.trim();
-            const last   = card.querySelector('.p-last').value.trim();
-            const email  = card.querySelector('.p-email').value.trim();
-            const phone  = card.querySelector('.p-phone').value.trim();
-            const grade  = card.querySelector('.p-grade').value;
-            const event  = card.querySelector('.p-event').value;
-
-            // MUN & IPL sub-fields
-            const munCommittee = card.querySelector('.p-mun-committee');
-            const munPortfolio = card.querySelector('.p-mun-portfolio');
-            const iplTeamSel   = card.querySelector('.p-ipl-team');
-
-            const munCommitteeVal = munCommittee ? munCommittee.value : null;
-            const munPortfolioVal = munPortfolio ? munPortfolio.value.trim() : null;
-            const iplTeamVal      = iplTeamSel   ? iplTeamSel.value      : null;
-
-            const munRequired = event === 'mun' && (!munCommitteeVal || !munPortfolioVal);
-            const iplRequired = event === 'ipl' && !iplTeamVal;
-
-            if (!first || !last || !email || !phone || !grade || !event || munRequired || iplRequired) {
-                valid = false;
-                card.querySelectorAll('input, select').forEach(el => {
-                    if (!el.value.trim()) el.classList.add('input-error');
-                    else el.classList.remove('input-error');
-                });
-            } else {
-                participants.push({
-                    firstName: first, lastName: last, email, phone, grade, event,
-                    munCommittee: munCommitteeVal || null,
-                    munPortfolio: munPortfolioVal || null,
-                    iplTeam:      iplTeamVal      || null
-                });
-            }
-        });
-
-        if (!valid) {
-            alert('Please fill in all participant details before continuing.');
-            return;
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => card.querySelector('input').focus(), 400);
         }
 
-        const finalTotal = getTotalFinal();
+        document.getElementById('add-participant-btn').addEventListener('click', addParticipantCard);
 
-        // Save to session
-        sessionStorage.setItem('nydc_inst_participants', JSON.stringify(participants));
-        sessionStorage.setItem('nydc_inst_total', finalTotal);
-        sessionStorage.removeItem('nydc_inst_coupon');
+        // ──────────────────────────────────────────────
+        // GO TO PAYMENT (Step 2 → Step 3)
+        // ──────────────────────────────────────────────
+        document.getElementById('go-to-payment-btn').addEventListener('click', () => {
+            const cards = document.querySelectorAll('.participant-card');
+            const participants = [];
+            let valid = true;
 
-        // Build participant summary
-        const summaryBox = document.getElementById('participant-summary-box');
-        summaryBox.innerHTML = `
+            cards.forEach((card, i) => {
+                const first = card.querySelector('.p-first').value.trim();
+                const last = card.querySelector('.p-last').value.trim();
+                const email = card.querySelector('.p-email').value.trim();
+                const phone = card.querySelector('.p-phone').value.trim();
+                const grade = card.querySelector('.p-grade').value;
+                const event = card.querySelector('.p-event').value;
+
+                // MUN & IPL sub-fields
+                const munCommittee = card.querySelector('.p-mun-committee');
+                const munPortfolio = card.querySelector('.p-mun-portfolio');
+                const iplTeamSel = card.querySelector('.p-ipl-team');
+
+                const munCommitteeVal = munCommittee ? munCommittee.value : null;
+                const munPortfolioVal = munPortfolio ? munPortfolio.value.trim() : null;
+                const iplTeamVal = iplTeamSel ? iplTeamSel.value : null;
+
+                const munRequired = event === 'mun' && (!munCommitteeVal || !munPortfolioVal);
+                const iplRequired = event === 'ipl' && !iplTeamVal;
+
+                // WHO consent check
+                const whoConsentEl = card.querySelector('.p-who-consent');
+                const whoRequired = event === 'mun' && munCommitteeVal === 'WHO' && whoConsentEl && !whoConsentEl.checked;
+
+                if (!first || !last || !email || !phone || !grade || !event || munRequired || iplRequired || whoRequired) {
+                    valid = false;
+                    card.querySelectorAll('input, select').forEach(el => {
+                        if (!el.value.trim()) el.classList.add('input-error');
+                        else el.classList.remove('input-error');
+                    });
+                } else {
+                    participants.push({
+                        firstName: first, lastName: last, email, phone, grade, event,
+                        munCommittee: munCommitteeVal || null,
+                        munPortfolio: munPortfolioVal || null,
+                        iplTeam: iplTeamVal || null
+                    });
+                }
+            });
+
+            if (!valid) {
+                alert('Please fill in all participant details before continuing.');
+                return;
+            }
+
+            const finalTotal = getTotalFinal();
+
+            // Save to session
+            sessionStorage.setItem('nydc_inst_participants', JSON.stringify(participants));
+            sessionStorage.setItem('nydc_inst_total', finalTotal);
+            sessionStorage.removeItem('nydc_inst_coupon');
+
+            // Build participant summary
+            const summaryBox = document.getElementById('participant-summary-box');
+            summaryBox.innerHTML = `
             <div class="ps-header">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 &nbsp; ${participants.length} Participant${participants.length !== 1 ? 's' : ''} — ${(window._instCoordData || {}).instName || 'Institution'}
@@ -829,247 +927,247 @@
             </div>
         `;
 
-        // Setup UPI
-        const UPI_ID = 'gupta-damini@ptyes';
-        const upiLink = `upi://pay?pa=${UPI_ID}&pn=NYDC%202026&am=${finalTotal}&cu=INR&tn=NYDC%202026%20Institutional%20Registration`;
-        const upiAnchor = document.getElementById('inst-upi-pay-link');
-        upiAnchor.href = upiLink;
-        upiAnchor.onclick = e => { e.preventDefault(); window.location.href = upiLink; };
+            // Setup UPI
+            const UPI_ID = 'gupta-damini@ptyes';
+            const upiLink = `upi://pay?pa=${UPI_ID}&pn=NYDC%202026&am=${finalTotal}&cu=INR&tn=NYDC%202026%20Institutional%20Registration`;
+            const upiAnchor = document.getElementById('inst-upi-pay-link');
+            upiAnchor.href = upiLink;
+            upiAnchor.onclick = e => { e.preventDefault(); window.location.href = upiLink; };
 
-        // QR code
-        document.getElementById('inst-upi-qr-img').src =
-            `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiLink)}&bgcolor=ffffff&color=000000&margin=2`;
+            // QR code
+            document.getElementById('inst-upi-qr-img').src =
+                `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiLink)}&bgcolor=ffffff&color=000000&margin=2`;
 
-        // Payment info
-        document.getElementById('inst-payment-amount').textContent = formatPrice(finalTotal);
-        document.getElementById('inst-payment-count').textContent = participants.length + ' participant' + (participants.length !== 1 ? 's' : '');
+            // Payment info
+            document.getElementById('inst-payment-amount').textContent = formatPrice(finalTotal);
+            document.getElementById('inst-payment-count').textContent = participants.length + ' participant' + (participants.length !== 1 ? 's' : '');
 
-        // Show step 3
-        document.getElementById('step-2').style.display = 'none';
-        document.getElementById('step-3').style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+            // Show step 3
+            document.getElementById('step-2').style.display = 'none';
+            document.getElementById('step-3').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
 
-    // Back to participants
-    document.getElementById('back-to-participants').addEventListener('click', (e) => {
-        e.preventDefault();
-        document.getElementById('step-3').style.display = 'none';
-        document.getElementById('step-2').style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+        // Back to participants
+        document.getElementById('back-to-participants').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('step-3').style.display = 'none';
+            document.getElementById('step-2').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
 
-    // Submit button wires to module script event
-    document.getElementById('inst-submit-btn').addEventListener('click', () => {
-        const txnId = document.getElementById('inst-transaction-id').value.trim();
-        if (!txnId) {
-            document.getElementById('inst-submit-error').textContent = 'Please enter your UPI Transaction ID.';
-            document.getElementById('inst-transaction-id').focus();
-            return;
-        }
-        document.getElementById('inst-submit-error').textContent = '';
-        window._instTransactionId = txnId;
-        window.dispatchEvent(new CustomEvent('inst-final-submit'));
-    });
+        // Submit button wires to module script event
+        document.getElementById('inst-submit-btn').addEventListener('click', () => {
+            const txnId = document.getElementById('inst-transaction-id').value.trim();
+            if (!txnId) {
+                document.getElementById('inst-submit-error').textContent = 'Please enter your UPI Transaction ID.';
+                document.getElementById('inst-transaction-id').focus();
+                return;
+            }
+            document.getElementById('inst-submit-error').textContent = '';
+            window._instTransactionId = txnId;
+            window.dispatchEvent(new CustomEvent('inst-final-submit'));
+        });
     </script>
 
     <!-- Firebase Module Script -->
     <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
-    import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
-    import { getFirestore, collection, addDoc, setDoc, doc, getDocs, query, where, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
+        import { getFirestore, collection, addDoc, setDoc, doc, getDocs, query, where, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
-        authDomain: "nydc-72b34.firebaseapp.com",
-        projectId: "nydc-72b34",
-        storageBucket: "nydc-72b34.firebasestorage.app",
-        messagingSenderId: "935882112599",
-        appId: "1:935882112599:web:f04b660e233f21a46f2d12",
-        measurementId: "G-5G8Z44578K"
-    };
+        const firebaseConfig = {
+            apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
+            authDomain: "nydc-72b34.firebaseapp.com",
+            projectId: "nydc-72b34",
+            storageBucket: "nydc-72b34.firebasestorage.app",
+            messagingSenderId: "935882112599",
+            appId: "1:935882112599:web:f04b660e233f21a46f2d12",
+            measurementId: "G-5G8Z44578K"
+        };
 
-    const app  = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db   = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-    // ── Fetch taken MUN portfolios from both individual + institutional ──
-    // Stored as { committeeName: Set(portfolioName) }, e.g. { 'UNGA': Set(['India','France'...]) }
-    const MUN_ID_TO_NAME = {
-        'unga':'UNGA','uncsw':'UNCSW','unhrc':'UNHRC',
-        'who':'WHO','aippm':'AIPPM','ip':'International Press (IP)'
-    };
-    window.__instTakenPortfolios = {};
+        // ── Fetch taken MUN portfolios from both individual + institutional ──
+        // Stored as { committeeName: Set(portfolioName) }, e.g. { 'UNGA': Set(['India','France'...]) }
+        const MUN_ID_TO_NAME = {
+            'unga': 'UNGA', 'uncsw': 'UNCSW', 'unhrc': 'UNHRC',
+            'who': 'WHO', 'aippm': 'AIPPM', 'ip': 'International Press (IP)'
+        };
+        window.__instTakenPortfolios = {};
 
-    (async () => {
-        const takenMap = {};
-        // 1. Individual registrations
-        try {
-            const q    = query(collection(db, 'registrations'), where('event', '==', 'mun'));
-            const snap = await getDocs(q);
-            snap.forEach(d => {
-                const data = d.data();
-                if (data.status === 'rejected') return;
-                (data.munPortfolios || []).forEach(p => {
-                    const cName = MUN_ID_TO_NAME[(p.committeeId || '').toLowerCase()] || p.committeeId;
-                    if (!takenMap[cName]) takenMap[cName] = new Set();
-                    takenMap[cName].add(p.portfolioName);
-                });
-            });
-        } catch(e) { console.warn('Inst fetch individual MUN taken:', e); }
-
-        // 2. Institutional registrations
-        try {
-            const iq    = query(collection(db, 'institutional_registrations'));
-            const isnap = await getDocs(iq);
-            isnap.forEach(d => {
-                const data = d.data();
-                if (data.status === 'rejected') return;
-                (data.participants || []).forEach(p => {
-                    if (p.event === 'mun' && p.munCommittee && p.munPortfolio) {
-                        const cName = p.munCommittee; // already a name like 'UNGA'
+        (async () => {
+            const takenMap = {};
+            // 1. Individual registrations
+            try {
+                const q = query(collection(db, 'registrations'), where('event', '==', 'mun'));
+                const snap = await getDocs(q);
+                snap.forEach(d => {
+                    const data = d.data();
+                    if (data.status === 'rejected') return;
+                    (data.munPortfolios || []).forEach(p => {
+                        const cName = MUN_ID_TO_NAME[(p.committeeId || '').toLowerCase()] || p.committeeId;
                         if (!takenMap[cName]) takenMap[cName] = new Set();
-                        takenMap[cName].add(p.munPortfolio);
-                    }
+                        takenMap[cName].add(p.portfolioName);
+                    });
                 });
-            });
-        } catch(e) { console.warn('Inst fetch institutional MUN taken:', e); }
+            } catch (e) { console.warn('Inst fetch individual MUN taken:', e); }
 
-        window.__instTakenPortfolios = takenMap;
-        console.log('✅ Inst taken portfolios ready:', takenMap);
-    })();
+            // 2. Institutional registrations
+            try {
+                const iq = query(collection(db, 'institutional_registrations'));
+                const isnap = await getDocs(iq);
+                isnap.forEach(d => {
+                    const data = d.data();
+                    if (data.status === 'rejected') return;
+                    (data.participants || []).forEach(p => {
+                        if (p.event === 'mun' && p.munCommittee && p.munPortfolio) {
+                            const cName = p.munCommittee; // already a name like 'UNGA'
+                            if (!takenMap[cName]) takenMap[cName] = new Set();
+                            takenMap[cName].add(p.munPortfolio);
+                        }
+                    });
+                });
+            } catch (e) { console.warn('Inst fetch institutional MUN taken:', e); }
 
-    // ── STEP 1: Coordinator form submit ──
-    window.addEventListener('inst-coord-submit', async () => {
-        const data      = window._pendingCoordData;
-        const submitBtn = document.getElementById('coord-submit-btn');
-        const genErr    = document.getElementById('coord-general-error');
+            window.__instTakenPortfolios = takenMap;
+            console.log('✅ Inst taken portfolios ready:', takenMap);
+        })();
 
-        try {
-            // Check if institution already has a registration (by institution name)
-            const instQuery = query(
-                collection(db, 'institutional_registrations'),
-                where('institutionName', '==', data.instName)
-            );
-            const existing = await getDocs(instQuery);
+        // ── STEP 1: Coordinator form submit ──
+        window.addEventListener('inst-coord-submit', async () => {
+            const data = window._pendingCoordData;
+            const submitBtn = document.getElementById('coord-submit-btn');
+            const genErr = document.getElementById('coord-general-error');
 
-            if (!existing.empty) {
+            try {
+                // Check if institution already has a registration (by institution name)
+                const instQuery = query(
+                    collection(db, 'institutional_registrations'),
+                    where('institutionName', '==', data.instName)
+                );
+                const existing = await getDocs(instQuery);
+
+                if (!existing.empty) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Continue to Participants →';
+                    genErr.textContent = '⚠ This institution is already registered. Please log in to add more participants.';
+                    return;
+                }
+
+                // Create Firebase Auth account
+                const userCred = await createUserWithEmailAndPassword(auth, data.email, data.password);
+                const uid = userCred.user.uid;
+
+                // Save coordinator data globally (accessible from inline script)
+                window._instCoordData = { ...data, uid };
+
+                // ── Create a DRAFT Firestore doc immediately so login can detect this as institutional ──
+                const draftRef = await addDoc(collection(db, 'institutional_registrations'), {
+                    registrationType: 'institutional',
+                    uid,
+                    coordinatorFirst: data.firstName,
+                    coordinatorLast: data.lastName,
+                    email: data.email,
+                    phone: data.phone,
+                    institutionName: data.instName,
+                    institutionCity: data.instCity,
+                    institutionType: data.instType,
+                    participants: [],
+                    participantCount: 0,
+                    totalAmount: 0,
+                    status: 'draft',
+                    registeredAt: serverTimestamp()
+                });
+                window._instDraftDocId = draftRef.id;
+                console.log('✅ Institutional draft created:', draftRef.id);
+
+                // Update badge
+                document.getElementById('inst-badge-name').textContent = data.instName;
+
+                // Show step 2
+                document.getElementById('step-1').style.display = 'none';
+                document.getElementById('step-2').style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            } catch (error) {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Continue to Participants →';
-                genErr.textContent = '⚠ This institution is already registered. Please log in to add more participants.';
-                return;
+                let msg = 'Error: ' + error.message;
+                if (error.code === 'auth/email-already-in-use') msg = 'This email is already registered. Try logging in instead.';
+                else if (error.code === 'auth/weak-password') msg = 'Password too weak. Use at least 6 characters.';
+                else if (error.code === 'auth/invalid-email') msg = 'Please enter a valid email address.';
+                genErr.textContent = msg;
             }
+        });
 
-            // Create Firebase Auth account
-            const userCred = await createUserWithEmailAndPassword(auth, data.email, data.password);
-            const uid = userCred.user.uid;
+        // ── STEP 3: Final submission ──
+        window.addEventListener('inst-final-submit', async () => {
+            const submitBtn = document.getElementById('inst-submit-btn');
+            const errEl = document.getElementById('inst-submit-error');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting…';
 
-            // Save coordinator data globally (accessible from inline script)
-            window._instCoordData = { ...data, uid };
+            try {
+                const coordInfo = window._instCoordData;
+                const participants = JSON.parse(sessionStorage.getItem('nydc_inst_participants') || '[]');
+                const totalAmount = parseFloat(sessionStorage.getItem('nydc_inst_total') || '0');
+                const originalTotal = parseFloat(sessionStorage.getItem('nydc_inst_original_total') || '0');
+                const couponRaw = sessionStorage.getItem('nydc_inst_coupon');
+                const couponInfo = couponRaw ? JSON.parse(couponRaw) : null;
+                const txnId = window._instTransactionId;
 
-            // ── Create a DRAFT Firestore doc immediately so login can detect this as institutional ──
-            const draftRef = await addDoc(collection(db, 'institutional_registrations'), {
-                registrationType: 'institutional',
-                uid,
-                coordinatorFirst: data.firstName,
-                coordinatorLast:  data.lastName,
-                email:            data.email,
-                phone:            data.phone,
-                institutionName:  data.instName,
-                institutionCity:  data.instCity,
-                institutionType:  data.instType,
-                participants:     [],
-                participantCount: 0,
-                totalAmount:      0,
-                status:           'draft',
-                registeredAt:     serverTimestamp()
-            });
-            window._instDraftDocId = draftRef.id;
-            console.log('✅ Institutional draft created:', draftRef.id);
+                const regData = {
+                    // Type flag
+                    registrationType: 'institutional',
+                    // Coordinator
+                    uid: coordInfo.uid || '',
+                    coordinatorFirst: coordInfo.firstName || '',
+                    coordinatorLast: coordInfo.lastName || '',
+                    email: coordInfo.email || '',
+                    phone: coordInfo.phone || '',
+                    // Institution
+                    institutionName: coordInfo.instName || '',
+                    institutionCity: coordInfo.instCity || '',
+                    institutionType: coordInfo.instType || '',
+                    // Participants
+                    participants,
+                    participantCount: participants.length,
+                    // Payment
+                    totalAmount,
+                    originalTotal,
+                    couponApplied: couponInfo ? couponInfo.applied : false,
+                    couponCode: couponInfo ? couponInfo.code : null,
+                    transactionId: txnId,
+                    // Metadata
+                    status: 'pending',
+                    registeredAt: serverTimestamp()
+                };
 
-            // Update badge
-            document.getElementById('inst-badge-name').textContent = data.instName;
+                let docRef;
+                if (window._instDraftDocId) {
+                    // Update existing draft doc created in Step 1
+                    const dRef = doc(db, 'institutional_registrations', window._instDraftDocId);
+                    await setDoc(dRef, regData);
+                    docRef = { id: window._instDraftDocId };
+                    console.log('Institutional draft updated to pending:', docRef.id);
+                } else {
+                    // Fallback: create new doc (e.g. resumed from login)
+                    docRef = await addDoc(collection(db, 'institutional_registrations'), regData);
+                    console.log('Institutional registration saved:', docRef.id);
+                }
 
-            // Show step 2
-            document.getElementById('step-1').style.display = 'none';
-            document.getElementById('step-2').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Clear session
+                sessionStorage.removeItem('nydc_inst_participants');
+                sessionStorage.removeItem('nydc_inst_total');
+                sessionStorage.removeItem('nydc_inst_original_total');
+                sessionStorage.removeItem('nydc_inst_coupon');
 
-        } catch (error) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Continue to Participants →';
-            let msg = 'Error: ' + error.message;
-            if (error.code === 'auth/email-already-in-use') msg = 'This email is already registered. Try logging in instead.';
-            else if (error.code === 'auth/weak-password') msg = 'Password too weak. Use at least 6 characters.';
-            else if (error.code === 'auth/invalid-email') msg = 'Please enter a valid email address.';
-            genErr.textContent = msg;
-        }
-    });
-
-    // ── STEP 3: Final submission ──
-    window.addEventListener('inst-final-submit', async () => {
-        const submitBtn = document.getElementById('inst-submit-btn');
-        const errEl     = document.getElementById('inst-submit-error');
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Submitting…';
-
-        try {
-            const coordInfo     = window._instCoordData;
-            const participants  = JSON.parse(sessionStorage.getItem('nydc_inst_participants') || '[]');
-            const totalAmount   = parseFloat(sessionStorage.getItem('nydc_inst_total') || '0');
-            const originalTotal = parseFloat(sessionStorage.getItem('nydc_inst_original_total') || '0');
-            const couponRaw     = sessionStorage.getItem('nydc_inst_coupon');
-            const couponInfo    = couponRaw ? JSON.parse(couponRaw) : null;
-            const txnId         = window._instTransactionId;
-
-            const regData = {
-                // Type flag
-                registrationType: 'institutional',
-                // Coordinator
-                uid:              coordInfo.uid              || '',
-                coordinatorFirst: coordInfo.firstName        || '',
-                coordinatorLast:  coordInfo.lastName         || '',
-                email:            coordInfo.email            || '',
-                phone:            coordInfo.phone            || '',
-                // Institution
-                institutionName:  coordInfo.instName         || '',
-                institutionCity:  coordInfo.instCity         || '',
-                institutionType:  coordInfo.instType         || '',
-                // Participants
-                participants,
-                participantCount: participants.length,
-                // Payment
-                totalAmount,
-                originalTotal,
-                couponApplied:    couponInfo ? couponInfo.applied : false,
-                couponCode:       couponInfo ? couponInfo.code : null,
-                transactionId:    txnId,
-                // Metadata
-                status:           'pending',
-                registeredAt:     serverTimestamp()
-            };
-
-            let docRef;
-            if (window._instDraftDocId) {
-                // Update existing draft doc created in Step 1
-                const dRef = doc(db, 'institutional_registrations', window._instDraftDocId);
-                await setDoc(dRef, regData);
-                docRef = { id: window._instDraftDocId };
-                console.log('Institutional draft updated to pending:', docRef.id);
-            } else {
-                // Fallback: create new doc (e.g. resumed from login)
-                docRef = await addDoc(collection(db, 'institutional_registrations'), regData);
-                console.log('Institutional registration saved:', docRef.id);
-            }
-
-            // Clear session
-            sessionStorage.removeItem('nydc_inst_participants');
-            sessionStorage.removeItem('nydc_inst_total');
-            sessionStorage.removeItem('nydc_inst_original_total');
-            sessionStorage.removeItem('nydc_inst_coupon');
-
-            // Show success screen
-            const card = document.getElementById('main-card');
-            card.innerHTML = `
+                // Show success screen
+                const card = document.getElementById('main-card');
+                card.innerHTML = `
                 <div style="text-align:center; padding:60px 20px;">
                     <div style="width:70px;height:70px;border-radius:50%;background:rgba(234,179,8,0.15);border:2px solid #eab308;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1096,16 +1194,17 @@
                 </div>
             `;
 
-        } catch (error) {
-            console.error('Institutional registration error:', error);
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Submit Institutional Registration';
-            errEl.textContent = 'Submission failed: ' + error.message + '. Please try again.';
-        }
-    });
+            } catch (error) {
+                console.error('Institutional registration error:', error);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Institutional Registration';
+                errEl.textContent = 'Submission failed: ' + error.message + '. Please try again.';
+            }
+        });
 
 
     </script>
 
 </body>
+
 </html>
