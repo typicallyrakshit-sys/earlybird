@@ -137,9 +137,8 @@
                         <label for="inst-type">Institution Type</label>
                         <select id="inst-type" required>
                             <option value="" disabled selected>Select type</option>
-                            <option value="school">School (Grades 8–12)</option>
+                            <option value="school">School (Grades 6–12)</option>
                             <option value="college">College / University</option>
-                            <option value="coaching">Coaching Institute</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
@@ -169,7 +168,7 @@
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                         &nbsp; Institutional Pricing — Same event price per participant
                     </div>
-                    <p class="pricing-tier-note">Add participants below. Each participant pays the full event price. Select the event when adding each participant. Coupon codes apply at checkout.</p>
+                    <p class="pricing-tier-note">Add participants below. Each participant pays the full event price. Select the event when adding each participant.</p>
                 </div>
 
                 <!-- Participants container -->
@@ -192,29 +191,7 @@
                     </div>
                 </div>
 
-                <!-- Coupon Code Section -->
-                <div class="coupon-section" id="inst-coupon-section">
-                    <span class="events-label">🎟️ Have a Coupon Code?</span>
-                    <div class="coupon-input-row">
-                        <input type="text" id="inst-coupon-input" class="coupon-input" placeholder="Enter coupon code" autocomplete="off" spellcheck="false">
-                        <button type="button" id="inst-coupon-apply-btn" class="coupon-apply-btn">Apply</button>
-                    </div>
-                    <p class="coupon-status" id="inst-coupon-status"></p>
-                    <div class="price-summary" id="inst-price-summary" style="display:none;">
-                        <div class="price-row">
-                            <span>Original Total</span>
-                            <span class="price-original" id="inst-price-original"></span>
-                        </div>
-                        <div class="price-row price-discount-row">
-                            <span>Coupon Discount</span>
-                            <span class="price-discount" id="inst-price-discount"></span>
-                        </div>
-                        <div class="price-row price-final-row">
-                            <span>You Pay (per UPI)</span>
-                            <span class="price-final" id="inst-price-final"></span>
-                        </div>
-                    </div>
-                </div>
+
 
                 <button type="button" class="submit-btn" id="go-to-payment-btn" style="margin-bottom:20px;" disabled>Continue to Payment →</button>
                 <p class="step-indicator">Step 2 of 3 — Participants</p>
@@ -241,10 +218,7 @@
                             <span>Participants</span>
                             <span id="inst-payment-count">—</span>
                         </div>
-                        <div class="payment-coupon-row" id="inst-payment-coupon-row" style="display:none;">
-                            <span>Coupon Applied</span>
-                            <span class="payment-coupon-badge" id="inst-payment-coupon-badge"></span>
-                        </div>
+
                     </div>
 
                     <a href="#" id="inst-upi-pay-link" class="upi-pay-btn">
@@ -317,6 +291,8 @@
                         <label>Grade / Year</label>
                         <select class="p-grade" required>
                             <option value="" disabled selected>Select grade</option>
+                            <option value="6">Grade 6</option>
+                            <option value="7">Grade 7</option>
                             <option value="8">Grade 8</option>
                             <option value="9">Grade 9</option>
                             <option value="10">Grade 10</option>
@@ -634,13 +610,11 @@
     // STEP 2: PARTICIPANTS
     // ──────────────────────────────────────────────
     let participantCount = 0;
-    let couponApplied = false;
-    let appliedCouponCode = '';
 
     const container = document.getElementById('participants-container');
     const template  = document.getElementById('participant-card-template');
 
-    function getTotalOriginal() {
+    function getTotalFinal() {
         let total = 0;
         document.querySelectorAll('.participant-card').forEach(card => {
             const eventSel = card.querySelector('.p-event').value;
@@ -651,36 +625,14 @@
         return total;
     }
 
-    function getTotalFinal() {
-        let total = 0;
-        document.querySelectorAll('.participant-card').forEach(card => {
-            const eventSel = card.querySelector('.p-event').value;
-            if (eventSel && PRICES[eventSel]) {
-                total += couponApplied ? PRICES[eventSel].original : PRICES[eventSel].increased;
-            }
-        });
-        return total;
-    }
-
     function updateSummary() {
         const cards = document.querySelectorAll('.participant-card');
         const count = cards.length;
         const finalTotal = getTotalFinal();
-        const originalTotal = getTotalOriginal();
 
         document.getElementById('participant-count-label').textContent =
             count + (count === 1 ? ' Participant' : ' Participants');
         document.getElementById('total-amount').textContent = formatPrice(finalTotal);
-
-        // Coupon summary panel
-        if (couponApplied && count > 0 && originalTotal > 0) {
-            document.getElementById('inst-price-original').textContent = formatPrice(originalTotal);
-            document.getElementById('inst-price-discount').textContent = '- ' + formatPrice(originalTotal - finalTotal);
-            document.getElementById('inst-price-final').textContent = formatPrice(finalTotal);
-            document.getElementById('inst-price-summary').style.display = 'block';
-        } else {
-            document.getElementById('inst-price-summary').style.display = 'none';
-        }
 
         // Enable/disable continue button — also check sub-fields
         const allFilled = count > 0 && Array.from(cards).every(card => {
@@ -836,8 +788,7 @@
         eventSel.addEventListener('change', () => {
             const k = eventSel.value;
             if (k && PRICES[k]) {
-                const price = couponApplied ? PRICES[k].original : PRICES[k].increased;
-                priceVal.textContent = formatPrice(price);
+                priceVal.textContent = formatPrice(PRICES[k].increased);
             } else {
                 priceVal.textContent = '—';
             }
@@ -869,58 +820,6 @@
     }
 
     document.getElementById('add-participant-btn').addEventListener('click', addParticipantCard);
-
-    // ──────────────────────────────────────────────
-    // COUPON LOGIC (Step 2)
-    // ──────────────────────────────────────────────
-    const couponInput  = document.getElementById('inst-coupon-input');
-    const couponBtn    = document.getElementById('inst-coupon-apply-btn');
-    const couponStatus = document.getElementById('inst-coupon-status');
-
-    couponBtn.addEventListener('click', () => {
-        const code = couponInput.value.trim().toUpperCase();
-        if (!code) {
-            couponStatus.textContent = 'Please enter a coupon code.';
-            couponStatus.className = 'coupon-status error';
-            return;
-        }
-
-        if (VALID_COUPONS[code]) {
-            couponApplied = true;
-            appliedCouponCode = code;
-            couponStatus.textContent = '✓ ' + VALID_COUPONS[code].label + ' applied!';
-            couponStatus.className = 'coupon-status success';
-            couponInput.disabled = true;
-            couponInput.value = code;
-            couponBtn.textContent = 'Applied ✓';
-            couponBtn.disabled = true;
-            couponBtn.classList.add('applied');
-            // Refresh event price tags
-            document.querySelectorAll('.participant-card').forEach(card => {
-                const k = card.querySelector('.p-event').value;
-                const pv = card.querySelector('.p-price-value');
-                if (k && PRICES[k]) pv.textContent = formatPrice(PRICES[k].original);
-            });
-            updateSummary();
-        } else {
-            couponApplied = false;
-            appliedCouponCode = '';
-            couponStatus.textContent = '✕ Invalid coupon code. Please try again.';
-            couponStatus.className = 'coupon-status error';
-            couponInput.classList.add('shake');
-            setTimeout(() => couponInput.classList.remove('shake'), 500);
-            document.querySelectorAll('.participant-card').forEach(card => {
-                const k = card.querySelector('.p-event').value;
-                const pv = card.querySelector('.p-price-value');
-                if (k && PRICES[k]) pv.textContent = formatPrice(PRICES[k].increased);
-            });
-            updateSummary();
-        }
-    });
-
-    couponInput.addEventListener('keydown', e => {
-        if (e.key === 'Enter') { e.preventDefault(); couponBtn.click(); }
-    });
 
     // ──────────────────────────────────────────────
     // GO TO PAYMENT (Step 2 → Step 3)
@@ -971,18 +870,12 @@
             return;
         }
 
-        const finalTotal   = getTotalFinal();
-        const originalTotal = getTotalOriginal();
+        const finalTotal = getTotalFinal();
 
         // Save to session
         sessionStorage.setItem('nydc_inst_participants', JSON.stringify(participants));
         sessionStorage.setItem('nydc_inst_total', finalTotal);
-        sessionStorage.setItem('nydc_inst_original_total', originalTotal);
-        if (couponApplied) {
-            sessionStorage.setItem('nydc_inst_coupon', JSON.stringify({ code: appliedCouponCode, applied: true }));
-        } else {
-            sessionStorage.removeItem('nydc_inst_coupon');
-        }
+        sessionStorage.removeItem('nydc_inst_coupon');
 
         // Build participant summary
         const summaryBox = document.getElementById('participant-summary-box');
@@ -999,7 +892,7 @@
                             <strong>${p.firstName} ${p.lastName}</strong>
                             <span>${EVENT_NAMES[p.event] || p.event}${p.munCommittee ? ' · ' + p.munCommittee + (p.munPortfolio ? ' — ' + p.munPortfolio : '') : ''}${p.iplTeam ? ' · ' + p.iplTeam : ''}</span>
                         </div>
-                        <span class="ps-price">${formatPrice(couponApplied ? PRICES[p.event].original : PRICES[p.event].increased)}</span>
+                        <span class="ps-price">${formatPrice(PRICES[p.event].increased)}</span>
                     </div>
                 `).join('')}
             </div>
@@ -1019,11 +912,6 @@
         // Payment info
         document.getElementById('inst-payment-amount').textContent = formatPrice(finalTotal);
         document.getElementById('inst-payment-count').textContent = participants.length + ' participant' + (participants.length !== 1 ? 's' : '');
-
-        if (couponApplied) {
-            document.getElementById('inst-payment-coupon-row').style.display = 'flex';
-            document.getElementById('inst-payment-coupon-badge').textContent = appliedCouponCode;
-        }
 
         // Show step 3
         document.getElementById('step-2').style.display = 'none';
