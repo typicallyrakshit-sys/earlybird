@@ -371,6 +371,7 @@
                 phone:     d.phone,
                 instName:  d.institutionName,
                 instCity:  d.institutionCity,
+                instType:  d.institutionType || '',
                 uid:       d.uid
             };
             window._instDraftDocId = d.docId; // so Step 3 updates instead of creates
@@ -1205,15 +1206,15 @@
                 // Type flag
                 registrationType: 'institutional',
                 // Coordinator
-                uid:              coordInfo.uid,
-                coordinatorFirst: coordInfo.firstName,
-                coordinatorLast:  coordInfo.lastName,
-                email:            coordInfo.email,
-                phone:            coordInfo.phone,
+                uid:              coordInfo.uid              || '',
+                coordinatorFirst: coordInfo.firstName        || '',
+                coordinatorLast:  coordInfo.lastName         || '',
+                email:            coordInfo.email            || '',
+                phone:            coordInfo.phone            || '',
                 // Institution
-                institutionName:  coordInfo.instName,
-                institutionCity:  coordInfo.instCity,
-                institutionType:  coordInfo.instType,
+                institutionName:  coordInfo.instName         || '',
+                institutionCity:  coordInfo.instCity         || '',
+                institutionType:  coordInfo.instType         || '',
                 // Participants
                 participants,
                 participantCount: participants.length,
