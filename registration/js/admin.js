@@ -96,6 +96,8 @@ const couponStatsSection = document.getElementById('coupon-stats-section');
 const couponStatsGrid = document.getElementById('coupon-stats-grid');
 
 let registrationsData = [];
+let institutionalData = [];
+let activeTab = 'individual'; // 'individual' | 'institutional'
 
 // ─── AUTH STATE LOGIC ───
 onAuthStateChanged(auth, async (user) => {
@@ -120,6 +122,7 @@ onAuthStateChanged(auth, async (user) => {
 // ─── FETCH DATA ───
 async function fetchRegistrations() {
     try {
+        // Individual registrations
         const regsRef = collection(db, "registrations");
         const q = query(regsRef, orderBy('registeredAt', 'desc'));
         const querySnapshot = await getDocs(q);
@@ -129,8 +132,23 @@ async function fetchRegistrations() {
             registrationsData.push({ id: docSnap.id, ...docSnap.data() });
         });
 
+        // Institutional registrations
+        try {
+            const instRef = collection(db, "institutional_registrations");
+            const instQ = query(instRef, orderBy('registeredAt', 'desc'));
+            const instSnap = await getDocs(instQ);
+            institutionalData = [];
+            instSnap.forEach(docSnap => {
+                institutionalData.push({ id: docSnap.id, ...docSnap.data() });
+            });
+        } catch (instErr) {
+            console.warn('Could not fetch institutional registrations:', instErr);
+            institutionalData = [];
+        }
+
         renderCouponStats(registrationsData);
         renderTable(registrationsData);
+        renderTabCounts();
         showDashboard();
 
     } catch (error) {
@@ -193,6 +211,161 @@ function renderCouponStats(dataArray) {
     ` + html;
 
     couponStatsGrid.innerHTML = html;
+}
+
+// ─── TAB COUNT RENDER ───
+function renderTabCounts() {
+    const indTab = document.getElementById('tab-individual');
+    const instTab = document.getElementById('tab-institutional');
+    if (indTab) indTab.textContent = `Individual (${registrationsData.length})`;
+    if (instTab) instTab.textContent = `Institutional (${institutionalData.length})`;
+}
+
+// Wire tab buttons if they exist in DOM
+document.addEventListener('DOMContentLoaded', () => {
+    const indTab = document.getElementById('tab-individual');
+    const instTab = document.getElementById('tab-institutional');
+    if (indTab) {
+        indTab.addEventListener('click', () => {
+            activeTab = 'individual';
+            indTab.classList.add('active-tab');
+            if (instTab) instTab.classList.remove('active-tab');
+            renderTable(registrationsData);
+        });
+    }
+    if (instTab) {
+        instTab.addEventListener('click', () => {
+            activeTab = 'institutional';
+            instTab.classList.add('active-tab');
+            if (indTab) indTab.classList.remove('active-tab');
+            renderInstitutionalTable(institutionalData);
+        });
+    }
+});
+
+// ─── RENDER INSTITUTIONAL TABLE ───
+function renderInstitutionalTable(dataArray) {
+    const filterVal = statusFilter.value;
+    let filtered = dataArray;
+    if (filterVal !== 'all') {
+        filtered = dataArray.filter(r => (r.status || 'pending') === filterVal);
+    }
+
+    const term = searchInput.value.toLowerCase();
+    if (term) {
+        filtered = filtered.filter(reg => {
+            const coordName = `${reg.coordinatorFirst || ''} ${reg.coordinatorLast || ''}`.toLowerCase();
+            return coordName.includes(term) ||
+                   (reg.email && reg.email.toLowerCase().includes(term)) ||
+                   (reg.institutionName && reg.institutionName.toLowerCase().includes(term)) ||
+                   (reg.transactionId && reg.transactionId.toLowerCase().includes(term));
+        });
+    }
+
+    totalCount.textContent = dataArray.length;
+    pendingCount.textContent = dataArray.filter(r => (r.status || 'pending') === 'pending').length;
+    approvedCount.textContent = dataArray.filter(r => r.status === 'approved').length;
+    rejectedCount.textContent = dataArray.filter(r => r.status === 'rejected').length;
+
+    tableBody.innerHTML = '';
+
+    if (filtered.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 40px; color: var(--text-muted);">No institutional registrations found.</td></tr>`;
+        return;
+    }
+
+    filtered.forEach(reg => {
+        const row = document.createElement('tr');
+
+        let dateStr = '—';
+        if (reg.registeredAt) {
+            const date = reg.registeredAt.toDate ? reg.registeredAt.toDate() : new Date(reg.registeredAt);
+            dateStr = date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+        }
+
+        const status = reg.status || 'pending';
+        const statusLabel = status.charAt(0).toUpperCase() + status.slice(1);
+
+        const priceHtml = reg.totalAmount
+            ? `<span class="td-price">₹${reg.totalAmount.toLocaleString('en-IN')}</span>${reg.couponApplied && reg.couponCode ? `<span class="td-coupon">${reg.couponCode}</span>` : ''}`
+            : '—';
+
+        const txnHtml = reg.transactionId
+            ? `<span class="td-txn">${reg.transactionId}</span>`
+            : '<span style="color:var(--text-dimmed);font-size:0.75rem;">None</span>';
+
+        const participantNames = (reg.participants || []).slice(0, 3)
+            .map(p => `${p.firstName} ${p.lastName}`).join(', ');
+        const moreCount = (reg.participants || []).length - 3;
+
+        let actionsHtml = '';
+        if (status === 'pending') {
+            actionsHtml = `
+                <button class="action-btn approve-btn" data-id="${reg.id}" data-type="institutional" title="Approve">✓ Approve</button>
+                <button class="action-btn reject-btn" data-id="${reg.id}" data-type="institutional" title="Reject">✕ Reject</button>
+            `;
+        } else if (status === 'approved') {
+            actionsHtml = `<span class="action-done">✓ Done</span>`;
+        } else if (status === 'rejected') {
+            actionsHtml = `<span class="action-done rejected-done">✕ Rejected</span>`;
+        }
+
+        row.innerHTML = `
+            <td>
+                <span class="td-name">${reg.coordinatorFirst || ''} ${reg.coordinatorLast || ''}</span>
+                <span class="td-city" style="display:flex;align-items:center;gap:5px;">
+                    <span style="background:rgba(59,130,246,0.15);color:#60a5fa;font-size:0.65rem;padding:1px 8px;border-radius:9999px;font-weight:600;letter-spacing:0.05em;">INSTITUTIONAL</span>
+                    ${reg.institutionName || ''} · ${reg.institutionCity || ''}
+                </span>
+                <span class="td-city" style="margin-top:3px;font-size:0.7rem;color:var(--text-dimmed);">(${reg.participantCount || 0} participants)</span>
+            </td>
+            <td class="td-contact">
+                <div><a href="mailto:${reg.email}">${reg.email}</a></div>
+                <div style="margin-top: 4px;font-size:0.75rem;color:var(--text-dimmed);">${reg.phone || '—'}</div>
+            </td>
+            <td>
+                <span class="event-badge" style="font-size:0.7rem;">${participantNames}${moreCount > 0 ? ` +${moreCount} more` : ''}</span>
+                <span style="display:block;font-size:0.7rem;color:var(--text-dimmed);margin-top:4px;">${dateStr}</span>
+            </td>
+            <td>${priceHtml}</td>
+            <td>${txnHtml}</td>
+            <td><span class="status-badge ${status}">${statusLabel}</span></td>
+            <td class="td-actions">${actionsHtml}</td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+
+    // Approve buttons (institutional)
+    document.querySelectorAll('.approve-btn[data-type="institutional"]').forEach(btn => {
+        btn.addEventListener('click', () => handleInstitutionalAction(btn.dataset.id, 'approved'));
+    });
+    document.querySelectorAll('.reject-btn[data-type="institutional"]').forEach(btn => {
+        btn.addEventListener('click', () => handleInstitutionalAction(btn.dataset.id, 'rejected'));
+    });
+}
+
+// ─── INSTITUTIONAL APPROVE/REJECT HANDLER ───
+async function handleInstitutionalAction(regId, newStatus) {
+    const reg = institutionalData.find(r => r.id === regId);
+    if (!reg) return;
+
+    const actionLabel = newStatus === 'approved' ? 'approve' : 'reject';
+    if (!confirm(`Are you sure you want to ${actionLabel} the registration for ${reg.institutionName}?`)) return;
+
+    const btns = document.querySelectorAll(`[data-id="${regId}"]`);
+    btns.forEach(b => { b.disabled = true; b.textContent = '…'; });
+
+    try {
+        const docRef = doc(db, 'institutional_registrations', regId);
+        await updateDoc(docRef, { status: newStatus });
+        reg.status = newStatus;
+        renderInstitutionalTable(institutionalData);
+    } catch (error) {
+        console.error('Error updating institutional status:', error);
+        alert('Failed to update status: ' + error.message);
+        btns.forEach(b => { b.disabled = false; });
+    }
 }
 
 // ─── RENDER TABLE ───
