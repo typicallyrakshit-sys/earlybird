@@ -436,6 +436,8 @@
           if (instDoc) {
             // This is an institutional coordinator → redirect to institutional page
             const instData = instDoc.data();
+            const instStatus = instData.status || 'draft';
+
             sessionStorage.setItem('nydc_inst_returning', JSON.stringify({
               uid,
               email,
@@ -444,10 +446,17 @@
               coordinatorFirst: instData.coordinatorFirst || '',
               coordinatorLast:  instData.coordinatorLast  || '',
               phone:            instData.phone || '',
-              status:           instData.status || 'pending',
+              status:           instStatus,
               docId:            instDoc.id
             }));
-            window.location.href = 'institutional.html?returning=1';
+
+            // Draft = incomplete, send to Step 2 to resume adding participants
+            if (instStatus === 'draft') {
+              window.location.href = 'institutional.html?resume=1';
+            } else {
+              // Pending / Approved / Rejected — show status card
+              window.location.href = 'institutional.html?returning=1';
+            }
             return;
           }
 
