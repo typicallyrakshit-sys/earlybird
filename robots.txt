@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /registration/html/admin.html
+
+Sitemap: https://nydc.co.in/sitemap.xml
