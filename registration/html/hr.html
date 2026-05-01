@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Panel — NYDC 2026</title>
+    <link rel="stylesheet" href="../css/registration.css">
+    <link rel="stylesheet" href="../css/hr.css">
+    <link rel="icon" href="../../NYDC-Final-main/images/nydc-logo.png" type="image/png" />
+</head>
+<body>
+    <div class="bg-ambience"></div>
+    <div class="border-frame"></div>
+    <div class="grainy-border-left"></div>
+    <div class="grainy-border-right"></div>
+
+    <div class="top-banner">
+        <p>NYDC 2026 — INTERNAL HR MANAGEMENT SYSTEM</p>
+    </div>
+
+    <main class="hr-wrapper">
+        <div class="hr-container">
+            
+            <!-- 1. LOGIN GATE -->
+            <div id="login-section" class="registration-card" style="max-width: 450px; margin: 0 auto;">
+                <div class="card-header">
+                    <span class="card-tag">HR ACCESS</span>
+                    <h1>Secure <span>Login</span></h1>
+                </div>
+                <div class="divider"></div>
+                <form id="hr-login-form">
+                    <div class="form-group">
+                        <label>Admin Email</label>
+                        <input type="email" id="hr-email" required placeholder="admin@nydc.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="hr-password" required placeholder="••••••••">
+                    </div>
+                    <p id="login-error" class="password-error"></p>
+                    <button type="submit" class="submit-btn">Authorize Entry →</button>
+                </form>
+            </div>
+
+            <!-- 2. LOADING -->
+            <div id="loading-section" style="display:none; text-align:center; padding:100px 0;">
+                <div class="spinner" style="margin: 0 auto 20px;"></div>
+                <p id="loading-text">Synchronizing records...</p>
+            </div>
+
+            <!-- 3. DASHBOARD -->
+            <div id="hr-dashboard" style="display:none;">
+                <div class="hr-header">
+                    <div>
+                        <h1>NYDC 2026 <span>HR Panel</span></h1>
+                        <p class="card-subtitle">Manage team event members <span id="role-badge" style="margin-left:8px; font-size:0.65rem; padding:2px 8px; border-radius:4px; text-transform:uppercase; font-weight:700;"></span></p>
+                    </div>
+                    <div style="display:flex; gap:12px;">
+                        <a href="admin.html" id="admin-switch-btn" style="display:none; text-decoration:none; background:rgba(255,255,255,0.05); border:1px solid var(--border-color); color:#fff; padding:10px 20px; border-radius:8px; font-family:var(--font-body); font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em;">Admin Panel</a>
+                        <button class="logout-btn-header" id="hr-logout">Exit Session</button>
+                    </div>
+                </div>
+
+                <div class="hr-tabs">
+                    <button class="hr-tab active" data-target="inst-list">Institutional</button>
+                    <button class="hr-tab" data-target="indiv-list">Individual (View Only)</button>
+                </div>
+
+                <div class="inst-list" id="inst-list">
+                    <!-- Injected via JS -->
+                </div>
+
+                <div class="indiv-container" id="indiv-list" style="display:none;">
+                    <table class="indiv-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email / Phone</th>
+                                <th>School / City</th>
+                                <th>Event</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="indiv-table-body">
+                            <!-- Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- TEAM MANAGEMENT MODAL -->
+    <div class="modal-overlay" id="team-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeTeamModal()">×</button>
+            <div class="card-header">
+                <span class="card-tag" id="modal-event-tag">MOOT COURT</span>
+                <h2 id="modal-leader-name" style="font-family: var(--font-display); font-size: 1.8rem; margin: 5px 0;">Team Leader Name</h2>
+                <p class="card-subtitle">Add members to this team below</p>
+            </div>
+            <div class="divider" style="margin: 20px 0;"></div>
+            
+            <div id="team-members-inputs">
+                <!-- Member inputs injected here -->
+            </div>
+
+            <p class="team-limit-note" id="team-limit-note">Maximum 4 members allowed for this event.</p>
+            <button class="save-team-btn" id="save-team-btn">Update Team Members</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+        import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
+            authDomain: "nydc-72b34.firebaseapp.com",
+            projectId: "nydc-72b34",
+            storageBucket: "nydc-72b34.firebasestorage.app",
+            messagingSenderId: "935882112599",
+            appId: "1:935882112599:web:f04b660e233f21a46f2d12",
+            measurementId: "G-5G8Z44578K"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const TEAM_LIMITS = {
+            film_making: 5, moot_court: 4, spark_tank: 4, 
+            raag_jaam: 6, hackathon: 4, debate: 2, ipl: 4
+        };
+
+        const EVENT_NAMES = {
+            mun: 'Model United Nations', moot_court: 'Moot Court', hackathon: 'Hackathon',
+            debate: 'Conventional Debate', spark_tank: 'Spark Tank', marketing: 'Marketing',
+            paper_trading: 'Paper Trading', film_making: 'Film Making', Navras: 'Navras',
+            poetry: 'Poetry', raag_jaam: 'Raag Jaam', ipl: 'IPL Auction'
+        };
+
+        let currentInstDoc = null;
+        let currentParticipantIndex = -1;
+        let instData = [];
+        let indivData = [];
+
+        // Tab Switching
+        document.querySelectorAll('.hr-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.hr-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const target = tab.getAttribute('data-target');
+                document.getElementById('inst-list').style.display = target === 'inst-list' ? 'flex' : 'none';
+                document.getElementById('indiv-list').style.display = target === 'indiv-list' ? 'block' : 'none';
+            });
+        });
+
+        async function checkAccess(email) {
+            try {
+                // 1. Check Admin access (Admins can access everything)
+                const adminSnap = await getDoc(doc(db, 'settings', 'admins'));
+                if (adminSnap.exists() && adminSnap.data().emails?.includes(email)) {
+                    return { authorized: true, role: 'admin' };
+                }
+
+                // 2. Check HR access
+                const hrSnap = await getDoc(doc(db, 'settings', 'hr'));
+                if (hrSnap.exists() && hrSnap.data().emails?.includes(email)) {
+                    return { authorized: true, role: 'hr' };
+                }
+
+                // Fallback for primary admin
+                if (email === "dhamindhankher2010@gmail.com") return { authorized: true, role: 'admin' };
+            } catch(e) {
+                console.error("Access check error:", e);
+            }
+            return { authorized: false, role: null };
+        }
+
+        // ─── AUTH LOGIC ───
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                showView('loading');
+                const access = await checkAccess(user.email);
+                if (access.authorized) {
+                    window._userRole = access.role;
+                    await fetchData();
+                    showView('dashboard');
+                    renderRoleUI(access.role);
+                } else {
+                    alert("Access Denied: You do not have HR permissions.");
+                    signOut(auth);
+                }
+            } else {
+                showView('login');
+            }
+        });
+
+        // ─── FETCH DATA ───
+        async function fetchData() {
+            // Fetch Institutional
+            const qInst = query(collection(db, "institutional_registrations"), orderBy('registeredAt', 'desc'));
+            const snapInst = await getDocs(qInst);
+            instData = [];
+            snapInst.forEach(d => instData.push({ id: d.id, ...d.data() }));
+            renderInstitutions();
+
+            // Fetch Individual
+            const qIndiv = query(collection(db, "registrations"), orderBy('registeredAt', 'desc'));
+            const snapIndiv = await getDocs(qIndiv);
+            indivData = [];
+            snapIndiv.forEach(d => indivData.push({ id: d.id, ...d.data() }));
+            renderIndividual();
+        }
+
+        function renderInstitutions() {
+            const list = document.getElementById('inst-list');
+            list.innerHTML = instData.filter(i => i.status !== 'draft').map(inst => `
+                <div class="inst-item" id="inst-${inst.id}">
+                    <div class="inst-summary" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="inst-info">
+                            <h3>${inst.institutionName}</h3>
+                            <div class="inst-meta">${inst.coordinatorFirst} ${inst.coordinatorLast} • ${inst.institutionCity}</div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <span class="participant-count">${inst.participantCount} Participants</span>
+                            <span style="color:var(--text-dimmed)">▼</span>
+                        </div>
+                    </div>
+                    <div class="participants-box">
+                        <table class="p-table">
+                            <thead>
+                                <tr>
+                                    <th>Participant (Leader)</th>
+                                    <th>Event</th>
+                                    <th>Team Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${inst.participants.map((p, idx) => {
+                                    const isTeamEvent = TEAM_LIMITS[p.event];
+                                    const teamCount = (p.teamMembers || []).length + 1; // +1 for leader
+                                    return `
+                                        <tr>
+                                            <td>
+                                                <div class="p-name">${p.firstName} ${p.lastName}</div>
+                                                <div style="font-size:0.75rem; color:var(--text-muted)">${p.email}</div>
+                                            </td>
+                                            <td><span class="p-event">${EVENT_NAMES[p.event] || p.event}</span></td>
+                                            <td>
+                                                ${isTeamEvent ? `
+                                                    <span style="font-size:0.8rem; color:${teamCount > 1 ? '#22c55e' : '#eab308'}">
+                                                        ${teamCount} / ${TEAM_LIMITS[p.event]} Members
+                                                    </span>
+                                                ` : '<span style="color:var(--text-dimmed)">Solo Event</span>'}
+                                            </td>
+                                            <td>
+                                                ${isTeamEvent ? `
+                                                    <button class="manage-team-btn ${teamCount > 1 ? 'has-team' : ''}" 
+                                                            onclick="event.stopPropagation(); openTeamModal('${inst.id}', ${idx})">
+                                                        ${teamCount > 1 ? 'Edit Team' : 'Add Members'}
+                                                    </button>
+                                                ` : '—'}
+                                            </td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderIndividual() {
+            const tbody = document.getElementById('indiv-table-body');
+            tbody.innerHTML = indivData.map(reg => {
+                const status = reg.status || 'pending';
+                const statusColor = status === 'approved' ? '#22c55e' : (status === 'rejected' ? '#ef4444' : '#eab308');
+                return `
+                    <tr>
+                        <td>
+                            <div style="font-weight:600; color:#fff;">${reg.firstName} ${reg.lastName || ''}</div>
+                        </td>
+                        <td>
+                            <div style="color:var(--text-muted); font-size:0.8rem;">${reg.email}</div>
+                            <div style="color:var(--text-dimmed); font-size:0.75rem;">${reg.phone || '—'}</div>
+                        </td>
+                        <td>
+                            <div style="color:#fff; font-size:0.8rem;">${reg.school || '—'}</div>
+                            <div style="color:var(--text-dimmed); font-size:0.75rem;">${reg.city || '—'}</div>
+                        </td>
+                        <td><span style="color:var(--accent-light); font-size:0.8rem;">${EVENT_NAMES[reg.event] || reg.event}</span></td>
+                        <td>
+                            <span style="background:rgba(255,255,255,0.05); border:1px solid ${statusColor}40; color:${statusColor}; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;">
+                                ${status}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // ─── TEAM MODAL LOGIC ───
+        window.openTeamModal = (instId, pIdx) => {
+            currentInstDoc = instData.find(i => i.id === instId);
+            currentParticipantIndex = pIdx;
+            const p = currentInstDoc.participants[pIdx];
+            const limit = TEAM_LIMITS[p.event];
+
+            document.getElementById('modal-event-tag').textContent = EVENT_NAMES[p.event];
+            document.getElementById('modal-leader-name').textContent = `${p.firstName} ${p.lastName}`;
+            document.getElementById('team-limit-note').textContent = `Maximum ${limit} members allowed (including Leader).`;
+
+            const container = document.getElementById('team-members-inputs');
+            container.innerHTML = '';
+
+            // We need to add (limit - 1) member slots
+            const currentMembers = p.teamMembers || [];
+            for (let i = 0; i < limit - 1; i++) {
+                const m = currentMembers[i] || { firstName: '', lastName: '', email: '' };
+                container.innerHTML += `
+                    <div class="team-member-input">
+                        <div style="display:flex; flex-direction:column; gap:5px; width:100%">
+                            <div style="font-size:0.65rem; color:var(--accent-light); text-transform:uppercase">Member ${i + 2}</div>
+                            <div style="display:flex; gap:10px;">
+                                <input type="text" placeholder="First Name" class="m-first" value="${m.firstName}">
+                                <input type="text" placeholder="Last Name" class="m-last" value="${m.lastName}">
+                            </div>
+                            <input type="email" placeholder="Email Address" class="m-email" value="${m.email}">
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('team-modal').style.display = 'flex';
+        };
+
+        window.closeTeamModal = () => {
+            document.getElementById('team-modal').style.display = 'none';
+        };
+
+        document.getElementById('save-team-btn').onclick = async () => {
+            const btn = document.getElementById('save-team-btn');
+            btn.disabled = true;
+            btn.textContent = "Saving...";
+
+            const inputs = document.querySelectorAll('.team-member-input');
+            const members = [];
+
+            inputs.forEach(div => {
+                const first = div.querySelector('.m-first').value.trim();
+                const last = div.querySelector('.m-last').value.trim();
+                const email = div.querySelector('.m-email').value.trim();
+                
+                if (first || last || email) {
+                    members.push({ firstName: first, lastName: last, email: email });
+                }
+            });
+
+            try {
+                const participants = [...currentInstDoc.participants];
+                participants[currentParticipantIndex].teamMembers = members;
+
+                await updateDoc(doc(db, "institutional_registrations", currentInstDoc.id), {
+                    participants: participants
+                });
+
+                // Update local data
+                currentInstDoc.participants = participants;
+                renderInstitutions();
+                closeTeamModal();
+            } catch (e) {
+                alert("Error saving: " + e.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Update Team Members";
+            }
+        };
+
+        // ─── UI HELPERS ───
+        function renderRoleUI(role) {
+            const badge = document.getElementById('role-badge');
+            const adminBtn = document.getElementById('admin-switch-btn');
+            
+            if (role === 'admin') {
+                badge.textContent = "Admin Mode";
+                badge.style.background = "rgba(139,26,26,0.2)";
+                badge.style.color = "var(--accent-light)";
+                adminBtn.style.display = "block";
+            } else {
+                badge.textContent = "HR Mode";
+                badge.style.background = "rgba(34,197,94,0.15)";
+                badge.style.color = "#22c55e";
+                adminBtn.style.display = "none";
+            }
+        }
+
+        function showView(view) {
+            document.getElementById('login-section').style.display = view === 'login' ? 'block' : 'none';
+            document.getElementById('loading-section').style.display = view === 'loading' ? 'block' : 'none';
+            document.getElementById('hr-dashboard').style.display = view === 'dashboard' ? 'block' : 'none';
+        }
+
+        document.getElementById('hr-login-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('hr-email').value;
+            const pass = document.getElementById('hr-password').value;
+            const err = document.getElementById('login-error');
+            err.textContent = "";
+
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+            } catch(e) {
+                err.textContent = "Invalid credentials or unauthorized.";
+            }
+        };
+
+        document.getElementById('hr-logout').onclick = () => signOut(auth);
+
+    </script>
+</body>
+</html>
