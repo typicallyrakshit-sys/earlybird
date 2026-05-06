@@ -20,7 +20,9 @@ import {
     query,
     doc,
     getDoc,
-    updateDoc
+    updateDoc,
+    deleteField,
+    setDoc
 } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
 // ─── Firebase Init (inline, not imported) ───
@@ -146,6 +148,9 @@ async function fetchRegistrations() {
             institutionalData = [];
         }
 
+        // Sync IPL team reservations from existing registrations
+        await syncIplTeams(registrationsData);
+
         renderCouponStats(registrationsData);
         renderTable(registrationsData);
         renderTabCounts();
@@ -156,6 +161,34 @@ async function fetchRegistrations() {
         showLoading("Failed to load data. See console for details.");
         document.querySelector('.spinner').style.display = 'none';
         document.getElementById('loading-text').classList.add('error-text');
+    }
+}
+
+// ─── SYNC IPL TEAM RESERVATIONS ───
+// Scans all existing registrations for IPL teams and writes
+// them to settings/ipl_teams so the selection page can block taken teams.
+async function syncIplTeams(dataArray) {
+    try {
+        const iplTeamsMap = {};
+        dataArray.forEach(reg => {
+            if (reg.event === 'ipl' && reg.iplTeam) {
+                const status = (reg.status || '').toLowerCase();
+                // Only block teams that are pending or approved (not rejected/draft)
+                if (status === 'pending' || status === 'approved') {
+                    iplTeamsMap[reg.iplTeam] = reg.id;
+                }
+            }
+        });
+
+        // Only write if there are IPL teams to sync
+        if (Object.keys(iplTeamsMap).length > 0) {
+            const iplTeamsRef = doc(db, 'settings', 'ipl_teams');
+            // Overwrite the entire document to ensure rejected teams are cleared
+            await setDoc(iplTeamsRef, iplTeamsMap);
+            console.log('✅ IPL teams synced:', iplTeamsMap);
+        }
+    } catch (err) {
+        console.warn('Could not sync IPL teams:', err);
     }
 }
 
@@ -371,9 +404,9 @@ async function handleInstitutionalAction(regId, newStatus) {
 // ─── RENDER TABLE ───
 function renderTable(dataArray) {
     const filterVal = statusFilter.value;
-    let filtered = dataArray;
+    let filtered = dataArray.filter(r => (r.status || '').toLowerCase() !== 'draft');
     if (filterVal !== 'all') {
-        filtered = dataArray.filter(r => (r.status || 'pending') === filterVal);
+        filtered = filtered.filter(r => (r.status || 'pending').toLowerCase() === filterVal);
     }
 
     const term = searchInput.value.toLowerCase();
@@ -390,10 +423,11 @@ function renderTable(dataArray) {
         });
     }
 
-    totalCount.textContent = dataArray.length;
-    pendingCount.textContent = dataArray.filter(r => (r.status || 'pending') === 'pending').length;
-    approvedCount.textContent = dataArray.filter(r => r.status === 'approved').length;
-    rejectedCount.textContent = dataArray.filter(r => r.status === 'rejected').length;
+    const nonDraft = dataArray.filter(r => (r.status || '').toLowerCase() !== 'draft');
+    totalCount.textContent = nonDraft.length;
+    pendingCount.textContent = nonDraft.filter(r => ((r.status || '').toLowerCase() === 'pending' || r.status === undefined)).length;
+    approvedCount.textContent = nonDraft.filter(r => (r.status || '').toLowerCase() === 'approved').length;
+    rejectedCount.textContent = nonDraft.filter(r => (r.status || '').toLowerCase() === 'rejected').length;
 
     tableBody.innerHTML = '';
 
@@ -487,6 +521,17 @@ async function handleAction(regId, newStatus) {
     try {
         const docRef = doc(db, 'registrations', regId);
         await updateDoc(docRef, { status: newStatus });
+
+        // ─── IPL Team: release team on rejection ───
+        if (newStatus === 'rejected' && reg.event === 'ipl' && reg.iplTeam) {
+            try {
+                const iplTeamsRef = doc(db, 'settings', 'ipl_teams');
+                await updateDoc(iplTeamsRef, { [reg.iplTeam]: deleteField() });
+                console.log('IPL team released:', reg.iplTeam);
+            } catch (iplErr) {
+                console.warn('Could not release IPL team:', iplErr);
+            }
+        }
 
         // Send email notification
         if (typeof emailjs !== 'undefined') {
