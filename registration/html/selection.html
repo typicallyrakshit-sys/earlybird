@@ -278,6 +278,60 @@
         iplSection.style.display = 'block';
         // Add required validation only when IPL section is visible
         document.getElementById('ipl-mi').setAttribute('required', '');
+        // Load team availability from Firestore
+        loadIplTeamAvailability();
+      }
+
+      // ─── Load IPL Team Availability from Firestore ───
+      // Directly queries registrations collection for IPL teams — no admin sync needed
+      async function loadIplTeamAvailability() {
+        try {
+          const { initializeApp: _iA, getApps } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js');
+          const { getFirestore: _gF, collection, getDocs, query, where } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
+          const _app = getApps().length ? getApps()[0] : _iA({ apiKey:"AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",authDomain:"nydc-72b34.firebaseapp.com",projectId:"nydc-72b34",storageBucket:"nydc-72b34.firebasestorage.app",messagingSenderId:"935882112599",appId:"1:935882112599:web:f04b660e233f21a46f2d12" });
+          const _db = _gF(_app);
+
+          // Query all registrations where event is 'ipl'
+          const regsRef = collection(_db, 'registrations');
+          const iplQuery = query(regsRef, where('event', '==', 'ipl'));
+          const iplSnap = await getDocs(iplQuery);
+
+          // Build map of taken teams (only pending or approved registrations)
+          const takenTeams = {};
+          iplSnap.forEach(docSnap => {
+            const data = docSnap.data();
+            const status = (data.status || '').toLowerCase();
+            if (data.iplTeam && (status === 'pending' || status === 'approved')) {
+              takenTeams[data.iplTeam] = docSnap.id;
+            }
+          });
+
+          console.log('IPL teams taken:', takenTeams);
+
+          // Disable taken team cards
+          document.querySelectorAll('input[name="ipl_team"]').forEach(radio => {
+            const teamName = radio.value;
+            if (takenTeams[teamName]) {
+              radio.disabled = true;
+              radio.removeAttribute('required');
+              const card = radio.closest('.ipl-team-card');
+              card.classList.add('ipl-team-taken');
+              // Add "TAKEN" badge
+              const badge = document.createElement('span');
+              badge.className = 'ipl-taken-badge';
+              badge.textContent = 'TAKEN';
+              card.querySelector('label').appendChild(badge);
+            }
+          });
+
+          // Ensure required is set on first available radio
+          const available = document.querySelectorAll('input[name="ipl_team"]:not(:disabled)');
+          if (available.length > 0) {
+            available[0].setAttribute('required', '');
+          }
+        } catch (err) {
+          console.warn('Could not load IPL team availability:', err);
+        }
       }
 
       // ─── Member card template ───
@@ -469,7 +523,7 @@
     <!-- Firebase Integration (Inline for reliability) -->
     <script type="module">
       import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
-      import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+      import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
       import { getAuth } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
 
       const firebaseConfig = {
@@ -547,6 +601,18 @@
         }
 
         try {
+          // ─── IPL Team: verify still available before submitting ───
+          if (iplTeam) {
+            const iplTeamsRef = doc(db, 'settings', 'ipl_teams');
+            const iplTeamsSnap = await getDoc(iplTeamsRef);
+            if (iplTeamsSnap.exists() && iplTeamsSnap.data()[iplTeam]) {
+              alert('Sorry, ' + iplTeam + ' has just been taken by another registrant. Please go back and choose a different team.');
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Register Now';
+              return;
+            }
+          }
+
           const registrationData = {
             uid:           personalData.uid || null,
             firstName:     personalData.firstName,
@@ -571,6 +637,16 @@
           };
 
           const docRef = await addDoc(collection(db, 'registrations'), registrationData);
+
+          // ─── IPL Team: reserve the team in Firestore ───
+          if (iplTeam) {
+            try {
+              const iplTeamsRef = doc(db, 'settings', 'ipl_teams');
+              await setDoc(iplTeamsRef, { [iplTeam]: docRef.id }, { merge: true });
+            } catch (iplErr) {
+              console.warn('Could not reserve IPL team:', iplErr);
+            }
+          }
           console.log('Registration saved:', docRef.id);
 
           // EmailJS removed: Emails will only be sent upon Admin approval/rejection.
