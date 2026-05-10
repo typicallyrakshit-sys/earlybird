@@ -238,7 +238,7 @@
         Navras: 'Navras',
         poetry: 'Poetry',
         raag_jaam: 'Raag Jaam',
-        ipl: 'IPL'
+        ipl: 'IPL Auction'
       };
 
       // ─── Guard: must have personal data + event ───
@@ -283,7 +283,6 @@
       }
 
       // ─── Load IPL Team Availability from Firestore ───
-      // Directly queries registrations collection for IPL teams — no admin sync needed
       async function loadIplTeamAvailability() {
         try {
           const { initializeApp: _iA, getApps } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js');
@@ -291,12 +290,10 @@
           const _app = getApps().length ? getApps()[0] : _iA({ apiKey:"AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",authDomain:"nydc-72b34.firebaseapp.com",projectId:"nydc-72b34",storageBucket:"nydc-72b34.firebasestorage.app",messagingSenderId:"935882112599",appId:"1:935882112599:web:f04b660e233f21a46f2d12" });
           const _db = _gF(_app);
 
-          // Query all registrations where event is 'ipl'
           const regsRef = collection(_db, 'registrations');
           const iplQuery = query(regsRef, where('event', '==', 'ipl'));
           const iplSnap = await getDocs(iplQuery);
 
-          // Build map of taken teams (only pending or approved registrations)
           const takenTeams = {};
           iplSnap.forEach(docSnap => {
             const data = docSnap.data();
@@ -306,9 +303,6 @@
             }
           });
 
-          console.log('IPL teams taken:', takenTeams);
-
-          // Disable taken team cards
           document.querySelectorAll('input[name="ipl_team"]').forEach(radio => {
             const teamName = radio.value;
             if (takenTeams[teamName]) {
@@ -316,7 +310,6 @@
               radio.removeAttribute('required');
               const card = radio.closest('.ipl-team-card');
               card.classList.add('ipl-team-taken');
-              // Add "TAKEN" badge
               const badge = document.createElement('span');
               badge.className = 'ipl-taken-badge';
               badge.textContent = 'TAKEN';
@@ -324,7 +317,6 @@
             }
           });
 
-          // Ensure required is set on first available radio
           const available = document.querySelectorAll('input[name="ipl_team"]:not(:disabled)');
           if (available.length > 0) {
             available[0].setAttribute('required', '');
@@ -344,7 +336,6 @@
         card.className = 'member-card';
         card.setAttribute('data-index', index);
 
-        // Sanitize: convert undefined/null to '' so inputs don't show "undefined"
         const safeVal = (v) => (v == null || v === 'undefined') ? '' : v;
 
         card.innerHTML = `
@@ -380,7 +371,6 @@
           </div>
         `;
 
-        // Remove button handler
         const removeBtn = card.querySelector('.remove-member-btn');
         if (removeBtn) {
           removeBtn.addEventListener('click', () => {
@@ -393,7 +383,6 @@
             }, 300);
           });
         }
-
         return card;
       }
 
@@ -401,40 +390,28 @@
         const cards = document.querySelectorAll('.member-card');
         cards.forEach((card, i) => {
           const label = card.querySelector('.member-number');
-          if (i === 0) {
-            label.textContent = '👑 Team Leader';
-          } else {
-            label.textContent = 'Member ' + (i + 1);
-          }
+          label.textContent = i === 0 ? '👑 Team Leader' : 'Member ' + (i + 1);
         });
       }
 
       function updateAddButton() {
         const btn = document.getElementById('add-member-btn');
-        if (memberCount >= maxMembers) {
-          btn.style.display = 'none';
-        } else {
-          btn.style.display = 'flex';
-        }
+        btn.style.display = memberCount >= maxMembers ? 'none' : 'flex';
       }
 
-      // ─── Initialize: first card is the registrant ───
-      // If session is missing name fields (e.g. after browser restart + re-login),
-      // fetch the draft doc from Firestore to fill them in.
       const container = document.getElementById('members-container');
 
       async function initLeaderCard() {
         let leader = { ...personal };
-
         const missingFields = !leader.firstName || !leader.lastName || !leader.phone;
-        const storedDocId   = sessionStorage.getItem('nydc_doc_id');
+        const storedDocId = sessionStorage.getItem('nydc_doc_id');
 
         if (missingFields && storedDocId) {
           try {
             const { initializeApp: _iA, getApps } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js');
             const { getFirestore: _gF, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
             const _app = getApps().length ? getApps()[0] : _iA({ apiKey:"AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",authDomain:"nydc-72b34.firebaseapp.com",projectId:"nydc-72b34",storageBucket:"nydc-72b34.firebasestorage.app",messagingSenderId:"935882112599",appId:"1:935882112599:web:f04b660e233f21a46f2d12" });
-            const _db  = _gF(_app);
+            const _db = _gF(_app);
             const snap = await getDoc(doc(_db, 'registrations', storedDocId));
             if (snap.exists()) {
               const d = snap.data();
@@ -443,14 +420,10 @@
               leader.phone     = leader.phone     || d.phone     || '';
               leader.school    = leader.school    || d.school    || '';
               leader.email     = leader.email     || d.email     || '';
-              // Update sessionStorage so subsequent checks work
               sessionStorage.setItem('nydc_registration', JSON.stringify(leader));
             }
-          } catch(err) {
-            console.warn('Could not fetch leader details from Firestore:', err);
-          }
+          } catch(err) { console.warn('Leader fetch failed:', err); }
         }
-
         container.appendChild(createMemberCard(0, leader));
         memberCount = 1;
         updateAddButton();
@@ -458,24 +431,19 @@
 
       initLeaderCard();
 
-
-      // ─── Add member ───
       document.getElementById('add-member-btn').addEventListener('click', () => {
         if (memberCount >= maxMembers) return;
         const card = createMemberCard(memberCount, null);
         container.appendChild(card);
         memberCount++;
         updateAddButton();
-        // Scroll to new card
         card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // Focus first input
         setTimeout(() => card.querySelector('input').focus(), 400);
       });
     </script>
 
     <!-- Payment Logic -->
     <script>
-      // ─── Price data from event selection ───
       const PRICES = {
         mun:           { original: 1699, increased: 1869 },
         moot_court:    { original: 3499, increased: 3849 },
@@ -490,25 +458,30 @@
         ipl:           { original: 2999, increased: 3299 }
       };
 
-      // ─── Set up payment section ───
       const paymentPrice = eventData.price || (PRICES[eventKey] ? (eventData.couponApplied ? PRICES[eventKey].original : PRICES[eventKey].increased) : 0);
       const UPI_ID = 'gupta-damini@ptyes';
 
-      // Display price
       document.getElementById('payment-amount').textContent = '₹' + paymentPrice.toLocaleString('en-IN');
 
-      // Show coupon info if applied
       if (eventData.couponApplied && eventData.couponCode) {
         document.getElementById('payment-coupon-row').style.display = 'flex';
         document.getElementById('payment-coupon-badge').textContent = eventData.couponCode;
       }
 
-      // UPI deep link
       const upiLink = `upi://pay?pa=${UPI_ID}&pn=NYDC%202026&am=${paymentPrice}&cu=INR&tn=NYDC%202026%20Registration`;
       const upiAnchor = document.getElementById('upi-pay-link');
       upiAnchor.href = upiLink;
       upiAnchor.addEventListener('click', function(e) {
         e.preventDefault();
+        window.location.href = upiLink;
+      });
+
+      const qrImg = document.getElementById('upi-qr-img');
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiLink)}&bgcolor=ffffff&color=000000&margin=2`;
+
+      window.__paymentPrice = paymentPrice;
+    </script>
+
     <script type="module" src="../js/selection.js"></script>
 
 </body>
