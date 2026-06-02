@@ -269,13 +269,14 @@
             </div>
           </div>
 
-          <!-- Genesis -->
+          <!-- Hack2Skill & Google for Developers -->
           <div class="partner-card lg:col-span-2 h-56 md:h-64 bg-[#0a0505] border-[4px] border-[#8b1a1a] rounded-2xl relative flex flex-col items-center justify-center p-6 shadow-[6px_6px_0px_0px_rgba(139,26,26,1)] group hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none transition-all cursor-pointer">
             <div class="absolute top-0 right-0 w-10 h-10 bg-[#8b1a1a] rounded-bl-3xl rounded-tr-xl"></div>
             <p class="text-[#8b1a1a] font-body text-[10px] tracking-[0.2em] font-bold uppercase mb-4">HACKATHON POWERED BY</p>
-            <div class="flex flex-col items-center gap-3">
-              <img src="NYDC-Final-main/images/genesis-logo.png" alt="Genesis" class="h-28 md:h-36 object-contain transition-transform duration-500 group-hover:scale-105" />
-              <h3 class="text-white font-display text-xl font-black tracking-tight text-center uppercase">Genesis</h3>
+            <div class="flex flex-col items-center gap-2 justify-center">
+              <h3 class="text-white font-display text-2xl font-black tracking-tight text-center uppercase transition-transform duration-500 group-hover:scale-105">Hack2Skill</h3>
+              <span class="text-[#8b1a1a] font-display text-lg font-light">&amp;</span>
+              <h3 class="text-white font-display text-2xl font-black tracking-tight text-center uppercase transition-transform duration-500 group-hover:scale-105">Google for Developers</h3>
             </div>
           </div>
 
@@ -332,7 +333,7 @@
     // ---- Event Cards Data ----
     const events = [
       { num: '01', title: 'Model United Nations', desc: 'Diplomatic simulations across 5 elite committees', fullDesc: 'Step into the world\'s most prestigious diplomatic forum. Represent nations, debate global crises, and draft resolutions that shape international policy across five elite committees — UNGA, UNCSW, UNHRC, WHO, and AIPPM.', date: '4th & 5th July 2026', duration: '2 Days', price: '₹2,089', priceNote: 'Use coupon for ₹1,899', team: 'Solo', img: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=400&h=300&fit=crop' },
-      { num: '02', title: 'Hackathon', desc: 'by Genesis — 24-hour innovation sprint', fullDesc: 'A relentless 24-hour innovation marathon powered by Genesis. Build, break, and ship tech solutions to real-world problems. Registration opens soon — stay tuned.', date: '4th July – 5th July 2026', duration: '24 Hours', price: 'Coming Soon', team: 'Up to 4', img: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop', disabled: true },
+      { num: '02', title: 'Hackathon', desc: 'by Hack2Skill & Google for Developers — 8-hour innovation sprint', fullDesc: 'A relentless 8-hour innovation marathon powered by Hack2Skill, Google for Developers, and PromptWars. Build, break, and ship tech solutions to real-world problems. Register now on Hack2Skill.', date: '27th June 2026', duration: '8 Hours', price: 'Free', team: 'Solo', img: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop', disabled: false, registerUrl: 'https://hack2skill.com/event/promptwars-x-nydc26?utm_source=hack2skill&utm_medium=homepage' },
       { num: '03', title: 'Moot Court', desc: 'powered by Legal Capital — courtroom simulation', fullDesc: 'Step into the courtroom powered by The Legal Capital. Argue landmark cases, master legal reasoning, and battle wits against the sharpest legal minds in the room.', date: '4th & 5th July 2026', duration: '2 Days', price: '₹4,399', priceNote: 'Use coupon for ₹3,999', team: 'Up to 4', img: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=300&fit=crop' },
       { num: '04', title: 'Debate', desc: 'by Politics Personal — structured argumentation', fullDesc: 'Craft compelling arguments and dismantle opposition with precision. Powered by Politics Personal, this debate challenges you to think fast, speak sharp, and dominate the floor.', date: '5th July 2026', duration: '1 Day', price: '₹2,200', priceNote: 'Use coupon for ₹2,000', team: 'Up to 2', img: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=400&h=300&fit=crop' },
       { num: '05', title: 'Spark Tank', desc: 'Entrepreneurial pitching competition', fullDesc: 'Your startup idea meets ruthless investors. Pitch your venture, defend your business model, and convince the panel that your idea is worth backing.', date: '5th July 2026', duration: '1 Day', price: '₹3,959', priceNote: 'Use coupon for ₹3,599', team: 'Up to 4', img: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop' },
@@ -426,6 +427,16 @@
       document.getElementById('modal-price').textContent = e.price;
       document.getElementById('modal-duration').textContent = e.duration;
       document.getElementById('modal-team').textContent = e.team;
+
+      const regBtn = document.getElementById('modal-register-btn');
+      if (e.registerUrl) {
+        regBtn.href = e.registerUrl;
+        regBtn.target = '_blank';
+      } else {
+        regBtn.href = 'registration/registration.html';
+        regBtn.target = '_self';
+      }
+
       const modal = document.getElementById('event-modal');
       modal.style.display = 'flex';
       document.body.style.overflow = 'hidden';
@@ -479,7 +490,7 @@
             <div id="modal-team" style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:#fff;font-weight:600;"></div>
           </div>
         </div>
-        <a href="registration/registration.html" style="display:block;text-align:center;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;font-family:'Outfit',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;padding:14px;border-radius:12px;text-decoration:none;box-shadow:0 0 24px rgba(139,26,26,0.35);transition:all 0.3s;" onmouseover="this.style.boxShadow='0 0 40px rgba(139,26,26,0.6)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='0 0 24px rgba(139,26,26,0.35)';this.style.transform=''">Register Now →</a>
+        <a href="registration/registration.html" id="modal-register-btn" style="display:block;text-align:center;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;font-family:'Outfit',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;padding:14px;border-radius:12px;text-decoration:none;box-shadow:0 0 24px rgba(139,26,26,0.35);transition:all 0.3s;" onmouseover="this.style.boxShadow='0 0 40px rgba(139,26,26,0.6)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='0 0 24px rgba(139,26,26,0.35)';this.style.transform=''">Register Now →</a>
       </div>
     </div>
   </div>
