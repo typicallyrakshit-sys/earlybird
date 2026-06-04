@@ -61,6 +61,12 @@
                     </div>
                 </div>
 
+                <!-- Coupon Stats Section -->
+                <div class="coupon-stats-section" id="coupon-stats-section" style="display:none;">
+                    <h2 class="section-title">Coupon Usage Statistics</h2>
+                    <div class="coupon-stats-grid" id="coupon-stats-grid"></div>
+                </div>
+
                 <div class="hr-tabs">
                     <button class="hr-tab active" data-target="inst-list">Institutional</button>
                     <button class="hr-tab" data-target="indiv-list">Individual (View Only)</button>
@@ -214,6 +220,9 @@
             indivData = [];
             snapIndiv.forEach(d => indivData.push({ id: d.id, ...d.data() }));
             renderIndividual();
+
+            // Render Coupon Stats
+            renderCouponStats();
         }
 
         // Coupon code → referral person name mapping
@@ -224,6 +233,70 @@
             if (match) return match[1].charAt(0).toUpperCase() + match[1].slice(1).toLowerCase();
             if (code === 'NYDC2026') return 'Early Bird (General)';
             return code;
+        }
+
+        // Render Coupon Statistics Grid
+        function renderCouponStats() {
+            const map = {};
+            
+            // 1. Process Individual Registrations
+            indivData.forEach(r => {
+                if (r.status === 'rejected' || r.status === 'draft') return;
+                if (r.couponApplied && r.couponCode) {
+                    const c = r.couponCode.toUpperCase();
+                    if (!map[c]) map[c] = { count: 0, users: [] };
+                    map[c].count++;
+                    map[c].users.push(`${r.firstName} ${r.lastName || ''} (Individual)`);
+                }
+            });
+
+            // 2. Process Institutional Registrations
+            instData.forEach(r => {
+                if (r.status === 'rejected' || r.status === 'draft') return;
+                if (r.couponApplied && r.couponCode) {
+                    const c = r.couponCode.toUpperCase();
+                    if (!map[c]) map[c] = { count: 0, users: [] };
+                    map[c].count++;
+                    map[c].users.push(`${r.institutionName || r.coordinatorFirst + ' ' + (r.coordinatorLast || '')} (Inst)`);
+                }
+            });
+
+            const codes = Object.keys(map);
+            const section = document.getElementById('coupon-stats-section');
+            const grid = document.getElementById('coupon-stats-grid');
+            
+            if (!codes.length) {
+                section.style.display = 'none';
+                return;
+            }
+            
+            section.style.display = 'block';
+            codes.sort((a, b) => map[b].count - map[a].count);
+            
+            const total = codes.reduce((sum, c) => sum + map[c].count, 0);
+            
+            let html = `
+                <div class="coupon-stat-card total-card">
+                    <div class="coupon-stat-code">TOTAL USES</div>
+                    <div class="coupon-stat-count">${total}</div>
+                    <div class="coupon-stat-label">coupon uses</div>
+                    <div class="coupon-stat-users">${codes.length} unique codes</div>
+                </div>
+            `;
+            
+            codes.forEach(c => {
+                const owner = getCouponOwner(c) || c;
+                html += `
+                    <div class="coupon-stat-card">
+                        <div class="coupon-stat-code" title="Referred by: ${owner}">${c}</div>
+                        <div class="coupon-stat-count">${map[c].count}</div>
+                        <div class="coupon-stat-label">use${map[c].count > 1 ? 's' : ''}</div>
+                        <div class="coupon-stat-users" title="${map[c].users.join(', ')}">${map[c].users.join(', ')}</div>
+                    </div>
+                `;
+            });
+            
+            grid.innerHTML = html;
         }
 
         function renderInstitutions() {
@@ -266,12 +339,23 @@
                     </div>
                 `;
 
+                let dateStr = '—';
+                if (inst.registeredAt) {
+                    try {
+                        dateStr = inst.registeredAt.toDate().toLocaleDateString('en-IN', {day:'2-digit', month:'short'});
+                    } catch(e){}
+                } else if (inst.createdAt) {
+                    try {
+                        dateStr = inst.createdAt.toDate().toLocaleDateString('en-IN', {day:'2-digit', month:'short'});
+                    } catch(e){}
+                }
+
                 return `
                 <div class="inst-item" id="inst-${inst.id}">
                     <div class="inst-summary" onclick="this.parentElement.classList.toggle('expanded')">
                         <div class="inst-info">
                             <h3>${inst.institutionName}</h3>
-                            <div class="inst-meta">${inst.coordinatorFirst} ${inst.coordinatorLast} • ${inst.institutionCity}</div>
+                            <div class="inst-meta">${inst.coordinatorFirst} ${inst.coordinatorLast} • ${inst.institutionCity} • ${dateStr}</div>
                             ${couponHtml}
                             ${txnHtml}
                         </div>
@@ -334,6 +418,18 @@
                 const statusColor = status === 'approved' ? '#22c55e' : (status === 'rejected' ? '#ef4444' : '#eab308');
                 const hasCoupon = reg.couponApplied && reg.couponCode;
                 const owner = getCouponOwner(reg.couponCode);
+
+                let dateStr = '—';
+                if (reg.registeredAt) {
+                    try {
+                        dateStr = reg.registeredAt.toDate().toLocaleDateString('en-IN', {day:'2-digit', month:'short'});
+                    } catch(e){}
+                } else if (reg.createdAt) {
+                    try {
+                        dateStr = reg.createdAt.toDate().toLocaleDateString('en-IN', {day:'2-digit', month:'short'});
+                    } catch(e){}
+                }
+
                 return `
                     <tr>
                         <td>
@@ -347,7 +443,10 @@
                             <div style="color:#fff; font-size:0.8rem;">${reg.school || '—'}</div>
                             <div style="color:var(--text-dimmed); font-size:0.75rem;">${reg.city || '—'}</div>
                         </td>
-                        <td><span style="color:var(--accent-light); font-size:0.8rem;">${EVENT_NAMES[reg.event] || reg.event}</span></td>
+                        <td>
+                            <span style="color:var(--accent-light); font-size:0.8rem;">${EVENT_NAMES[reg.event] || reg.event}</span>
+                            <span style="display:block; font-size:0.7rem; color:var(--text-dimmed); margin-top:4px;">${dateStr}</span>
+                        </td>
                         <td>
                             ${hasCoupon ? `
                                 <span style="background:rgba(139,26,26,0.15);color:#e57373;font-size:0.65rem;padding:2px 8px;border-radius:9999px;font-weight:700;letter-spacing:0.04em;display:inline-block;">${reg.couponCode}</span>
