@@ -67,9 +67,12 @@
                     <div class="coupon-stats-grid" id="coupon-stats-grid"></div>
                 </div>
 
-                <div class="hr-tabs">
-                    <button class="hr-tab active" data-target="inst-list">Institutional</button>
-                    <button class="hr-tab" data-target="indiv-list">Individual (View Only)</button>
+                <div class="hr-tabs" style="display:flex; align-items:center; justify-content:space-between;">
+                    <div style="display:flex; gap:20px;">
+                        <button class="hr-tab active" data-target="inst-list">Institutional</button>
+                        <button class="hr-tab" data-target="indiv-list">Individual (View Only)</button>
+                    </div>
+                    <button id="download-indiv-btn" onclick="downloadIndivCSV()" style="display:none; background:linear-gradient(135deg,#8b1a1a,#c0392b); color:#fff; border:none; padding:8px 18px; border-radius:8px; font-family:var(--font-body); font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; box-shadow:0 0 12px rgba(139,26,26,0.3);" onmouseover="this.style.boxShadow='0 0 24px rgba(139,26,26,0.6)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='0 0 12px rgba(139,26,26,0.3)';this.style.transform=''">⬇ Download CSV</button>
                 </div>
 
                 <div class="inst-list" id="inst-list">
@@ -84,8 +87,11 @@
                                 <th>Email / Phone</th>
                                 <th>School / City</th>
                                 <th>Event</th>
+                                <th>Committee / Portfolio</th>
+                                <th>Payment</th>
                                 <th>Coupon</th>
                                 <th>Status</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="indiv-table-body">
@@ -161,6 +167,7 @@
                 const target = tab.getAttribute('data-target');
                 document.getElementById('inst-list').style.display = target === 'inst-list' ? 'flex' : 'none';
                 document.getElementById('indiv-list').style.display = target === 'indiv-list' ? 'block' : 'none';
+                document.getElementById('download-indiv-btn').style.display = target === 'indiv-list' ? 'inline-block' : 'none';
             });
         });
 
@@ -413,7 +420,7 @@
 
         function renderIndividual() {
             const tbody = document.getElementById('indiv-table-body');
-            tbody.innerHTML = indivData.map(reg => {
+            tbody.innerHTML = indivData.filter(r => r.status !== 'draft').map((reg, idx) => {
                 const status = reg.status || 'pending';
                 const statusColor = status === 'approved' ? '#22c55e' : (status === 'rejected' ? '#ef4444' : '#eab308');
                 const hasCoupon = reg.couponApplied && reg.couponCode;
@@ -429,6 +436,96 @@
                         dateStr = reg.createdAt.toDate().toLocaleDateString('en-IN', {day:'2-digit', month:'short'});
                     } catch(e){}
                 }
+
+                // MUN Committee / Portfolio info
+                let portfolioHtml = '<span style="color:var(--text-dimmed);font-size:0.75rem;">—</span>';
+                if (reg.event === 'mun' && reg.munPortfolios && Array.isArray(reg.munPortfolios) && reg.munPortfolios.length) {
+                    portfolioHtml = reg.munPortfolios.map(p => `
+                        <div style="margin-bottom:4px;">
+                            <span style="background:rgba(139,26,26,0.15);color:#e57373;font-size:0.62rem;padding:2px 8px;border-radius:9999px;font-weight:700;letter-spacing:0.04em;display:inline-block;">${p.committeeName || p.committeeId || '—'}</span>
+                            <div style="font-size:0.72rem;color:#fff;margin-top:2px;font-weight:600;">${p.portfolioName || '—'}</div>
+                        </div>
+                    `).join('');
+                } else if (reg.event === 'ipl' && reg.iplTeam) {
+                    portfolioHtml = `
+                        <span style="background:rgba(139,26,26,0.15);color:#e57373;font-size:0.62rem;padding:2px 8px;border-radius:9999px;font-weight:700;letter-spacing:0.04em;display:inline-block;">IPL</span>
+                        <div style="font-size:0.72rem;color:#fff;margin-top:2px;font-weight:600;">${reg.iplTeam}</div>
+                    `;
+                }
+
+                // Payment info
+                const priceStr = reg.price ? '₹' + Number(reg.price).toLocaleString('en-IN') : '—';
+                const txnStr = reg.transactionId || '—';
+
+                // Team members detail rows
+                const teamMembers = reg.teamMembers || [];
+                const hasTeam = teamMembers.length > 1;
+
+                let detailHtml = '';
+                // Build expandable detail row
+                let detailContent = '';
+
+                // Team Members Table
+                if (hasTeam) {
+                    detailContent += `
+                        <div style="margin-bottom:12px;">
+                            <div style="font-size:0.68rem;color:var(--accent-light);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;font-weight:700;">Team Members (${teamMembers.length})</div>
+                            <table style="width:100%;border-collapse:collapse;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:left;padding:6px 10px;font-size:0.62rem;color:var(--text-dimmed);text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid rgba(255,255,255,0.08);">Role</th>
+                                        <th style="text-align:left;padding:6px 10px;font-size:0.62rem;color:var(--text-dimmed);text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid rgba(255,255,255,0.08);">Name</th>
+                                        <th style="text-align:left;padding:6px 10px;font-size:0.62rem;color:var(--text-dimmed);text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid rgba(255,255,255,0.08);">Email</th>
+                                        <th style="text-align:left;padding:6px 10px;font-size:0.62rem;color:var(--text-dimmed);text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid rgba(255,255,255,0.08);">Phone</th>
+                                        <th style="text-align:left;padding:6px 10px;font-size:0.62rem;color:var(--text-dimmed);text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid rgba(255,255,255,0.08);">School</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${teamMembers.map((m, mi) => `
+                                        <tr>
+                                            <td style="padding:8px 10px;font-size:0.78rem;color:${mi === 0 ? '#eab308' : '#9ca3af'};font-weight:${mi === 0 ? '700' : '400'};border-bottom:1px solid rgba(255,255,255,0.04);">${mi === 0 ? '👑 Leader' : 'Member ' + (mi + 1)}</td>
+                                            <td style="padding:8px 10px;font-size:0.78rem;color:#fff;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">${m.firstName || ''} ${m.lastName || ''}</td>
+                                            <td style="padding:8px 10px;font-size:0.75rem;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.04);">${m.email || '—'}</td>
+                                            <td style="padding:8px 10px;font-size:0.75rem;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.04);">${m.phone || '—'}</td>
+                                            <td style="padding:8px 10px;font-size:0.75rem;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.04);">${m.school || '—'}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                }
+
+                // MUN Portfolio detail in expanded view
+                if (reg.event === 'mun' && reg.munPortfolios && Array.isArray(reg.munPortfolios) && reg.munPortfolios.length) {
+                    detailContent += `
+                        <div style="margin-bottom:12px;">
+                            <div style="font-size:0.68rem;color:var(--accent-light);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;font-weight:700;">MUN Portfolio Assignment</div>
+                            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                                ${reg.munPortfolios.map(p => `
+                                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 14px;">
+                                        <div style="font-size:0.6rem;color:var(--accent-light);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">${p.committeeName || p.committeeId || '—'}</div>
+                                        <div style="font-size:0.85rem;color:#fff;font-weight:600;">${p.portfolioName || '—'}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (detailContent) {
+                    detailHtml = `
+                        <tr class="indiv-detail-row" id="indiv-detail-${idx}" style="display:none;">
+                            <td colspan="9" style="padding:16px 20px;background:rgba(0,0,0,0.3);border-bottom:2px solid rgba(139,26,26,0.2);">
+                                ${detailContent}
+                            </td>
+                        </tr>
+                    `;
+                }
+
+                const expandBtn = detailContent ? `
+                    <button onclick="toggleIndivDetail(${idx})" style="background:none;border:1px solid rgba(255,255,255,0.1);color:var(--text-muted);border-radius:6px;padding:4px 10px;font-size:0.7rem;cursor:pointer;font-family:var(--font-body);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='var(--text-muted)'">Details ▼</button>
+                ` : '';
 
                 return `
                     <tr>
@@ -447,6 +544,11 @@
                             <span style="color:var(--accent-light); font-size:0.8rem;">${EVENT_NAMES[reg.event] || reg.event}</span>
                             <span style="display:block; font-size:0.7rem; color:var(--text-dimmed); margin-top:4px;">${dateStr}</span>
                         </td>
+                        <td>${portfolioHtml}</td>
+                        <td>
+                            <div style="font-size:0.82rem;color:#fff;font-weight:600;">${priceStr}</div>
+                            <div style="font-size:0.68rem;color:var(--text-dimmed);margin-top:3px;font-family:'Space Mono',monospace;letter-spacing:0.03em;" title="Transaction ID">${txnStr}</div>
+                        </td>
                         <td>
                             ${hasCoupon ? `
                                 <span style="background:rgba(139,26,26,0.15);color:#e57373;font-size:0.65rem;padding:2px 8px;border-radius:9999px;font-weight:700;letter-spacing:0.04em;display:inline-block;">${reg.couponCode}</span>
@@ -458,10 +560,118 @@
                                 ${status}
                             </span>
                         </td>
+                        <td>${expandBtn}</td>
                     </tr>
+                    ${detailHtml}
                 `;
             }).join('');
         }
+
+        // Toggle individual detail row
+        window.toggleIndivDetail = (idx) => {
+            const row = document.getElementById('indiv-detail-' + idx);
+            if (row) {
+                row.style.display = row.style.display === 'none' ? 'table-row' : 'none';
+            }
+        };
+
+        // ─── DOWNLOAD CSV ───
+        window.downloadIndivCSV = () => {
+            const filtered = indivData.filter(r => r.status === 'approved');
+            if (!filtered.length) { alert('No approved data to download.'); return; }
+
+            // Find max team size across all registrations
+            let maxTeam = 1;
+            filtered.forEach(r => {
+                const t = (r.teamMembers || []).length;
+                if (t > maxTeam) maxTeam = t;
+            });
+
+            // Build header row
+            const headers = [
+                'Name', 'Email', 'Phone', 'School', 'City', 'Grade',
+                'Event', 'Status', 'Price', 'Transaction ID',
+                'Coupon Code', 'Coupon Owner',
+                'Committee', 'Portfolio / Country', 'IPL Team',
+                'Registration Date'
+            ];
+            // Add team member columns
+            for (let i = 1; i <= maxTeam; i++) {
+                const label = i === 1 ? 'Leader' : 'Member ' + i;
+                headers.push(label + ' Name', label + ' Email', label + ' Phone', label + ' School');
+            }
+
+            const rows = [headers];
+
+            filtered.forEach(reg => {
+                let dateStr = '';
+                if (reg.registeredAt) {
+                    try { dateStr = reg.registeredAt.toDate().toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'}); } catch(e){}
+                } else if (reg.createdAt) {
+                    try { dateStr = reg.createdAt.toDate().toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'}); } catch(e){}
+                }
+
+                // MUN committee/portfolio
+                let committee = '';
+                let portfolio = '';
+                if (reg.event === 'mun' && reg.munPortfolios && Array.isArray(reg.munPortfolios) && reg.munPortfolios.length) {
+                    committee = reg.munPortfolios.map(p => p.committeeName || p.committeeId || '').join('; ');
+                    portfolio = reg.munPortfolios.map(p => p.portfolioName || '').join('; ');
+                }
+
+                const row = [
+                    (reg.firstName || '') + ' ' + (reg.lastName || ''),
+                    reg.email || '',
+                    reg.phone || '',
+                    reg.school || '',
+                    reg.city || '',
+                    reg.grade || '',
+                    EVENT_NAMES[reg.event] || reg.event || '',
+                    reg.status || 'pending',
+                    reg.price || '',
+                    reg.transactionId || '',
+                    reg.couponCode || '',
+                    getCouponOwner(reg.couponCode) || '',
+                    committee,
+                    portfolio,
+                    reg.iplTeam || '',
+                    dateStr
+                ];
+
+                // Add team member columns
+                const members = reg.teamMembers || [];
+                for (let i = 0; i < maxTeam; i++) {
+                    const m = members[i] || {};
+                    row.push(
+                        ((m.firstName || '') + ' ' + (m.lastName || '')).trim(),
+                        m.email || '',
+                        m.phone || '',
+                        m.school || ''
+                    );
+                }
+
+                rows.push(row);
+            });
+
+            // Build CSV string
+            const csvContent = rows.map(r =>
+                r.map(cell => {
+                    const str = String(cell).replace(/"/g, '""');
+                    return '"' + str + '"';
+                }).join(',')
+            ).join('\n');
+
+            // Download
+            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'NYDC_2026_Approved_Individual_Registrations.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
 
         // ─── TEAM MODAL LOGIC ───
         window.openTeamModal = (instId, pIdx) => {
