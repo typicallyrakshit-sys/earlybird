@@ -48,6 +48,21 @@ Campus Ambassador Codes:
   JANAYA-NYDC26         — Janaya Sachdeva
   PRAKHAR-NYDC26        — Prakhar Sagar
 
+Additional Lead Codes:
+─────────────────────────────────────────────────────
+  MATETI-NYDC26         — Mateti Sri Theerdha
+  JIYA-NYDC26           — Jiya Chhabra
+  VAISHNAV-NYDC26       — Vaishnav Wadkar
+  NAVYA-NYDC26          — Navya Jindal
+  SHREYA-NYDC26         — Shreya Sajeesh M.S
+  TEJASWI-NYDC26        — Tejaswi Nayan
+  RIDA-NYDC26           — Rida Fatima
+  ARATRIKA-NYDC26       — Aratrika Basu
+  SANSKRITI-NYDC26      — Sanskriti Bisht
+  AYMAN-NYDC26          — Ayman Ullah Khan
+  SHERLEN-NYDC26        — Sherlen
+  MAYURI-NYDC26         — Mayuri Mishra
+  AANYA-NYDC26          — Aanya Yadav
+
 ─────────────────────────────────────────────────────
 Effect: Reverts event price to original (removes 10% markup)
-Total Codes: 40 (1 general + 39 ambassador)

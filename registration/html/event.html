@@ -67,6 +67,7 @@
               <label for="ev-mun">Model United Nations &nbsp;<span class="event-price"
                   data-event="mun">(&#8377;2,089)</span> <span class="event-duration">2 Days</span></label>
             </div>
+
             <div class="event-check">
               <input type="radio" id="ev-moot" name="events" value="moot_court">
               <label for="ev-moot">Moot Court &nbsp;<span class="event-price"
@@ -77,10 +78,10 @@
               <label for="ev-debate">Conventional Debate &nbsp;<span class="event-price"
                   data-event="debate">(&#8377;2,200)</span> <span class="event-duration">1 Day</span></label>
             </div>
-            <div class="event-check">
-              <input type="radio" id="ev-spark" name="events" value="spark_tank">
+                        <div class="event-check" style="opacity:0.5;pointer-events:none;position:relative;">
+              <input type="radio" id="ev-spark" name="events" value="spark_tank" disabled>
               <label for="ev-spark">Spark Tank &nbsp;<span class="event-price"
-                  data-event="spark_tank">(&#8377;3,959)</span> <span class="event-duration">1 Day</span></label>
+                  data-event="spark_tank">(&#8377;3,959)</span> <span class="event-duration">1 Day</span> <span style="background:#8b1a1a;color:#fff;font-size:10px;padding:2px 10px;border-radius:9999px;margin-left:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Closed</span></label>
             </div>
             <div class="event-check">
               <input type="radio" id="ev-mktg" name="events" value="marketing">
@@ -137,6 +138,7 @@
                   <span
                     style="background:#8b1a1a;color:#fff;font-size:10px;padding:2px 10px;border-radius:9999px;margin-left:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Register
                     on Hack2Skill</span>
+
                 </div>
               </a>
             </div>
@@ -169,12 +171,14 @@
           </div>
         </div>
 
+
         <!-- Experience -->
         <div class="form-group">
           <label for="experience">Prior Experience (optional)</label>
           <textarea id="experience" name="experience"
             placeholder="Tell us about any relevant MUN, debate, or hackathon experience…"></textarea>
         </div>
+
 
         <!-- Submit -->
         <button type="submit" class="submit-btn">Continue to Team →</button>
