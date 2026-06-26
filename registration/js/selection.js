@@ -21,6 +21,7 @@ if (!form) {
 
   if (!storedPersonal || !storedEvent) {
     window.location.href = '../registration.html';
+    return;
   }
 
   const personalData  = JSON.parse(storedPersonal);
@@ -63,6 +64,12 @@ if (!form) {
     if (evData.event === 'ipl') {
       const sel = form.querySelector('input[name="ipl_team"]:checked');
       iplTeam = sel ? sel.value : null;
+      if (!iplTeam) {
+        alert('Please select an IPL franchise to represent before submitting.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Register Now';
+        return;
+      }
     }
 
     try {
