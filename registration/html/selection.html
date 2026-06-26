@@ -276,8 +276,6 @@
       const iplSection = document.getElementById('ipl-team-section');
       if (eventKey === 'ipl') {
         iplSection.style.display = 'block';
-        // Add required validation only when IPL section is visible
-        document.getElementById('ipl-mi').setAttribute('required', '');
         // Load team availability from Firestore
         loadIplTeamAvailability();
       }
@@ -318,8 +316,8 @@
           });
 
           const available = document.querySelectorAll('input[name="ipl_team"]:not(:disabled)');
-          if (available.length > 0) {
-            available[0].setAttribute('required', '');
+          if (available.length === 0) {
+            console.warn('All IPL teams are taken!');
           }
         } catch (err) {
           console.warn('Could not load IPL team availability:', err);

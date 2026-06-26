@@ -7,10 +7,13 @@ import {
   collection, addDoc, updateDoc, doc, getDoc, setDoc, getDocs, query, where, deleteDoc, serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-const form = document.getElementById('team-form');
-if (!form) {
-  console.error('team-form not found');
-} else {
+(async function () {
+  const form = document.getElementById('team-form');
+  if (!form) {
+    console.error('team-form not found');
+    return;
+  }
+
   const submitBtn = form.querySelector('.submit-btn');
 
   // Pull stored data
@@ -75,16 +78,21 @@ if (!form) {
     try {
       // ─── IPL Team: verify still available ───
       if (iplTeam) {
-        const iplTeamsRef = doc(db, 'settings', 'ipl_teams');
-        const iplTeamsSnap = await getDoc(iplTeamsRef);
-        if (iplTeamsSnap.exists() && iplTeamsSnap.data()[iplTeam]) {
-          // If the team is taken by someone else (not the current user's draft)
-          if (iplTeamsSnap.data()[iplTeam] !== sessionStorage.getItem('nydc_doc_id')) {
-            alert('Sorry, ' + iplTeam + ' has just been taken by another registrant.');
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Register Now';
-            return;
+        try {
+          const iplTeamsRef = doc(db, 'settings', 'ipl_teams');
+          const iplTeamsSnap = await getDoc(iplTeamsRef);
+          if (iplTeamsSnap.exists() && iplTeamsSnap.data()[iplTeam]) {
+            // If the team is taken by someone else (not the current user's draft)
+            if (iplTeamsSnap.data()[iplTeam] !== sessionStorage.getItem('nydc_doc_id')) {
+              alert('Sorry, ' + iplTeam + ' has just been taken by another registrant.');
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Register Now';
+              return;
+            }
           }
+        } catch (availErr) {
+          // If we can't read the settings doc (e.g. rules), skip the check and proceed
+          console.warn('Could not verify IPL team availability:', availErr);
         }
       }
 
@@ -188,4 +196,4 @@ if (!form) {
       alert('Registration failed!\n\n' + error.message);
     }
   });
-}
+})();
