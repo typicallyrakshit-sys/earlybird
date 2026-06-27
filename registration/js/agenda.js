@@ -1,5 +1,5 @@
 // ─── Firebase Imports ───
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
+import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
 import { getFirestore, collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
 const firebaseConfig = {
@@ -12,7 +12,13 @@ const firebaseConfig = {
   measurementId: "G-5G8Z44578K"
 };
 
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase - only if not already initialized
+let app;
+if (getApps().length === 0) {
+  app = initializeApp(firebaseConfig);
+} else {
+  app = getApps()[0];
+}
 const db = getFirestore(app);
 
 // ─── Committee Portfolio Data (mirrored from mun.js for the 4 committees) ───

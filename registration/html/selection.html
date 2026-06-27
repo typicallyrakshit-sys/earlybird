@@ -283,10 +283,25 @@
       // ─── Load IPL Team Availability from Firestore ───
       async function loadIplTeamAvailability() {
         try {
-          const { initializeApp: _iA, getApps } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js');
-          const { getFirestore: _gF, collection, getDocs, query, where } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
-          const _app = getApps().length ? getApps()[0] : _iA({ apiKey:"AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",authDomain:"nydc-72b34.firebaseapp.com",projectId:"nydc-72b34",storageBucket:"nydc-72b34.firebasestorage.app",messagingSenderId:"935882112599",appId:"1:935882112599:web:f04b660e233f21a46f2d12" });
-          const _db = _gF(_app);
+          const { getApps } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js');
+          const { getFirestore, collection, getDocs, query, where } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
+          // Use existing app or wait for it to be initialized
+          let _app = null;
+          let attempts = 0;
+          while (!_app && attempts < 20) {
+            const apps = getApps();
+            if (apps.length > 0) {
+              _app = apps[0];
+              break;
+            }
+            await new Promise(resolve => setTimeout(resolve, 50));
+            attempts++;
+          }
+          if (!_app) {
+            console.warn('Firebase app not initialized after waiting');
+            return;
+          }
+          const _db = getFirestore(_app);
 
           const regsRef = collection(_db, 'registrations');
           const iplQuery = query(regsRef, where('event', '==', 'ipl'));
@@ -406,10 +421,28 @@
 
         if (missingFields && storedDocId) {
           try {
-            const { initializeApp: _iA, getApps } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js');
-            const { getFirestore: _gF, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
-            const _app = getApps().length ? getApps()[0] : _iA({ apiKey:"AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",authDomain:"nydc-72b34.firebaseapp.com",projectId:"nydc-72b34",storageBucket:"nydc-72b34.firebasestorage.app",messagingSenderId:"935882112599",appId:"1:935882112599:web:f04b660e233f21a46f2d12" });
-            const _db = _gF(_app);
+            const { getApps } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js');
+            const { getFirestore, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
+            // Use existing app or wait for it to be initialized
+            let _app = null;
+            let attempts = 0;
+            while (!_app && attempts < 20) {
+              const apps = getApps();
+              if (apps.length > 0) {
+                _app = apps[0];
+                break;
+              }
+              await new Promise(resolve => setTimeout(resolve, 50));
+              attempts++;
+            }
+            if (!_app) {
+              console.warn('Firebase app not initialized after waiting');
+              container.appendChild(createMemberCard(0, leader));
+              memberCount = 1;
+              updateAddButton();
+              return;
+            }
+            const _db = getFirestore(_app);
             const snap = await getDoc(doc(_db, 'registrations', storedDocId));
             if (snap.exists()) {
               const d = snap.data();

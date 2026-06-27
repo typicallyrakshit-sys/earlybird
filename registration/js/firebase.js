@@ -1,5 +1,5 @@
 // Firebase configuration & Common Utilities
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
+import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 import { getAuth } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
 
@@ -13,8 +13,17 @@ const firebaseConfig = {
   measurementId: "G-5G8Z44578K"
 };
 
-// Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+// Initialize Firebase - only if not already initialized
+let app;
+if (getApps().length === 0) {
+  app = initializeApp(firebaseConfig);
+  console.log('✓ Firebase initialized');
+} else {
+  app = getApps()[0];
+  console.log('✓ Firebase already initialized, using existing app');
+}
+
+export { app };
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
