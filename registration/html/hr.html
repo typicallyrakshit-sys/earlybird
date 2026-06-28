@@ -67,6 +67,57 @@
                     <div class="coupon-stats-grid" id="coupon-stats-grid"></div>
                 </div>
 
+                <!-- Event-Wise Export Section -->
+                <div class="coupon-stats-section" id="event-export-section" style="margin-bottom: 28px;">
+                    <h2 class="section-title">Event-Wise Registration Export</h2>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border-color); border-radius:12px; padding:20px; display:flex; flex-wrap:wrap; gap:16px; align-items:flex-end;">
+                        <div style="display:flex; flex-direction:column; gap:6px; min-width:220px; flex:1;">
+                            <label style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; font-weight:700; letter-spacing:0.08em;">Select Event</label>
+                            <select id="export-event-select" style="background:#120c0c; border:1px solid var(--border-color); color:#fff; padding:10px 14px; border-radius:8px; font-family:var(--font-body); font-size:0.85rem; outline:none; transition:border-color 0.2s; cursor:pointer; width:100%;" onmouseover="this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.borderColor='var(--border-color)'" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border-color)'">
+                                <option value="all">All Events Combined</option>
+                                <option value="mun">Model United Nations (MUN)</option>
+                                <option value="ipl">IPL Auction</option>
+                                <option value="moot_court">Moot Court</option>
+                                <option value="debate">Conventional Debate</option>
+                                <option value="spark_tank">Spark Tank</option>
+                                <option value="hackathon">Hackathon</option>
+                                <option value="film_making">Film Making</option>
+                                <option value="raag_jaam">Raag Jaam</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="paper_trading">Paper Trading</option>
+                                <option value="Navras">Navras</option>
+                                <option value="poetry">Poetry</option>
+                            </select>
+                        </div>
+                        <!-- Select Committee (Shown only when MUN is selected) -->
+                        <div id="export-committee-wrapper" style="display:none; flex-direction:column; gap:6px; min-width:200px; flex:1;">
+                            <label style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; font-weight:700; letter-spacing:0.08em;">MUN Committee</label>
+                            <select id="export-committee-select" style="background:#120c0c; border:1px solid var(--border-color); color:#fff; padding:10px 14px; border-radius:8px; font-family:var(--font-body); font-size:0.85rem; outline:none; transition:border-color 0.2s; cursor:pointer; width:100%;" onmouseover="this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.borderColor='var(--border-color)'" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border-color)'">
+                                <option value="all">All Committees Combined</option>
+                                <option value="unga">UNGA</option>
+                                <option value="uncsw">UNCSW</option>
+                                <option value="unhrc">UNHRC</option>
+                                <option value="who">WHO</option>
+                                <option value="aippm">AIPPM</option>
+                                <option value="ip">International Press (IP)</option>
+                            </select>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:6px; min-width:180px; flex:1;">
+                            <label style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; font-weight:700; letter-spacing:0.08em;">Status Filter</label>
+                            <select id="export-status-select" style="background:#120c0c; border:1px solid var(--border-color); color:#fff; padding:10px 14px; border-radius:8px; font-family:var(--font-body); font-size:0.85rem; outline:none; transition:border-color 0.2s; cursor:pointer; width:100%;" onmouseover="this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.borderColor='var(--border-color)'" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border-color)'">
+                                <option value="approved">Approved Only</option>
+                                <option value="approved_pending">Approved & Pending</option>
+                                <option value="all">All Statuses</option>
+                            </select>
+                        </div>
+                        <div style="min-width:180px; flex:1; display:flex;">
+                            <button id="export-event-btn" style="width:100%; background:linear-gradient(135deg,#8b1a1a,#c0392b); color:#fff; border:none; padding:11px 24px; border-radius:8px; font-family:var(--font-body); font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; box-shadow:0 0 12px rgba(139,26,26,0.3); display:inline-flex; align-items:center; justify-content:center; gap:8px;" onmouseover="this.style.boxShadow='0 0 24px rgba(139,26,26,0.6)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='0 0 12px rgba(139,26,26,0.3)';this.style.transform=''">
+                                <span>⬇ Export to Excel (CSV)</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="hr-tabs" style="display:flex; align-items:center; justify-content:space-between;">
                     <div style="display:flex; gap:20px;">
                         <button class="hr-tab active" data-target="inst-list">Institutional</button>
@@ -672,6 +723,248 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         };
+
+        // Helper to match committee name or ID case-insensitively
+        function isCommitteeMatch(pCommittee, filterValue) {
+            if (!pCommittee || !filterValue) return false;
+            const pc = pCommittee.toLowerCase().trim();
+            const fv = filterValue.toLowerCase().trim();
+            if (pc === fv) return true;
+            if (fv === 'ip' && (pc.includes('ip') || pc.includes('press') || pc.includes('journalist') || pc.includes('photographer') || pc.includes('caricaturist'))) return true;
+            if (pc.includes(fv) || fv.includes(pc)) return true;
+            return false;
+        }
+
+        // Toggle committee selection wrapper based on event select
+        document.getElementById('export-event-select').addEventListener('change', (e) => {
+            const wrapper = document.getElementById('export-committee-wrapper');
+            if (e.target.value === 'mun') {
+                wrapper.style.display = 'flex';
+            } else {
+                wrapper.style.display = 'none';
+                document.getElementById('export-committee-select').value = 'all';
+            }
+        });
+
+        // ─── DOWNLOAD EVENT WISE CSV ───
+        document.getElementById('export-event-btn').onclick = () => {
+            const eventVal = document.getElementById('export-event-select').value;
+            const statusVal = document.getElementById('export-status-select').value;
+            const committeeVal = document.getElementById('export-committee-select').value;
+
+            // Filter individual registrations
+            let filteredIndiv = indivData;
+            if (eventVal !== 'all') {
+                filteredIndiv = filteredIndiv.filter(r => r.event === eventVal);
+            }
+            if (eventVal === 'mun' && committeeVal !== 'all') {
+                filteredIndiv = filteredIndiv.filter(r => {
+                    const mun = r.munPortfolios && r.munPortfolios[0];
+                    if (!mun) return false;
+                    return isCommitteeMatch(mun.committeeId || '', committeeVal) || isCommitteeMatch(mun.committeeName || '', committeeVal);
+                });
+            }
+            if (statusVal === 'approved') {
+                filteredIndiv = filteredIndiv.filter(r => r.status === 'approved');
+            } else if (statusVal === 'approved_pending') {
+                filteredIndiv = filteredIndiv.filter(r => r.status === 'approved' || r.status === 'pending');
+            }
+
+            // Filter institutional registrations
+            let filteredInst = instData.filter(inst => inst.status !== 'draft');
+            if (statusVal === 'approved') {
+                filteredInst = filteredInst.filter(inst => inst.status === 'approved');
+            } else if (statusVal === 'approved_pending') {
+                filteredInst = filteredInst.filter(inst => inst.status === 'approved' || inst.status === 'pending');
+            }
+
+            const participantsList = [];
+
+            // 1. Process Individual
+            filteredIndiv.forEach(reg => {
+                let dateStr = '';
+                if (reg.registeredAt) {
+                    try { dateStr = reg.registeredAt.toDate().toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'}); } catch(e){}
+                } else if (reg.createdAt) {
+                    try { dateStr = reg.createdAt.toDate().toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'}); } catch(e){}
+                }
+
+                let committee = '';
+                let portfolio = '';
+                if (reg.event === 'mun' && reg.munPortfolios && Array.isArray(reg.munPortfolios) && reg.munPortfolios.length) {
+                    committee = reg.munPortfolios.map(p => p.committeeName || p.committeeId || '').join('; ');
+                    portfolio = reg.munPortfolios.map(p => p.portfolioName || '').join('; ');
+                }
+
+                participantsList.push({
+                    regType: 'Individual',
+                    regName: (reg.firstName || '') + ' ' + (reg.lastName || ''),
+                    regEmail: reg.email || '',
+                    regPhone: reg.phone || '',
+                    school: reg.school || '',
+                    city: reg.city || '',
+                    status: reg.status || 'pending',
+                    price: reg.price ? '₹' + reg.price : '',
+                    transactionId: reg.transactionId || '',
+                    couponCode: reg.couponCode || '',
+                    couponOwner: getCouponOwner(reg.couponCode) || '',
+                    partName: (reg.firstName || '') + ' ' + (reg.lastName || ''),
+                    partEmail: reg.email || '',
+                    partPhone: reg.phone || '',
+                    partGrade: reg.grade || '',
+                    eventKey: reg.event || '',
+                    munCommittee: committee,
+                    munPortfolio: portfolio,
+                    iplTeam: reg.iplTeam || '',
+                    teamMembers: reg.teamMembers || [],
+                    date: dateStr
+                });
+            });
+
+            // 2. Process Institutional
+            filteredInst.forEach(inst => {
+                let dateStr = '';
+                if (inst.registeredAt) {
+                    try { dateStr = inst.registeredAt.toDate().toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'}); } catch(e){}
+                } else if (inst.createdAt) {
+                    try { dateStr = inst.createdAt.toDate().toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'}); } catch(e){}
+                }
+
+                const participants = inst.participants || [];
+                participants.forEach(p => {
+                    if (eventVal !== 'all' && p.event !== eventVal) return;
+                    if (eventVal === 'mun' && committeeVal !== 'all') {
+                        if (!isCommitteeMatch(p.munCommittee || '', committeeVal)) return;
+                    }
+
+                    participantsList.push({
+                        regType: 'Institutional',
+                        regName: `${inst.coordinatorFirst || ''} ${inst.coordinatorLast || ''}`.trim(),
+                        regEmail: inst.email || '',
+                        regPhone: inst.phone || '',
+                        school: inst.institutionName || '',
+                        city: inst.institutionCity || '',
+                        status: inst.status || 'pending',
+                        price: inst.totalAmount ? '₹' + inst.totalAmount + ' (Inst Total)' : '',
+                        transactionId: inst.transactionId || '',
+                        couponCode: inst.couponCode || '',
+                        couponOwner: getCouponOwner(inst.couponCode) || '',
+                        partName: `${p.firstName || ''} ${p.lastName || ''}`.trim(),
+                        partEmail: p.email || '',
+                        partPhone: p.phone || '',
+                        partGrade: p.grade || '',
+                        eventKey: p.event || '',
+                        munCommittee: p.munCommittee || '',
+                        munPortfolio: p.munPortfolio || '',
+                        iplTeam: p.iplTeam || '',
+                        teamMembers: p.teamMembers || [],
+                        date: dateStr
+                    });
+                });
+            });
+
+            if (!participantsList.length) {
+                alert('No registration data matches the selected filters.');
+                return;
+            }
+
+            // Determine max team members across matching participants
+            let maxTeam = 0;
+            participantsList.forEach(p => {
+                const len = (p.teamMembers || []).length;
+                if (len > maxTeam) maxTeam = len;
+            });
+
+            // Build Headers
+            const headers = [
+                'Registration Type',
+                'Registrant/Coordinator Name',
+                'Registrant/Coordinator Email',
+                'Registrant/Coordinator Phone',
+                'School/Institution',
+                'City',
+                'Payment Status',
+                'Amount Paid',
+                'Transaction ID',
+                'Coupon Code',
+                'Coupon Owner',
+                'Participant Name',
+                'Participant Email',
+                'Participant Phone',
+                'Participant Grade',
+                'Event Name',
+                'MUN Committee',
+                'MUN Portfolio/Country',
+                'IPL Team',
+                'Registration Date'
+            ];
+
+            for (let i = 1; i <= maxTeam; i++) {
+                headers.push(`Team Member ${i} Name`, `Team Member ${i} Email`, `Team Member ${i} Phone`);
+            }
+
+            const rows = [headers];
+
+            participantsList.forEach(p => {
+                const row = [
+                    p.regType,
+                    p.regName,
+                    p.regEmail,
+                    p.regPhone,
+                    p.school,
+                    p.city,
+                    p.status,
+                    p.price,
+                    p.transactionId,
+                    p.couponCode,
+                    p.couponOwner,
+                    p.partName,
+                    p.partEmail,
+                    p.partPhone,
+                    p.partGrade,
+                    EVENT_NAMES[p.eventKey] || p.eventKey || '',
+                    p.munCommittee,
+                    p.munPortfolio,
+                    p.iplTeam,
+                    p.date
+                ];
+
+                for (let i = 0; i < maxTeam; i++) {
+                    const tm = p.teamMembers[i] || {};
+                    row.push(
+                        `${tm.firstName || ''} ${tm.lastName || ''}`.trim(),
+                        tm.email || '',
+                        tm.phone || ''
+                    );
+                }
+
+                rows.push(row);
+            });
+
+            // Convert to CSV
+            const csvContent = rows.map(r =>
+                r.map(cell => {
+                    const str = String(cell).replace(/"/g, '""');
+                    return '"' + str + '"';
+                }).join(',')
+            ).join('\n');
+
+            // Trigger download
+            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            let filenameEvent = eventVal === 'all' ? 'All_Events' : (EVENT_NAMES[eventVal] || eventVal).replace(/\s+/g, '_');
+            if (eventVal === 'mun' && committeeVal !== 'all') {
+                filenameEvent += `_${committeeVal.toUpperCase()}`;
+            }
+            a.download = `NYDC_2026_${filenameEvent}_Registrations.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
+
 
         // ─── TEAM MODAL LOGIC ───
         window.openTeamModal = (instId, pIdx) => {
