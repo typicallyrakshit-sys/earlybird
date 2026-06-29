@@ -201,7 +201,7 @@
       paper_trading: { original: 1199, increased: 1319 },
       film_making: { original: 2799, increased: 3079 },
       Navras: { original: 1699, increased: 1869 },
-      poetry: { original: 599, increased: 999 },
+      poetry: { original: 600, increased: 999 },
       raag_jaam: { original: 4199, increased: 4619 },
       ipl: { original: 2999, increased: 3299 }
     };
@@ -245,7 +245,10 @@
       'REVANT-NYDC26': { type: 'revert', label: 'Revant Bhatt — Campus Ambassador' },
       'SUVARCHA-NYDC26': { type: 'revert', label: 'Suvarcha — Campus Ambassador' },
       'GAURI-NYDC26': { type: 'revert', label: 'Gauri — Campus Ambassador' },
-      'BHAVYA-NYDC26': { type: 'revert', label: 'Bhavya Bhardwaj — Campus Ambassador' },
+      'BHAVYA-NYDC26': { type: 'custom', label: 'Bhavya Bhardwaj — Campus Ambassador', munPrice: 1699 },
+      'BHAVYA': { type: 'custom', label: 'Bhavya Bhardwaj — Campus Ambassador', munPrice: 1699 },
+      'TANISH-NYDC26': { type: 'custom', label: 'Tanish — Campus Ambassador', munPrice: 1699 },
+      'TANISH': { type: 'custom', label: 'Tanish — Campus Ambassador', munPrice: 1699 },
       'JANAYA-NYDC26': { type: 'revert', label: 'Janaya Sachdeva — Campus Ambassador' },
       'PRAKHAR-NYDC26': { type: 'revert', label: 'Prakhar Sagar — Campus Ambassador' },
       'CHARAN-NYDC26': { type: 'revert', label: 'SG Charan Tej — Campus Ambassador' },
@@ -388,7 +391,15 @@
       document.querySelectorAll('.event-price').forEach(span => {
         const eventKey = span.dataset.event;
         if (PRICES[eventKey]) {
-          const price = couponApplied ? PRICES[eventKey].original : PRICES[eventKey].increased;
+          let price = PRICES[eventKey].increased;
+          if (couponApplied) {
+            const coupon = VALID_COUPONS[appliedCouponCode];
+            if (coupon && coupon.type === 'custom' && eventKey === 'mun' && coupon.munPrice !== undefined) {
+              price = coupon.munPrice;
+            } else {
+              price = PRICES[eventKey].original;
+            }
+          }
           span.textContent = '(' + formatPrice(price) + ')';
           if (couponApplied) {
             span.classList.add('discounted');
@@ -414,12 +425,16 @@
       if (!priceData) { summaryEl.style.display = 'none'; return; }
 
       const increased = priceData.increased;
-      const original = priceData.original;
-      const discount = increased - original;
+      let finalPrice = priceData.original;
+      const coupon = VALID_COUPONS[appliedCouponCode];
+      if (coupon && coupon.type === 'custom' && eventKey === 'mun' && coupon.munPrice !== undefined) {
+        finalPrice = coupon.munPrice;
+      }
+      const discount = increased - finalPrice;
 
       document.getElementById('price-original').textContent = formatPrice(increased);
       document.getElementById('price-discount').textContent = '- ' + formatPrice(discount);
-      document.getElementById('price-final').textContent = formatPrice(original);
+      document.getElementById('price-final').textContent = formatPrice(finalPrice);
 
       summaryEl.style.display = 'block';
     }
@@ -514,7 +529,15 @@
 
       const eventKey = selected.value;
       const priceData = PRICES[eventKey];
-      const finalPrice = couponApplied ? priceData.original : priceData.increased;
+      let finalPrice = priceData.increased;
+      if (couponApplied) {
+        const coupon = VALID_COUPONS[appliedCouponCode];
+        if (coupon && coupon.type === 'custom' && eventKey === 'mun' && coupon.munPrice !== undefined) {
+          finalPrice = coupon.munPrice;
+        } else {
+          finalPrice = priceData.original;
+        }
+      }
 
       // Save event choice + experience + price info
       const eventData = {
