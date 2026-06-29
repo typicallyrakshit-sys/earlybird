@@ -53,7 +53,7 @@
         'Brazil','Colombia','Cuba','Dominican Republic','El Salvador',
         'Mexico','Paraguay','Austria','Belgium','Canada','France',
         'Germany','Italy','Sweden','United States','Armenia','Poland',
-        'Romania','Russian Federation'
+        'Romania','Russian Federation', 'South Africa'
       ]
     },
     {
