@@ -89,7 +89,7 @@
         'Tejashwi Yadav','Nitish Kumar','Uddhav Thackeray','Eknath Shinde',
         'Devendra Fadnavis','Yogi Adityanath','K. Chandrashekar Rao',
         'M. K. Stalin','Pinarayi Vijayan','Chirag Paswan',
-        'Asaduddin Owaisi','Sukhbir Singh Badal','Hemant Soren'
+        'Asaduddin Owaisi','Sukhbir Singh Badal','Hemant Soren', 'Pawan Pandey'
       ]
     },
     {
