@@ -276,6 +276,8 @@
       const iplSection = document.getElementById('ipl-team-section');
       if (eventKey === 'ipl') {
         iplSection.style.display = 'block';
+        // Add required validation only when IPL section is visible
+        document.getElementById('ipl-mi').setAttribute('required', '');
         // Load team availability from Firestore
         loadIplTeamAvailability();
       }
@@ -283,25 +285,10 @@
       // ─── Load IPL Team Availability from Firestore ───
       async function loadIplTeamAvailability() {
         try {
-          const { getApps } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js');
-          const { getFirestore, collection, getDocs, query, where } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
-          // Use existing app or wait for it to be initialized
-          let _app = null;
-          let attempts = 0;
-          while (!_app && attempts < 20) {
-            const apps = getApps();
-            if (apps.length > 0) {
-              _app = apps[0];
-              break;
-            }
-            await new Promise(resolve => setTimeout(resolve, 50));
-            attempts++;
-          }
-          if (!_app) {
-            console.warn('Firebase app not initialized after waiting');
-            return;
-          }
-          const _db = getFirestore(_app);
+          const { initializeApp: _iA, getApps } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js');
+          const { getFirestore: _gF, collection, getDocs, query, where } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
+          const _app = getApps().length ? getApps()[0] : _iA({ apiKey:"AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",authDomain:"nydc-72b34.firebaseapp.com",projectId:"nydc-72b34",storageBucket:"nydc-72b34.firebasestorage.app",messagingSenderId:"935882112599",appId:"1:935882112599:web:f04b660e233f21a46f2d12" });
+          const _db = _gF(_app);
 
           const regsRef = collection(_db, 'registrations');
           const iplQuery = query(regsRef, where('event', '==', 'ipl'));
@@ -331,8 +318,8 @@
           });
 
           const available = document.querySelectorAll('input[name="ipl_team"]:not(:disabled)');
-          if (available.length === 0) {
-            console.warn('All IPL teams are taken!');
+          if (available.length > 0) {
+            available[0].setAttribute('required', '');
           }
         } catch (err) {
           console.warn('Could not load IPL team availability:', err);
@@ -421,28 +408,10 @@
 
         if (missingFields && storedDocId) {
           try {
-            const { getApps } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js');
-            const { getFirestore, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
-            // Use existing app or wait for it to be initialized
-            let _app = null;
-            let attempts = 0;
-            while (!_app && attempts < 20) {
-              const apps = getApps();
-              if (apps.length > 0) {
-                _app = apps[0];
-                break;
-              }
-              await new Promise(resolve => setTimeout(resolve, 50));
-              attempts++;
-            }
-            if (!_app) {
-              console.warn('Firebase app not initialized after waiting');
-              container.appendChild(createMemberCard(0, leader));
-              memberCount = 1;
-              updateAddButton();
-              return;
-            }
-            const _db = getFirestore(_app);
+            const { initializeApp: _iA, getApps } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js');
+            const { getFirestore: _gF, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
+            const _app = getApps().length ? getApps()[0] : _iA({ apiKey:"AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",authDomain:"nydc-72b34.firebaseapp.com",projectId:"nydc-72b34",storageBucket:"nydc-72b34.firebasestorage.app",messagingSenderId:"935882112599",appId:"1:935882112599:web:f04b660e233f21a46f2d12" });
+            const _db = _gF(_app);
             const snap = await getDoc(doc(_db, 'registrations', storedDocId));
             if (snap.exists()) {
               const d = snap.data();
@@ -489,7 +458,23 @@
         ipl:           { original: 2999, increased: 3299 }
       };
 
-      const paymentPrice = eventData.price || (PRICES[eventKey] ? (eventData.couponApplied ? PRICES[eventKey].original : PRICES[eventKey].increased) : 0);
+      let paymentPrice = eventData.price;
+      if (!paymentPrice) {
+        if (PRICES[eventKey]) {
+          if (eventData.couponApplied && eventData.couponCode) {
+            const code = eventData.couponCode.toUpperCase();
+            if (eventKey === 'mun' && (code === 'BHAVYA-NYDC26' || code === 'BHAVYA' || code === 'TANISH-NYDC26' || code === 'TANISH')) {
+              paymentPrice = 1699;
+            } else {
+              paymentPrice = PRICES[eventKey].original;
+            }
+          } else {
+            paymentPrice = PRICES[eventKey].increased;
+          }
+        } else {
+          paymentPrice = 0;
+        }
+      }
       const UPI_ID = 'gupta-damini@ptyes';
 
       document.getElementById('payment-amount').textContent = '₹' + paymentPrice.toLocaleString('en-IN');
