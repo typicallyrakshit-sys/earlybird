@@ -246,7 +246,8 @@ const COMMITTEES = [
             { id: '234', name: 'Armenia', status: 'available' },
             { id: '235', name: 'Poland', status: 'available' },
             { id: '236', name: 'Romania', status: 'available' },
-            { id: '237', name: 'Russian Federation', status: 'available' }
+            { id: '237', name: 'Russian Federation', status: 'available' },
+            { id: '482', name: 'South Africa', status: 'available' }
         ]
     },
     {
