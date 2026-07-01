@@ -246,8 +246,7 @@ const COMMITTEES = [
             { id: '234', name: 'Armenia', status: 'available' },
             { id: '235', name: 'Poland', status: 'available' },
             { id: '236', name: 'Romania', status: 'available' },
-            { id: '237', name: 'Russian Federation', status: 'available' },
-            { id: '482', name: 'South Africa', status: 'available' }
+            { id: '237', name: 'Russian Federation', status: 'available' }
         ]
     },
     {
@@ -542,10 +541,11 @@ const COMMITTEES = [
             { id: '475', name: 'Chirag Paswan', position: 'Party President', party: 'Lok Janshakti Party (Ram Vilas)', status: 'available' },
             { id: '476', name: 'Asaduddin Owaisi', position: 'Party President', party: 'All India Majlis-e-Ittehadul Muslimeen (AIMIM)', status: 'available' },
             { id: '477', name: 'Sukhbir Singh Badal', position: 'Party President', party: 'Shiromani Akali Dal (SAD)', status: 'available' },
-            { id: '478', name: 'Hemant Soren', position: 'Chief Minister of Jharkhand', party: 'Jharkhand Mukti Morcha (JMM)', status: 'available' },
-            { id: '483', name: 'Pawan Pandey', position: 'Spokesman', party: 'Samajwadi Party (SP)', status: 'available' },
+            { id: '478', name: 'Hemant Soren', position: 'Chief Minister of Jharkhand', party: 'Jharkhand Mukti Morcha (JMM)', status: 'available' }
         ]
-    },
+    }
+    /*
+    ,
     {
         id: 'ip',
         name: 'International Press (IP)',
@@ -555,6 +555,7 @@ const COMMITTEES = [
             { id: '481', name: 'Photographer', status: 'available' },
         ]
     }
+    */
 ];
 
 
@@ -603,7 +604,7 @@ function render(searchQuery = '') {
                 const searchable = [port.name, port.position, port.party]
                     .filter(Boolean).join(' ').toLowerCase();
                 return searchable.includes(query);
-                })
+              })
             : com.portfolios;
 
         // Skip committee entirely if no matches during search
