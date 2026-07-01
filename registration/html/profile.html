@@ -144,44 +144,16 @@
 
     <!-- Firebase Logic -->
     <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
-        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
-        import { getFirestore, collection, query, where, getDocs, doc, getDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
-            authDomain: "nydc-72b34.firebaseapp.com",
-            projectId: "nydc-72b34",
-            storageBucket: "nydc-72b34.firebasestorage.app",
-            messagingSenderId: "935882112599",
-            appId: "1:935882112599:web:f04b660e233f21a46f2d12",
-            measurementId: "G-5G8Z44578K"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        import { auth, db, EVENT_NAMES } from '../js/firebase.js';
+        import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
+        import { collection, query, where, getDocs, doc, getDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
         // Sections
         const loginSec = document.getElementById('login-section');
         const loadSec = document.getElementById('loading-section');
         const profSec = document.getElementById('profile-section');
 
-        // Event name formatter
-        const EVENT_NAMES = {
-            mun: 'Model United Nations',
-            moot_court: 'Moot Court',
-            hackathon: 'Hackathon',
-            debate: 'Conventional Debate',
-            spark_tank: 'Spark Tank',
-            marketing: 'Marketing',
-            paper_trading: 'Paper Trading',
-            film_making: 'Film Making',
-            Navras: 'Navras',
-            poetry: 'Poetry',
-            raag_jaam: 'Raag Jaam',
-            ipl: 'IPL'
-        };
+        // EVENT_NAMES imported from ../js/firebase.js
 
         // Password toggle
         document.querySelectorAll('.password-toggle').forEach(btn => {
@@ -276,7 +248,11 @@
                     if (draftData.event) {
                         sessionStorage.setItem('nydc_event', JSON.stringify({ event: draftData.event }));
                     }
-                    window.location.href = draftData.event ? 'selection.html' : 'event.html';
+                    if (draftData.event && draftData.event === 'mun' && (!draftData.munPortfolios || draftData.munPortfolios.length === 0)) {
+                        window.location.href = 'mun.html';
+                    } else {
+                        window.location.href = draftData.event ? 'selection.html' : 'event.html';
+                    }
                     return;
                 }
 

@@ -37,7 +37,7 @@ export const EVENT_NAMES = {
   marketing: 'Marketing',
   paper_trading: 'Paper Trading',
   film_making: 'Film Making',
-  Navras: 'Navras',
+  navras: 'Navras',
   poetry: 'Poetry',
   raag_jaam: 'Raag Jaam',
   ipl: 'IPL Auction'

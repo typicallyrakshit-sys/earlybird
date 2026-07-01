@@ -380,20 +380,9 @@
 
     <!-- Firebase Auth + Resume Logic -->
     <script type="module">
-      import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
-      import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
-      import { getFirestore, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
-
-      const app = initializeApp({
-        apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
-        authDomain: "nydc-72b34.firebaseapp.com",
-        projectId: "nydc-72b34",
-        storageBucket: "nydc-72b34.firebasestorage.app",
-        messagingSenderId: "935882112599",
-        appId: "1:935882112599:web:f04b660e233f21a46f2d12"
-      });
-      const auth = getAuth(app);
-      const db = getFirestore(app);
+      import { auth, db } from '../js/firebase.js';
+      import { signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
+      import { collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
       // Password toggle
       document.getElementById('pw-toggle').addEventListener('click', () => {
@@ -505,7 +494,16 @@
             sessionStorage.setItem('nydc_doc_id', docToUse.id);
 
             if (data.event) {
-              sessionStorage.setItem('nydc_event', JSON.stringify({ event: data.event }));
+              const evtData = { event: data.event };
+              if (data.price !== undefined) evtData.price = data.price;
+              if (data.experience !== undefined) evtData.experience = data.experience;
+              if (data.couponApplied !== undefined) evtData.couponApplied = data.couponApplied;
+              if (data.couponCode !== undefined) evtData.couponCode = data.couponCode;
+              sessionStorage.setItem('nydc_event', JSON.stringify(evtData));
+              
+              if (data.couponApplied && data.couponCode) {
+                 sessionStorage.setItem('nydc_coupon', JSON.stringify({ applied: true, code: data.couponCode }));
+              }
             }
             if (data.munPortfolios && data.munPortfolios.length > 0) {
               sessionStorage.setItem('nydc_mun_selection', JSON.stringify(data.munPortfolios));
@@ -528,7 +526,7 @@
         } catch (err) {
           console.error(err);
           btn.disabled = false;
-          btn.textContent = 'Log In →';
+          btn.innerHTML = 'Log In &rarr;';
           if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
             errorEl.textContent = 'Incorrect email or password.';
           } else {

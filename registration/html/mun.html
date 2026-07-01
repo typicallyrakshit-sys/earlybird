@@ -85,19 +85,8 @@
 
     <!-- Fetch taken portfolios from Firebase, then load mun.js -->
     <script type="module">
-      import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
-      import { getFirestore, collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
-
-      const app = initializeApp({
-        apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
-        authDomain: "nydc-72b34.firebaseapp.com",
-        projectId: "nydc-72b34",
-        storageBucket: "nydc-72b34.firebasestorage.app",
-        messagingSenderId: "935882112599",
-        appId: "1:935882112599:web:f04b660e233f21a46f2d12",
-        measurementId: "G-5G8Z44578K"
-      });
-      const db = getFirestore(app);
+      import { db } from '../js/firebase.js';
+      import { collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
       // ── 1. Individual registrations ──
       const takenMap = {}; // { committeeId: Set(portfolioName) }

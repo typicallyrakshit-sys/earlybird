@@ -190,7 +190,7 @@
                         <p style="font-family:'Outfit',sans-serif;font-size:11px;color:rgba(156,163,175,0.7);margin-top:10px;letter-spacing:0.05em;">Scan with any UPI app to pay</p>
                     </div>
 
-                    <p style="font-weight: 600; color: #8b1a1a; font-size: 12px; margin-top: 10px; margin-bottom: 20px; text-align: center;">Note: The payment can only be completed from moblie phone with any UPI app installed. If your are doing the registration from a laptop or PC you can login to your account on your mobile phone and continue to payment</p>
+                    <p style="font-weight: 600; color: #8b1a1a; font-size: 12px; margin-top: 10px; margin-bottom: 20px; text-align: center;">Note: The payment can only be completed from mobile phone with any UPI app installed. If you are doing the registration from a laptop or PC you can login to your account on your mobile phone and continue to payment</p>
 
                     <!-- Transaction ID Input -->
                     <div class="form-group" style="margin-bottom:0;">
@@ -235,7 +235,7 @@
         marketing: 'Marketing',
         paper_trading: 'Paper Trading',
         film_making: 'Film Making',
-        Navras: 'Navras',
+        navras: 'Navras',
         poetry: 'Poetry',
         raag_jaam: 'Raag Jaam',
         ipl: 'IPL Auction'
@@ -285,10 +285,8 @@
       // ─── Load IPL Team Availability from Firestore ───
       async function loadIplTeamAvailability() {
         try {
-          const { initializeApp: _iA, getApps } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js');
-          const { getFirestore: _gF, collection, getDocs, query, where } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
-          const _app = getApps().length ? getApps()[0] : _iA({ apiKey:"AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",authDomain:"nydc-72b34.firebaseapp.com",projectId:"nydc-72b34",storageBucket:"nydc-72b34.firebasestorage.app",messagingSenderId:"935882112599",appId:"1:935882112599:web:f04b660e233f21a46f2d12" });
-          const _db = _gF(_app);
+          const { db: _db } = await import('../js/firebase.js');
+          const { collection, getDocs, query, where } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
 
           const regsRef = collection(_db, 'registrations');
           const iplQuery = query(regsRef, where('event', '==', 'ipl'));
@@ -450,10 +448,11 @@
         debate:        { original: 2000, increased: 2200 },
         spark_tank:    { original: 3599, increased: 3959 },
         marketing:     { original: 1199, increased: 1319 },
-        paper_trading: { original: 1399, increased: 1539 },
-        film_making:   { original: 3499, increased: 3849 },
-        Navras:        { original: 1699, increased: 1869 },
-        poetry:        { original: 1200, increased: 1320 },
+        paper_trading: { original: 1199, increased: 1319 },
+        film_making:   { original: 2799, increased: 3079 },
+        navras:        { original: 1699, increased: 1869 },
+        poetry:        { original: 600, increased: 999 },
+        hackathon:     { original: 1599, increased: 1759 },
         raag_jaam:     { original: 4199, increased: 4619 },
         ipl:           { original: 2999, increased: 3299 }
       };
