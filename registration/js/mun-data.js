@@ -53,7 +53,7 @@
         'Brazil','Colombia','Cuba','Dominican Republic','El Salvador',
         'Mexico','Paraguay','Austria','Belgium','Canada','France',
         'Germany','Italy','Sweden','United States','Armenia','Poland',
-        'Romania','Russian Federation', 'South Africa'
+        'Romania','Russian Federation'
       ]
     },
     {
@@ -89,12 +89,15 @@
         'Tejashwi Yadav','Nitish Kumar','Uddhav Thackeray','Eknath Shinde',
         'Devendra Fadnavis','Yogi Adityanath','K. Chandrashekar Rao',
         'M. K. Stalin','Pinarayi Vijayan','Chirag Paswan',
-        'Asaduddin Owaisi','Sukhbir Singh Badal','Hemant Soren', 'Pawan Pandey'
+        'Asaduddin Owaisi','Sukhbir Singh Badal','Hemant Soren'
       ]
-    },
+    }
+    /*
+    ,
     {
       id: 'ip', name: 'International Press (IP)',
       portfolios: ['Journalist', 'Caricaturist', 'Photographer']
     }
+    */
   ];
 })();
