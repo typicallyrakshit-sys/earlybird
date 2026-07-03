@@ -186,6 +186,18 @@
         });
     </script>
 
+    <!-- Fallback: if the module fails to load, show login after 6s -->
+    <script>
+      setTimeout(function() {
+        var loading = document.getElementById('loading-section');
+        var login   = document.getElementById('login-section');
+        // Only act if loading is still visible (module hasn't taken over)
+        if (loading && login && loading.style.display !== 'none') {
+          loading.style.display = 'none';
+          login.style.display   = 'block';
+        }
+      }, 6000);
+    </script>
     <script type="module" src="../js/food.js"></script>
 </body>
 </html>
