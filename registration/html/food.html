@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PRV6H5CSWT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-PRV6H5CSWT');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Portal — NYDC 2026</title>
+    <link rel="stylesheet" href="../css/registration.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/food.css">
+    <link rel="icon" href="../../NYDC-Final-main/images/nydc-logo.png" type="image/png" />
+</head>
+<body>
+    <!-- Background Ambience -->
+    <div class="bg-ambience"></div>
+    <div class="border-frame"></div>
+    <div class="grainy-border-left"></div>
+    <div class="grainy-border-right"></div>
+
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <p>NYDC 2026 — INTERNAL FOOD MANAGEMENT PORTAL</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="registration-wrapper food-wrapper">
+
+        <!-- 1. LOGIN GATE (Shown if not logged in) -->
+        <div class="registration-card profile-card" id="login-section" style="display: none;">
+            <div class="card-header">
+                <span class="card-tag">Food Portal Access</span>
+                <h1>Secure <span>Login</span></h1>
+                <p class="card-subtitle">Authorized personnel only (Admin or HR)</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Authorized Email</label>
+                    <input type="email" id="login-email" required placeholder="admin@nydc.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="login-password" required placeholder="Enter password">
+                        <button type="button" class="password-toggle" data-target="login-password" aria-label="Toggle password visibility">
+                            <svg class="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <svg class="eye-off-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                        </button>
+                    </div>
+                    <p class="password-error" id="login-error"></p>
+                </div>
+
+                <button type="submit" class="submit-btn" id="login-btn">Authorize Entry →</button>
+            </form>
+        </div>
+
+        <!-- 2. LOADING STATE -->
+        <div class="registration-card profile-card" id="loading-section">
+            <div class="center-content">
+                <div class="spinner"></div>
+                <p id="loading-text">Verifying authorizations...</p>
+            </div>
+        </div>
+
+        <!-- 3. FOOD DASHBOARD -->
+        <div class="food-dashboard card-glass" id="dashboard-section" style="display: none;">
+            
+            <div class="food-header">
+                <div>
+                    <h1>Food <span>Portal</span></h1>
+                    <p class="food-subtitle">
+                        Logged in as <strong id="user-role-badge">Verification Agent</strong>
+                    </p>
+                </div>
+                <div class="dashboard-actions">
+                    <a href="admin.html" id="admin-nav-link" style="display:none; text-decoration:none; background:rgba(255,255,255,0.05); border:1px solid var(--border-color); color:#fff; padding:10px 20px; border-radius:8px; font-family:var(--font-body); font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">Admin Panel</a>
+                    <a href="hr.html" id="hr-nav-link" style="display:none; text-decoration:none; background:rgba(255,255,255,0.05); border:1px solid var(--border-color); color:#fff; padding:10px 20px; border-radius:8px; font-family:var(--font-body); font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">HR Panel</a>
+                    <button type="button" class="logout-btn-header" id="logout-btn">Exit Session</button>
+                </div>
+            </div>
+
+            <!-- Stats grid -->
+            <div class="stats-grid">
+                <!-- Breakfast stats -->
+                <div class="stat-card breakfast">
+                    <div class="stat-label">🥞 Breakfast Collection</div>
+                    <div class="stat-number">
+                        <strong id="breakfast-collected">0</strong><span> / <strong id="breakfast-total">0</strong></span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="breakfast-progress" style="width: 0%;"></div>
+                    </div>
+                    <div class="stat-details" id="breakfast-percentage">0% collected</div>
+                </div>
+
+                <!-- Lunch stats -->
+                <div class="stat-card lunch">
+                    <div class="stat-label">🍱 Lunch Collection</div>
+                    <div class="stat-number">
+                        <strong id="lunch-collected">0</strong><span> / <strong id="lunch-total">0</strong></span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="lunch-progress" style="width: 0%;"></div>
+                    </div>
+                    <div class="stat-details" id="lunch-percentage">0% collected</div>
+                </div>
+            </div>
+
+            <!-- Dashboard Navigation (Meal Toggle tabs) -->
+            <div class="dashboard-nav">
+                <div class="meal-tabs">
+                    <button type="button" class="meal-tab-btn breakfast active" id="tab-breakfast" onclick="switchMealTab('breakfast')">🥞 Breakfast</button>
+                    <button type="button" class="meal-tab-btn lunch" id="tab-lunch" onclick="switchMealTab('lunch')">🍱 Lunch</button>
+                </div>
+                <div style="font-family:var(--font-body); font-size:0.78rem; color:var(--text-dimmed); font-weight:600; text-transform:uppercase; letter-spacing:0.05em; background:rgba(34,197,94,0.1); color:#4ade80; border:1px solid rgba(34,197,94,0.2); padding:4px 12px; border-radius:9999px;">
+                    🛡️ Showing Approved Registrations Only
+                </div>
+            </div>
+
+            <!-- Filters bar -->
+            <div class="controls-row">
+                <input type="text" id="search-input" class="search-box" placeholder="Search by name, email, school, or team leader...">
+                
+                <select id="event-filter" class="search-box" style="width:200px;">
+                    <option value="all">All Events</option>
+                    <option value="mun">Model United Nations</option>
+                    <option value="moot_court">Moot Court</option>
+                    <option value="hackathon">Hackathon</option>
+                    <option value="debate">Conventional Debate</option>
+                    <option value="spark_tank">Spark Tank</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="paper_trading">Paper Trading</option>
+                    <option value="film_making">Film Making</option>
+                    <option value="Navras">Navras</option>
+                    <option value="poetry">Poetry</option>
+                    <option value="raag_jaam">Raag Jaam</option>
+                    <option value="ipl">IPL Auction</option>
+                </select>
+
+                <select id="collection-filter" class="search-box" style="width:180px;">
+                    <option value="all">All Collection Status</option>
+                    <option value="collected">Collected</option>
+                    <option value="uncollected">Not Collected</option>
+                </select>
+
+                <button type="button" id="reset-filters-btn" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#9ca3af; padding:10px 20px; border-radius:8px; font-family:var(--font-body); font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; cursor:pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='#fff';" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='#9ca3af';">Reset</button>
+            </div>
+
+            <!-- Accordion sections list -->
+            <div id="event-sections-container">
+                <!-- Injected via JS -->
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Password visibility toggler helper script -->
+    <script>
+        document.querySelectorAll('.password-toggle').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetId = this.dataset.target;
+                const input = document.getElementById(targetId);
+                const eye = this.querySelector('.eye-icon');
+                const eyeOff = this.querySelector('.eye-off-icon');
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    eye.style.display = 'none';
+                    eyeOff.style.display = 'block';
+                } else {
+                    input.type = 'password';
+                    eye.style.display = 'block';
+                    eyeOff.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+    <script type="module" src="../js/food.js"></script>
+</body>
+</html>
