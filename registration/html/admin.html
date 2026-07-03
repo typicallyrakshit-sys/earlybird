@@ -97,6 +97,7 @@
                     </select>
                     <input type="text" id="search-input" class="search-box" placeholder="Search by name, email, or event...">
                     <a href="hr.html" style="text-decoration:none; background:rgba(139,26,26,0.15); border:1px solid var(--accent); color:#fff; padding:10px 20px; border-radius:8px; font-family:var(--font-body); font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em;">HR Panel</a>
+                    <a href="food.html" style="text-decoration:none; background:rgba(245,158,11,0.15); border:1px solid #d97706; color:#fff; padding:10px 20px; border-radius:8px; font-family:var(--font-body); font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em;">Food Portal</a>
                     <button type="button" id="download-unpaid-btn" style="background:rgba(59,130,246,0.15); border:1px solid #3b82f6; color:#60a5fa; padding:10px 20px; border-radius:8px; font-family:var(--font-body); font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; cursor:pointer;">Download Unpaid</button>
                     <button type="button" class="logout-btn-header" id="logout-btn">Log Out</button>
                 </div>
@@ -139,6 +140,49 @@
         </div>
     </main>
 
+    <!-- ALLOTMENT EDIT MODAL -->
+    <div class="modal-overlay" id="allotment-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); align-items:center; justify-content:center; z-index:1000; padding:20px;">
+        <div class="modal-content" style="background:#120c0c; border:1px solid var(--accent); border-radius:16px; width:100%; max-width:500px; padding:30px; position:relative; box-shadow:0 0 50px rgba(139,26,26,0.3); font-family:var(--font-body);">
+            <button class="modal-close" onclick="closeAllotmentModal()" style="position:absolute; top:20px; right:20px; background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;">×</button>
+            <div class="card-header">
+                <span class="card-tag" id="allotment-modal-tag" style="background:rgba(139,26,26,0.2); color:var(--accent-light); padding:2px 8px; border-radius:4px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing: 0.05em;">MUN / IPL Allotment</span>
+                <h2 id="allotment-modal-title" style="font-family:var(--font-display); font-size:1.8rem; margin:10px 0 5px; color:#fff; font-weight:300;">Edit Allotment</h2>
+                <p class="card-subtitle" id="allotment-modal-subtitle" style="font-size:0.85rem; color:var(--text-muted);">Change portfolio allotment details</p>
+            </div>
+            <div class="divider" style="height:1px; background:rgba(255,255,255,0.08); margin:15px 0;"></div>
+            
+            <form id="allotment-form">
+                <!-- MUN Fields -->
+                <div id="allotment-mun-fields" style="display:none;">
+                    <div class="form-group" style="margin-bottom:15px; display:flex; flex-direction:column; gap:6px;">
+                        <label style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:700; letter-spacing:0.05em;">Committee</label>
+                        <select id="allotment-committee" style="background:#120c0c; border:1px solid var(--border-color); color:#fff; padding:10px; border-radius:8px; font-family:var(--font-body); font-size:0.85rem; outline:none; cursor:pointer;">
+                            <option value="UNGA">UNGA</option>
+                            <option value="UNCSW">UNCSW</option>
+                            <option value="UNHRC">UNHRC</option>
+                            <option value="WHO">WHO</option>
+                            <option value="AIPPM">AIPPM</option>
+                            <option value="International Press (IP)">International Press (IP)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom:15px; display:flex; flex-direction:column; gap:6px;">
+                        <label style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:700; letter-spacing:0.05em;">Portfolio / Country</label>
+                        <input type="text" id="allotment-portfolio" style="background:#120c0c; border:1px solid var(--border-color); color:#fff; padding:10px; border-radius:8px; font-family:var(--font-body); font-size:0.85rem; outline:none;" placeholder="e.g. India">
+                    </div>
+                </div>
+
+                <!-- IPL Fields -->
+                <div id="allotment-ipl-fields" style="display:none;">
+                    <div class="form-group" style="margin-bottom:15px; display:flex; flex-direction:column; gap:6px;">
+                        <label style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:700; letter-spacing:0.05em;">IPL Team</label>
+                        <input type="text" id="allotment-ipl-team" style="background:#120c0c; border:1px solid var(--border-color); color:#fff; padding:10px; border-radius:8px; font-family:var(--font-body); font-size:0.85rem; outline:none;" placeholder="e.g. Mumbai Indians">
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="save-allotment-btn" style="width:100%; background:var(--accent); color:#fff; border:none; padding:12px; border-radius:8px; font-family:var(--font-body); font-size:0.85rem; font-weight:700; text-transform:uppercase; cursor:pointer; transition:background 0.2s; margin-top:10px; letter-spacing:0.08em;">Save Changes</button>
+            </form>
+        </div>
+    </div>
 
     <script type="module" src="../js/admin.js"></script>
 </body>
