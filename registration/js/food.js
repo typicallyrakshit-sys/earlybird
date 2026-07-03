@@ -205,9 +205,11 @@ function parseParticipants() {
       collectedLunch: reg.collectedLunch || false
     });
 
-    // Team members
+    // Team members (skip the leader entry to avoid duplicates —
+    // the leader is already added from top-level registration fields above)
     const teamMembers = reg.teamMembers || [];
     teamMembers.forEach((m, idx) => {
+      if (m.role === 'leader' || idx === 0) return; // skip leader duplicate
       flatParticipants.push({
         id: `${reg.id}-member-${idx}`,
         docId: reg.id,
