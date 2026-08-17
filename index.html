@@ -46,7 +46,7 @@
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" onclick="scrollToSection('footer')">Contact Us</button>
           <a href="registration/html/agenda.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Portfolios</a>
           <a href="registration/html/login.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Login</a>
-          <a href="registration/registration.html" class="font-body text-base uppercase tracking-widest rounded-full transition-all duration-300" style="text-decoration:none;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;border:1px solid #8b1a1a;box-shadow:0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3);letter-spacing:0.15em;font-weight:600;padding:10px 15px;" onmouseover="this.style.boxShadow='0 0 25px rgba(139,26,26,0.7),0 6px 20px rgba(0,0,0,0.4)';this.style.transform='translateY(-2px) scale(1.05)';" onmouseout="this.style.boxShadow='0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3)';this.style.transform='translateY(0) scale(1)';">Register</a>
+          <a href="registration/registration.html" data-reg-element class="font-body text-base uppercase tracking-widest rounded-full transition-all duration-300" style="text-decoration:none;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;border:1px solid #8b1a1a;box-shadow:0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3);letter-spacing:0.15em;font-weight:600;padding:10px 15px;" onmouseover="this.style.boxShadow='0 0 25px rgba(139,26,26,0.7),0 6px 20px rgba(0,0,0,0.4)';this.style.transform='translateY(-2px) scale(1.05)';" onmouseout="this.style.boxShadow='0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3)';this.style.transform='translateY(0) scale(1)';">Register</a>
         </div>
 
         <!-- Mobile Hamburger -->
@@ -68,7 +68,7 @@
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" onclick="scrollToSection('footer')">Contact Us</button>
           <a href="registration/html/agenda.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Portfolios</a>
           <a href="registration/html/login.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Login</a>
-          <a href="registration/registration.html" class="font-body text-sm uppercase tracking-widest text-left px-6 py-2.5 rounded-full transition-all duration-300" style="text-decoration:none;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;border:1px solid #8b1a1a;display:inline-block;text-align:center;box-shadow:0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3);letter-spacing:0.15em;">Register</a>
+          <a href="registration/registration.html" data-reg-element class="font-body text-sm uppercase tracking-widest text-left px-6 py-2.5 rounded-full transition-all duration-300" style="text-decoration:none;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;border:1px solid #8b1a1a;display:inline-block;text-align:center;box-shadow:0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3);letter-spacing:0.15em;">Register</a>
         </div>
       </div>
     </nav>
@@ -118,7 +118,7 @@
     </div>
 
     <!-- ==================== REGISTER CTA ==================== -->
-    <section class="py-16 px-6 relative overflow-hidden">
+    <section id="register-cta-section" class="py-16 px-6 relative overflow-hidden">
       <div class="absolute inset-0 bg-gradient-to-b from-black via-[#0a0505] to-black"></div>
       <div class="max-w-3xl mx-auto text-center relative z-10">
         <p class="fade-up font-body text-gray-400 text-lg md:text-xl tracking-wider mb-8">Be part of India's premier youth conference</p>
@@ -510,6 +510,70 @@
       </div>
     </div>
   </div>
+  <!-- Registration Status Check -->
+  <script type="module">
+    import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
+    import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
+      authDomain: "nydc-72b34.firebaseapp.com",
+      projectId: "nydc-72b34",
+      storageBucket: "nydc-72b34.firebasestorage.app",
+      messagingSenderId: "935882112599",
+      appId: "1:935882112599:web:f04b660e233f21a46f2d12",
+      measurementId: "G-5G8Z44578K"
+    };
+
+    let app;
+    if (getApps().length === 0) {
+      app = initializeApp(firebaseConfig);
+    } else {
+      app = getApps()[0];
+    }
+    const db = getFirestore(app);
+
+    async function checkRegistrationStatus() {
+      try {
+        const snap = await getDoc(doc(db, 'settings', 'registration'));
+        const isOpen = snap.exists() ? snap.data().isOpen !== false : true;
+
+        if (!isOpen) {
+          // Hide all registration links/buttons
+          document.querySelectorAll('[data-reg-element]').forEach(el => {
+            el.style.display = 'none';
+          });
+
+          // Replace CTA section content
+          const ctaSection = document.getElementById('register-cta-section');
+          if (ctaSection) {
+            ctaSection.innerHTML = `
+              <div class="absolute inset-0 bg-gradient-to-b from-black via-[#0a0505] to-black"></div>
+              <div class="max-w-3xl mx-auto text-center relative z-10">
+                <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:12px;padding:12px 24px;margin-bottom:20px;">
+                  <span style="font-family:'Outfit',sans-serif;font-size:0.85rem;font-weight:600;color:#ef4444;letter-spacing:0.1em;text-transform:uppercase;">Registrations Closed</span>
+                </div>
+                <p class="fade-up font-body text-gray-400 text-lg md:text-xl tracking-wider">
+                  Registrations for NYDC 2026 are now closed. Follow us on Instagram for updates.
+                </p>
+              </div>
+            `;
+          }
+
+          // Hide register button in event modal
+          const modalRegBtn = document.getElementById('modal-register-btn');
+          if (modalRegBtn) {
+            modalRegBtn.style.display = 'none';
+          }
+        }
+      } catch (e) {
+        console.warn('Registration status check failed:', e);
+        // Default to open if check fails
+      }
+    }
+
+    checkRegistrationStatus();
+  </script>
 
 </body>
 </html>

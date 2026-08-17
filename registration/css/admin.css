@@ -456,6 +456,28 @@
   list-style-type: square;
 }
 
+/* ───── Registration Toggle Switch ───── */
+.toggle-switch input:checked + .toggle-slider {
+  background: #22c55e;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
 /* ───── Responsive ───── */
 @media (max-width: 768px) {
   .dashboard-header {

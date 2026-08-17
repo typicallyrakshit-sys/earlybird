@@ -89,6 +89,15 @@
                     </p>
                 </div>
                 <div class="dashboard-actions">
+                    <!-- Registration Toggle -->
+                    <div id="reg-toggle-wrapper" style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 16px;">
+                        <span style="font-family:var(--font-body);font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Registration</span>
+                        <label class="toggle-switch" style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;">
+                            <input type="checkbox" id="reg-toggle" style="opacity:0;width:0;height:0;">
+                            <span class="toggle-slider" style="position:absolute;cursor:pointer;inset:0;background:#374151;border-radius:24px;transition:all 0.3s;"></span>
+                        </label>
+                        <span id="reg-toggle-label" style="font-family:var(--font-body);font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;min-width:50px;">—</span>
+                    </div>
                     <select id="status-filter" class="search-box" style="width:160px;cursor:pointer;">
                         <option value="all">All Status</option>
                         <option value="pending">Pending</option>

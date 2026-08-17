@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword, signOut, onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 import { 
-  collection, getDocs, orderBy, query, doc, getDoc, updateDoc 
+  collection, getDocs, orderBy, query, doc, getDoc, updateDoc, setDoc 
 } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
 // DOM Elements
@@ -378,6 +378,45 @@ async function handleInstAction(regId, newStatus) {
   }
 }
 
+// ─── Registration Toggle ───
+const regToggle = document.getElementById('reg-toggle');
+const regToggleLabel = document.getElementById('reg-toggle-label');
+
+async function loadRegistrationStatus() {
+  try {
+    const snap = await getDoc(doc(db, 'settings', 'registration'));
+    const isOpen = snap.exists() ? snap.data().isOpen !== false : true;
+    regToggle.checked = isOpen;
+    updateToggleLabel(isOpen);
+  } catch (e) {
+    console.error('Failed to load registration status:', e);
+    regToggle.checked = true;
+    updateToggleLabel(true);
+  }
+}
+
+function updateToggleLabel(isOpen) {
+  regToggleLabel.textContent = isOpen ? 'Open' : 'Closed';
+  regToggleLabel.style.color = isOpen ? '#22c55e' : '#ef4444';
+  const wrapper = document.getElementById('reg-toggle-wrapper');
+  wrapper.style.borderColor = isOpen ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)';
+}
+
+regToggle.addEventListener('change', async () => {
+  const isOpen = regToggle.checked;
+  updateToggleLabel(isOpen);
+  try {
+    await setDoc(doc(db, 'settings', 'registration'), { isOpen }, { merge: true });
+    console.log(`Registration ${isOpen ? 'opened' : 'closed'}`);
+  } catch (e) {
+    console.error('Failed to update registration status:', e);
+    // Revert toggle on failure
+    regToggle.checked = !isOpen;
+    updateToggleLabel(!isOpen);
+    alert('Failed to update registration status: ' + e.message);
+  }
+});
+
 // ─── UI Utilities ───
 window.switchTab = function(tab) {
   activeTab = tab;
@@ -448,4 +487,4 @@ if (downloadUnpaidBtn) {
 
 function showLogin() { loginSection.style.display = 'block'; loadingSection.style.display = 'none'; dashboardSection.style.display = 'none'; }
 function showLoading(t) { document.getElementById('loading-text').textContent = t; document.getElementById('loading-text').classList.remove('error-text'); document.querySelector('.spinner').style.display = 'block'; loginSection.style.display = 'none'; loadingSection.style.display = 'block'; dashboardSection.style.display = 'none'; }
-function showDashboard() { loginSection.style.display = 'none'; loadingSection.style.display = 'none'; dashboardSection.style.display = 'block'; }
+function showDashboard() { loginSection.style.display = 'none'; loadingSection.style.display = 'none'; dashboardSection.style.display = 'block'; loadRegistrationStatus(); }

@@ -299,5 +299,66 @@
       });
     </script>
 
+    <!-- Registration Status Gate -->
+    <script type="module">
+      import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
+      import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
+        authDomain: "nydc-72b34.firebaseapp.com",
+        projectId: "nydc-72b34",
+        storageBucket: "nydc-72b34.firebasestorage.app",
+        messagingSenderId: "935882112599",
+        appId: "1:935882112599:web:f04b660e233f21a46f2d12",
+        measurementId: "G-5G8Z44578K"
+      };
+
+      let fbApp;
+      if (getApps().length === 0) {
+        fbApp = initializeApp(firebaseConfig);
+      } else {
+        fbApp = getApps()[0];
+      }
+      const fbDb = getFirestore(fbApp);
+
+      async function checkRegStatus() {
+        try {
+          const snap = await getDoc(doc(fbDb, 'settings', 'registration'));
+          const isOpen = snap.exists() ? snap.data().isOpen !== false : true;
+
+          if (!isOpen) {
+            // Hide the registration type overlay
+            const overlay = document.getElementById('reg-type-overlay');
+            if (overlay) overlay.style.display = 'none';
+
+            // Replace the registration card with a closed message
+            const wrapper = document.querySelector('.registration-wrapper');
+            if (wrapper) {
+              wrapper.innerHTML = `
+                <div class="registration-card" style="text-align:center;padding:60px 40px;">
+                  <a href="../index.html" class="back-link">🏠 Main Page</a>
+                  <div class="card-header">
+                    <span class="card-tag" style="background:rgba(239,68,68,0.15);color:#ef4444;">Registrations Closed</span>
+                    <h1 style="margin-top:20px;">Registration <span>Closed</span></h1>
+                    <p class="card-subtitle" style="margin-top:12px;color:var(--text-muted);font-size:0.95rem;line-height:1.6;">
+                      Registrations for NYDC 2026 are now closed.<br>
+                      Follow us on Instagram <a href="https://instagram.com/nydc2026" target="_blank" style="color:#8b1a1a;text-decoration:none;font-weight:600;">@nydc2026</a> for updates.
+                    </p>
+                  </div>
+                  <div class="divider" style="margin:30px 0;"></div>
+                  <a href="../index.html" style="display:inline-block;text-decoration:none;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;font-family:'Outfit',sans-serif;font-size:0.85rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;padding:14px 32px;border-radius:10px;transition:all 0.3s;">← Back to Home</a>
+                </div>
+              `;
+            }
+          }
+        } catch (e) {
+          console.warn('Registration status check failed:', e);
+        }
+      }
+
+      checkRegStatus();
+    </script>
+
 </body>
 </html>
