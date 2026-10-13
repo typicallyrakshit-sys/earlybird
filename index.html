@@ -41,6 +41,7 @@
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" onclick="scrollToSection('about')">About</button>
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" onclick="scrollToSection('vision')">Vision</button>
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" onclick="scrollToSection('events')">Events</button>
+          <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" onclick="scrollToSection('gallery')">Gallery</button>
 
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" onclick="scrollToSection('partners')">Partners</button>
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" onclick="scrollToSection('footer')">Contact Us</button>
@@ -63,6 +64,7 @@
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" onclick="scrollToSection('about')">About</button>
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" onclick="scrollToSection('vision')">Vision</button>
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" onclick="scrollToSection('events')">Events</button>
+          <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" onclick="scrollToSection('gallery')">Gallery</button>
 
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" onclick="scrollToSection('partners')">Partners</button>
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" onclick="scrollToSection('footer')">Contact Us</button>
@@ -91,24 +93,24 @@
           </div>
 
           <!-- Title -->
-          <h1 class="hero-title font-display text-5xl md:text-7xl lg:text-8xl font-light tracking-tight mb-6">
+          <h1 class="hero-title font-display text-5xl md:text-7xl lg:text-8xl font-light tracking-tight mb-6 text-centre">
             National Youth<br />
-            <span class="text-[#8b1a1a]">Development Conference</span><br />
-            <span class="text-4xl md:text-5xl lg:text-6xl">2026</span>
+            <span class="text-[#8b1a1a] text-center">Development Conference</span><br />
+            <span class="text-4xl md:text-5xl lg:text-6xl text-center">2026</span>
           </h1>
 
-          <p class="hero-subtitle font-body text-lg md:text-xl text-gray-400 tracking-[0.3em] uppercase mt-8">
+          <p class="hero-subtitle font-body text-lg md:text-xl text-gray-400 tracking-[0.3em] uppercase mt-8 text-center">
             Diplomacy • Innovation • Governance • Culture
           </p>
 
-          <!-- Date Badge -->
+          <!-- Date Badge 
           <div class="hero-details mt-12 flex flex-col items-center gap-4">
             <div class="inline-flex items-center gap-3 border border-[#8b1a1a]/30 px-6 py-3 rounded-full bg-black/50 backdrop-blur-sm">
               <span class="w-2 h-2 bg-[#8b1a1a] rounded-full animate-pulse"></span>
               <span class="font-body text-sm md:text-base tracking-wider">July 2026 | Delhi NCR</span>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Scroll Indicator -->
         <div class="absolute bottom-12 left-1/2 -translate-x-1/2">
@@ -241,6 +243,256 @@
       </div>
     </section>
 
+    <!-- ==================== GALLERY SECTION ==================== -->
+    <section id="gallery" class="py-32 px-6 relative overflow-hidden">
+      <div class="absolute inset-0" style="background:radial-gradient(ellipse at 30% 50%, rgba(139,26,26,0.04) 0%, transparent 70%);"></div>
+
+      <div class="max-w-7xl mx-auto relative">
+        <!-- Section Header -->
+        <div class="text-center mb-20">
+          <p class="fade-up font-body text-[#8b1a1a] text-xs tracking-[0.5em] uppercase mb-4">Moments from NYDC 2025</p>
+          <h2 class="fade-up font-display text-3xl md:text-4xl lg:text-5xl font-light">
+            Last Year's <span class="text-[#8b1a1a]">Highlights</span>
+          </h2>
+          <div class="fade-up mt-6 mx-auto w-24 h-px bg-gradient-to-r from-transparent via-[#8b1a1a] to-transparent"></div>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="gallery-mosaic" id="gallery-mosaic">
+          <!-- Row 1: Large landscape + portrait stack -->
+          <div class="gallery-item gallery-item--wide" data-gallery-idx="0">
+            <div class="gallery-frame">
+              <img src="NYDC-Final-main/images/main-page/web/DSC05441.jpg" alt="NYDC 2025 — Group photo of delegates outside the venue" loading="lazy" />
+              <div class="gallery-shine"></div>
+            </div>
+          </div>
+          <div class="gallery-item gallery-item--tall" data-gallery-idx="1">
+            <div class="gallery-frame">
+              <img src="NYDC-Final-main/images/main-page/web/DSC05378.jpg" alt="NYDC 2025 — Delegates at Moot Court session" loading="lazy" />
+              <div class="gallery-shine"></div>
+            </div>
+          </div>
+          <div class="gallery-item gallery-item--wide" data-gallery-idx="2">
+            <div class="gallery-frame">
+              <img src="NYDC-Final-main/images/main-page/web/DSC05297.jpg" alt="NYDC 2025 — Band performance at Raag Jaam" loading="lazy" />
+              <div class="gallery-shine"></div>
+            </div>
+          </div>
+          <div class="gallery-item gallery-item--tall" data-gallery-idx="3">
+            <div class="gallery-frame">
+              <img src="NYDC-Final-main/images/main-page/web/DSC05268.jpg" alt="NYDC 2025 — Delegates discussing between sessions" loading="lazy" />
+              <div class="gallery-shine"></div>
+            </div>
+          </div>
+          <div class="gallery-item gallery-item--wide" data-gallery-idx="4">
+            <div class="gallery-frame">
+              <img src="NYDC-Final-main/images/main-page/web/DSC05213.jpg" alt="NYDC 2025 — Participants with their conference badges" loading="lazy" />
+              <div class="gallery-shine"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lightbox -->
+      <div id="gallery-lightbox" class="gallery-lightbox" style="display:none;" aria-hidden="true">
+        <button class="gallery-lightbox__close" onclick="closeLightbox()" aria-label="Close lightbox">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <button class="gallery-lightbox__nav gallery-lightbox__nav--prev" onclick="navLightbox(-1)" aria-label="Previous image">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="gallery-lightbox__nav gallery-lightbox__nav--next" onclick="navLightbox(1)" aria-label="Next image">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <img id="gallery-lightbox-img" src="" alt="" />
+        <div class="gallery-lightbox__counter">
+          <span id="gallery-lightbox-current">1</span> / <span id="gallery-lightbox-total">5</span>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      /* ── Gallery Mosaic Layout ── */
+      .gallery-mosaic {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      @media (min-width: 768px) {
+        .gallery-mosaic {
+          grid-template-columns: repeat(12, 1fr);
+          grid-auto-rows: 180px;
+          gap: 12px;
+        }
+        .gallery-item--wide { grid-column: span 7; grid-row: span 2; }
+        .gallery-item--tall { grid-column: span 5; grid-row: span 2; }
+        .gallery-mosaic .gallery-item:nth-child(3) { grid-column: span 5; }
+        .gallery-mosaic .gallery-item:nth-child(4) { grid-column: span 7; }
+        .gallery-mosaic .gallery-item:nth-child(5) { grid-column: span 12; grid-row: span 2; }
+      }
+
+      /* ── Frame styling ── */
+      .gallery-frame {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        border: 1px solid rgba(139,26,26,0.15);
+      }
+      .gallery-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(40%) contrast(1.05);
+        transition: filter 0.7s ease, transform 0.7s ease;
+      }
+      .gallery-frame:hover img {
+        filter: grayscale(0%) contrast(1.1);
+        transform: scale(1.06);
+      }
+      .gallery-frame::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, transparent 40%, rgba(139,26,26,0.08) 100%);
+        pointer-events: none;
+        transition: opacity 0.5s;
+      }
+      .gallery-frame:hover::after { opacity: 0; }
+
+      /* Diagonal light sweep on hover */
+      .gallery-shine {
+        position: absolute;
+        top: -100%;
+        left: -100%;
+        width: 60%;
+        height: 200%;
+        background: linear-gradient(
+          115deg,
+          transparent 20%,
+          rgba(255,255,255,0.06) 40%,
+          rgba(255,255,255,0.12) 50%,
+          rgba(255,255,255,0.06) 60%,
+          transparent 80%
+        );
+        transform: rotate(25deg);
+        pointer-events: none;
+        transition: none;
+      }
+      .gallery-frame:hover .gallery-shine {
+        animation: gallery-sweep 0.8s ease-out forwards;
+      }
+      @keyframes gallery-sweep {
+        0%   { top: -100%; left: -100%; }
+        100% { top: 100%;  left: 100%; }
+      }
+
+      /* ── Scroll-reveal entrance ── */
+      .gallery-item {
+        opacity: 0;
+        transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .gallery-item:nth-child(1) { transform: translate(-30px, 50px) rotate(-2.5deg) scale(0.92); }
+      .gallery-item:nth-child(2) { transform: translate(30px, 60px) rotate(1.8deg) scale(0.92); }
+      .gallery-item:nth-child(3) { transform: translate(20px, 40px) rotate(1.2deg) scale(0.92); }
+      .gallery-item:nth-child(4) { transform: translate(-20px, 55px) rotate(-1.5deg) scale(0.92); }
+      .gallery-item:nth-child(5) { transform: translate(0, 70px) rotate(0.5deg) scale(0.92); }
+
+      .gallery-item.is-visible {
+        opacity: 1;
+        transform: translate(0, 0) rotate(0deg) scale(1);
+      }
+
+      /* stagger each child */
+      .gallery-item:nth-child(1) { transition-delay: 0.05s; }
+      .gallery-item:nth-child(2) { transition-delay: 0.18s; }
+      .gallery-item:nth-child(3) { transition-delay: 0.30s; }
+      .gallery-item:nth-child(4) { transition-delay: 0.42s; }
+      .gallery-item:nth-child(5) { transition-delay: 0.55s; }
+
+      /* Mobile: fixed aspect ratios */
+      @media (max-width: 767px) {
+        .gallery-item--wide { aspect-ratio: 3 / 2; }
+        .gallery-item--tall { aspect-ratio: 3 / 4; }
+        .gallery-mosaic .gallery-item:nth-child(5) { aspect-ratio: 3 / 2; }
+      }
+
+      /* ── Lightbox ── */
+      .gallery-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 600;
+        background: rgba(0, 0, 0, 0.92);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: lb-fadein 0.3s ease;
+      }
+      @keyframes lb-fadein { from { opacity: 0; } }
+      .gallery-lightbox img {
+        max-width: 90vw;
+        max-height: 85vh;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+        animation: lb-scalein 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      @keyframes lb-scalein { from { transform: scale(0.92); opacity: 0; } }
+      .gallery-lightbox__close {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        background: rgba(0,0,0,0.5);
+        border: 1px solid rgba(139,26,26,0.3);
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #9ca3af;
+        cursor: pointer;
+        transition: all 0.2s;
+        z-index: 10;
+      }
+      .gallery-lightbox__close:hover { color: #fff; border-color: #8b1a1a; }
+      .gallery-lightbox__nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0,0,0,0.4);
+        border: 1px solid rgba(139,26,26,0.2);
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #9ca3af;
+        cursor: pointer;
+        transition: all 0.2s;
+        z-index: 10;
+      }
+      .gallery-lightbox__nav:hover { color: #fff; border-color: #8b1a1a; background: rgba(139,26,26,0.2); }
+      .gallery-lightbox__nav--prev { left: 20px; }
+      .gallery-lightbox__nav--next { right: 20px; }
+      .gallery-lightbox__counter {
+        position: absolute;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.75rem;
+        color: rgba(156,163,175,0.7);
+        letter-spacing: 0.2em;
+      }
+    </style>
+
 
     <!-- ==================== PARTNERS SECTION ==================== -->
     <section id="partners" class="py-32 px-6 relative bg-black overflow-hidden">
@@ -351,14 +603,13 @@
       { num: '02', title: 'Hackathon', desc: 'by Hack2Skill & Google for Developers — 8-hour innovation sprint', fullDesc: 'A relentless 8-hour innovation marathon powered by Hack2Skill, Google for Developers, and PromptWars. Build, break, and ship tech solutions to real-world problems. Register now on Hack2Skill.', date: '27th June 2026', duration: '8 Hours', price: 'Free', team: 'Solo', img: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop', disabled: false, registerUrl: 'https://hack2skill.com/event/promptwars-x-nydc26?utm_source=hack2skill&utm_medium=homepage' },
       { num: '03', title: 'Moot Court', desc: 'powered by Legal Capital — courtroom simulation', fullDesc: 'Step into the courtroom powered by The Legal Capital. Argue landmark cases, master legal reasoning, and battle wits against the sharpest legal minds in the room.<br><br><strong>Regulation of the Event:</strong><br>1. The case file will be provided one month prior to the event.<br>2. Participants must prepare arguments based on the given case.<br>3. Professional courtroom decorum must be maintained at all times.<br>4. Any misconduct may lead to disqualification.', date: '4th & 5th July 2026', duration: '2 Days', price: '₹4,399', priceNote: 'Use coupon for ₹3,999', team: 'Up to 4', img: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=300&fit=crop' },
       { num: '04', title: 'Debate', desc: 'by Politics Personal — structured argumentation', fullDesc: 'Craft compelling arguments and dismantle opposition with precision. Powered by Politics Personal, this debate challenges you to think fast, speak sharp, and dominate the floor.<br><br><strong>Regulations of the Event:</strong><br>1. Parliamentary Debate format will be followed.<br>2. The motion/topic will be revealed on the spot.<br>3. Participants must adhere to the prescribed debate structure and timings.<br>4. Any form of inappropriate conduct may result in disqualification.', date: '5th July 2026', duration: '1 Day', price: '₹2,200', priceNote: 'Use coupon for ₹2,000', team: 'Up to 2', img: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=400&h=300&fit=crop' },
-            { num: '05', title: 'Spark Tank', desc: 'Entrepreneurial pitching competition', fullDesc: 'Your startup idea meets ruthless investors. Pitch your venture, defend your business model, and convince the panel that your idea is worth backing.', date: '5th July 2026', duration: '1 Day', price: '₹3,959', priceNote: 'Use coupon for ₹3,599', team: 'Up to 4', img: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop', disabled: true, statusText: 'Closed' },
-      { num: '06', title: 'Marketing', desc: 'Strategic brand campaigns and challenges', fullDesc: 'Design, pitch, and execute a full-scale marketing campaign for a real brand challenge. From strategy to creative execution — prove you can move markets.', date: '4th July 2026', duration: '1 Day', price: '₹1,319', priceNote: 'Use coupon for ₹1,199', team: 'Solo', img: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&h=300&fit=crop', disabled: true, statusText: 'Closed' },
+      { num: '05', title: 'Spark Tank', desc: 'Entrepreneurial pitching competition', fullDesc: 'Your startup idea meets ruthless investors. Pitch your venture, defend your business model, and convince the panel that your idea is worth backing.', date: '5th July 2026', duration: '1 Day', price: '₹3,959', priceNote: 'Use coupon for ₹3,599', team: 'Up to 4', img: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop'},
+      { num: '06', title: 'Marketing', desc: 'Strategic brand campaigns and challenges', fullDesc: 'Design, pitch, and execute a full-scale marketing campaign for a real brand challenge. From strategy to creative execution — prove you can move markets.', date: '4th July 2026', duration: '1 Day', price: '₹1,319', priceNote: 'Use coupon for ₹1,199', team: 'Solo', img: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&h=300&fit=crop'},
       { num: '07', title: 'Paper Trading', desc: 'Simulated stock market competition', fullDesc: 'Trade live markets with virtual capital. Analyse trends, manage risk, and build a portfolio that outperforms the benchmark. The best trader takes it all.', date: '4th July 2026', duration: '1 Day', price: '₹1,539', priceNote: 'Use coupon for ₹1,399', team: 'Solo', img: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=300&fit=crop' },
       { num: '08', title: 'Film Making', desc: 'Short film creation and storytelling', fullDesc: 'Concept, shoot, edit, and screen — all in one day. Bring a compelling story to life with your team and compete for the best short film at NYDC 2026.<br><br><strong>Regulation of the Event:</strong><br>• The official topic/theme for the film will be provided to all participants one week prior to the event.<br>• Participants must create, complete, and finalize their film within the given timeframe, strictly based on the assigned theme.<br>• The final film must be presented on the event day.', date: '5th July 2026', duration: '1 Day', price: '₹3,849', priceNote: 'Use coupon for ₹3,499', team: 'Up to 5', img: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=300&fit=crop' },
       { num: '09', title: 'Raag Jaam', desc: 'Musical performances and competitions', fullDesc: 'An evening of soul-stirring musical performances. Vocalists, instrumentalists, and bands compete across genres in India\'s most vibrant youth music showcase.<br><br><strong>Regulation of the Event:</strong><br>1. Each band will be allotted 6–8 minutes for their performance.<br>2. Setup and sound-check time are excluded from the performance duration.<br>3. Participants must bring their own musical instruments and equipment required for the performance.<br>4. The performance may be Fusion, Western, Indian Classical, or any other musical genre.', date: '4th July 2026', duration: '1 Day', price: '₹4,619', priceNote: 'Use coupon for ₹4,199', team: 'Up to 6', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=300&fit=crop' },
       { num: '10', title: 'Poetry', desc: 'Verse composition and recitation', fullDesc: 'Words have power. Compose and recite original poetry that moves, provokes, and resonates. Open to spoken word, slam, classical, and contemporary forms.<br><br><strong>Regulation of the Event:</strong><br>• Poetry is a bilingual competition, allowing participants to present in two languages.<br>• Performance duration must be between 2 to 5 minutes.', date: '4th July 2026', duration: '1 Day', price: '₹1,320', priceNote: 'Use coupon for ₹1,200', team: 'Solo', img: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=300&fit=crop' },
       { num: '11', title: 'Navras', desc: 'Dance and dramatic arts showcase', fullDesc: 'A celebration of nine emotions through movement and drama. Type of Dance: Indian Classical / Semi-Classical<br><br><strong>Regulation of the Event:</strong><br>• Navras is a Classical/Semi-Classical Solo Dance Competition, where participants will showcase their artistry, expression, and technical excellence through individual performances.<br>• Each performance must have a minimum duration of 3 minutes and should not exceed the maximum time limit of 6 minutes.', date: '5th July 2026', duration: '1 Day', price: '₹1,869', priceNote: 'Use coupon for ₹1,699', team: 'Solo', img: 'NYDC-Final-main/images/navras-image.png' },
-
       { num: '12', title: 'IPL Auction', desc: 'Cricket franchise auction simulation', fullDesc: 'Become a franchise owner and build your dream IPL squad. Bid strategically on top players, manage your purse, and assemble the team that claims the title.', date: '4th July 2026', duration: '1 Day', price: '₹3,299', priceNote: 'Use coupon for ₹2,999', team: 'Up to 4', img: 'NYDC-Final-main/images/ipl-auction.jpg' },
     ];
 
@@ -428,6 +679,74 @@
       el.style.transform = 'translateY(30px)';
       el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
       observer.observe(el);
+    });
+
+    // ---- Gallery: Scatter-in Reveal ----
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const galleryObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          galleryObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    galleryItems.forEach(item => galleryObserver.observe(item));
+
+    // ---- Gallery: Lightbox ----
+    const gallerySrcs = [
+      'NYDC-Final-main/images/main-page/web/DSC05441.jpg',
+      'NYDC-Final-main/images/main-page/web/DSC05378.jpg',
+      'NYDC-Final-main/images/main-page/web/DSC05297.jpg',
+      'NYDC-Final-main/images/main-page/web/DSC05268.jpg',
+      'NYDC-Final-main/images/main-page/web/DSC05213.jpg',
+    ];
+    let lightboxIdx = 0;
+
+    document.querySelectorAll('.gallery-frame').forEach(frame => {
+      frame.addEventListener('click', () => {
+        const idx = parseInt(frame.parentElement.dataset.galleryIdx, 10);
+        openLightbox(idx);
+      });
+    });
+
+    function openLightbox(idx) {
+      lightboxIdx = idx;
+      const lb = document.getElementById('gallery-lightbox');
+      const img = document.getElementById('gallery-lightbox-img');
+      img.src = gallerySrcs[idx];
+      img.alt = document.querySelectorAll('.gallery-item')[idx]?.querySelector('img')?.alt || '';
+      document.getElementById('gallery-lightbox-current').textContent = idx + 1;
+      lb.style.display = 'flex';
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const lb = document.getElementById('gallery-lightbox');
+      lb.style.display = 'none';
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function navLightbox(dir) {
+      lightboxIdx = (lightboxIdx + dir + gallerySrcs.length) % gallerySrcs.length;
+      const img = document.getElementById('gallery-lightbox-img');
+      img.src = gallerySrcs[lightboxIdx];
+      img.alt = document.querySelectorAll('.gallery-item')[lightboxIdx]?.querySelector('img')?.alt || '';
+      document.getElementById('gallery-lightbox-current').textContent = lightboxIdx + 1;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      const lb = document.getElementById('gallery-lightbox');
+      if (lb.style.display === 'none') return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navLightbox(-1);
+      if (e.key === 'ArrowRight') navLightbox(1);
+    });
+
+    document.getElementById('gallery-lightbox').addEventListener('click', function(ev) {
+      if (ev.target === this) closeLightbox();
     });
 
     // ---- Event Modal Logic ----
