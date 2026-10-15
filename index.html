@@ -46,6 +46,7 @@
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" onclick="scrollToSection('partners')">Partners</button>
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" onclick="scrollToSection('footer')">Contact Us</button>
           <a href="registration/html/agenda.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Portfolios</a>
+          <a href="registration/html/team.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Team</a>
           <a href="registration/html/login.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Login</a>
           <a href="registration/registration.html" data-reg-element class="font-body text-base uppercase tracking-widest rounded-full transition-all duration-300" style="text-decoration:none;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;border:1px solid #8b1a1a;box-shadow:0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3);letter-spacing:0.15em;font-weight:600;padding:10px 15px;" onmouseover="this.style.boxShadow='0 0 25px rgba(139,26,26,0.7),0 6px 20px rgba(0,0,0,0.4)';this.style.transform='translateY(-2px) scale(1.05)';" onmouseout="this.style.boxShadow='0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3)';this.style.transform='translateY(0) scale(1)';">Register</a>
         </div>
@@ -69,6 +70,7 @@
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" onclick="scrollToSection('partners')">Partners</button>
           <button class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" onclick="scrollToSection('footer')">Contact Us</button>
           <a href="registration/html/agenda.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Portfolios</a>
+          <a href="registration/html/team.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Team</a>
           <a href="registration/html/login.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Login</a>
           <a href="registration/registration.html" data-reg-element class="font-body text-sm uppercase tracking-widest text-left px-6 py-2.5 rounded-full transition-all duration-300" style="text-decoration:none;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;border:1px solid #8b1a1a;display:inline-block;text-align:center;box-shadow:0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3);letter-spacing:0.15em;">Register</a>
         </div>
@@ -490,11 +492,32 @@
     </style>
 
 
-    <!-- ==================== PARTNERS SECTION ==================== -->
-    <section id="partners" class="py-32 px-6 relative bg-black overflow-hidden">
+    <!-- ==================== OUR PARTNERS SECTION ==================== -->
+    <section id="partners" class="pt-32 pb-16 px-6 relative bg-black overflow-hidden">
       <div class="max-w-6xl mx-auto text-center">
-        <div class="mb-24 inline-block relative">
+        <div class="mb-16 inline-block relative">
           <div class="bg-[#8b1a1a] text-white font-display text-4xl md:text-5xl lg:text-6xl px-12 py-6 rounded-2xl border-[4px] border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] -rotate-1 select-none uppercase">OUR PARTNERS</div>
+        </div>
+
+        <!-- Politics Personal -->
+        <div class="max-w-md mx-auto">
+          <div class="partner-card h-56 md:h-64 bg-[#0a0505] border-[4px] border-[#8b1a1a] rounded-2xl relative flex flex-col items-center justify-center p-6 shadow-[6px_6px_0px_0px_rgba(139,26,26,1)] group hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none transition-all cursor-pointer">
+            <div class="absolute top-0 right-0 w-10 h-10 bg-[#8b1a1a] rounded-bl-3xl rounded-tr-xl"></div>
+            <p class="text-[#8b1a1a] font-body text-[10px] tracking-[0.2em] font-bold uppercase mb-4">DEBATE POWERED BY</p>
+            <div class="flex flex-col items-center gap-3">
+              <img src="NYDC-Final-main/images/politics-personal-logo.png" alt="Politics Personal" class="h-28 md:h-36 object-contain transition-transform duration-500 group-hover:scale-105" />
+              <h3 class="text-white font-display text-xl font-black tracking-tight text-center uppercase">Politics Personal</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== OUR PAST PARTNERS SECTION ==================== -->
+    <section id="past-partners" class="pt-16 pb-32 px-6 relative bg-black overflow-hidden">
+      <div class="max-w-6xl mx-auto text-center">
+        <div class="mb-20 inline-block relative">
+          <div class="bg-[#8b1a1a] text-white font-display text-4xl md:text-5xl lg:text-6xl px-12 py-6 rounded-2xl border-[4px] border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] -rotate-1 select-none uppercase">OUR PREVIOUS PARTNERS</div>
         </div>
 
         <!-- Title Sponsor -->
@@ -510,7 +533,7 @@
         </div>
 
         <!-- Partners Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <!-- The Legal Capital -->
           <div class="partner-card h-56 md:h-64 bg-[#0a0505] border-[4px] border-[#8b1a1a] rounded-2xl relative flex flex-col items-center justify-center p-6 shadow-[6px_6px_0px_0px_rgba(139,26,26,1)] group hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none transition-all cursor-pointer">
             <div class="absolute top-0 right-0 w-10 h-10 bg-[#8b1a1a] rounded-bl-3xl rounded-tr-xl"></div>
@@ -529,16 +552,6 @@
               <h3 class="text-white font-display text-2xl font-black tracking-tight text-center uppercase transition-transform duration-500 group-hover:scale-105">Hack2Skill</h3>
               <span class="text-[#8b1a1a] font-display text-lg font-light">&amp;</span>
               <h3 class="text-white font-display text-2xl font-black tracking-tight text-center uppercase transition-transform duration-500 group-hover:scale-105">Google for Developers</h3>
-            </div>
-          </div>
-
-          <!-- Politics Personal -->
-          <div class="partner-card h-56 md:h-64 bg-[#0a0505] border-[4px] border-[#8b1a1a] rounded-2xl relative flex flex-col items-center justify-center p-6 shadow-[6px_6px_0px_0px_rgba(139,26,26,1)] group hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none transition-all cursor-pointer">
-            <div class="absolute top-0 right-0 w-10 h-10 bg-[#8b1a1a] rounded-bl-3xl rounded-tr-xl"></div>
-            <p class="text-[#8b1a1a] font-body text-[10px] tracking-[0.2em] font-bold uppercase mb-4">DEBATE POWERED BY</p>
-            <div class="flex flex-col items-center gap-3">
-              <img src="NYDC-Final-main/images/politics-personal-logo.png" alt="Politics Personal" class="h-28 md:h-36 object-contain transition-transform duration-500 group-hover:scale-105" />
-              <h3 class="text-white font-display text-xl font-black tracking-tight text-center uppercase">Politics Personal</h3>
             </div>
           </div>
 
@@ -596,11 +609,11 @@
     const events = [
 
       { num: '01', title: 'Model United Nations', desc: 'Diplomatic simulations across 5 elite committees', fullDesc: 'Step into the world\'s most prestigious diplomatic forum. Represent nations, debate global crises, and draft resolutions that shape international policy across five elite committees — UNGA, UNCSW, UNHRC, WHO, and AIPPM.', date: '4th & 5th July 2026', duration: '2 Days', price: '₹2,089', priceNote: 'Use coupon for ₹1,899', team: 'Solo', img: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=400&h=300&fit=crop' },
-      { num: '02', title: 'Hackathon', desc: 'by Hack2Skill & Google for Developers — 8-hour innovation sprint', fullDesc: 'A relentless 8-hour innovation marathon powered by Hack2Skill, Google for Developers, and PromptWars. Build, break, and ship tech solutions to real-world problems. Register now on Hack2Skill.', date: '27th June 2026', duration: '8 Hours', price: 'Free', team: 'Solo', img: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop', disabled: false, registerUrl: 'https://hack2skill.com/event/promptwars-x-nydc26?utm_source=hack2skill&utm_medium=homepage' },
+      //{ num: '02', title: 'Hackathon', desc: 'by Hack2Skill & Google for Developers — 8-hour innovation sprint', fullDesc: 'A relentless 8-hour innovation marathon powered by Hack2Skill, Google for Developers, and PromptWars. Build, break, and ship tech solutions to real-world problems. Register now on Hack2Skill.', date: '27th June 2026', duration: '8 Hours', price: 'Free', team: 'Solo', img: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop', disabled: false, registerUrl: 'https://hack2skill.com/event/promptwars-x-nydc26?utm_source=hack2skill&utm_medium=homepage' },
       { num: '03', title: 'Moot Court', desc: 'powered by Legal Capital — courtroom simulation', fullDesc: 'Step into the courtroom powered by The Legal Capital. Argue landmark cases, master legal reasoning, and battle wits against the sharpest legal minds in the room.<br><br><strong>Regulation of the Event:</strong><br>1. The case file will be provided one month prior to the event.<br>2. Participants must prepare arguments based on the given case.<br>3. Professional courtroom decorum must be maintained at all times.<br>4. Any misconduct may lead to disqualification.', date: '4th & 5th July 2026', duration: '2 Days', price: '₹4,399', priceNote: 'Use coupon for ₹3,999', team: 'Up to 4', img: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=300&fit=crop' },
       { num: '04', title: 'Debate', desc: 'by Politics Personal — structured argumentation', fullDesc: 'Craft compelling arguments and dismantle opposition with precision. Powered by Politics Personal, this debate challenges you to think fast, speak sharp, and dominate the floor.<br><br><strong>Regulations of the Event:</strong><br>1. Parliamentary Debate format will be followed.<br>2. The motion/topic will be revealed on the spot.<br>3. Participants must adhere to the prescribed debate structure and timings.<br>4. Any form of inappropriate conduct may result in disqualification.', date: '5th July 2026', duration: '1 Day', price: '₹2,200', priceNote: 'Use coupon for ₹2,000', team: 'Up to 2', img: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=400&h=300&fit=crop' },
-      { num: '05', title: 'Spark Tank', desc: 'Entrepreneurial pitching competition', fullDesc: 'Your startup idea meets ruthless investors. Pitch your venture, defend your business model, and convince the panel that your idea is worth backing.', date: '5th July 2026', duration: '1 Day', price: '₹3,959', priceNote: 'Use coupon for ₹3,599', team: 'Up to 4', img: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop'},
-      { num: '06', title: 'Marketing', desc: 'Strategic brand campaigns and challenges', fullDesc: 'Design, pitch, and execute a full-scale marketing campaign for a real brand challenge. From strategy to creative execution — prove you can move markets.', date: '4th July 2026', duration: '1 Day', price: '₹1,319', priceNote: 'Use coupon for ₹1,199', team: 'Solo', img: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&h=300&fit=crop'},
+      //{ num: '05', title: 'Spark Tank', desc: 'Entrepreneurial pitching competition', fullDesc: 'Your startup idea meets ruthless investors. Pitch your venture, defend your business model, and convince the panel that your idea is worth backing.', date: '5th July 2026', duration: '1 Day', price: '₹3,959', priceNote: 'Use coupon for ₹3,599', team: 'Up to 4', img: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop'},
+      //{ num: '06', title: 'Marketing', desc: 'Strategic brand campaigns and challenges', fullDesc: 'Design, pitch, and execute a full-scale marketing campaign for a real brand challenge. From strategy to creative execution — prove you can move markets.', date: '4th July 2026', duration: '1 Day', price: '₹1,319', priceNote: 'Use coupon for ₹1,199', team: 'Solo', img: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&h=300&fit=crop'},
       { num: '07', title: 'Paper Trading', desc: 'Simulated stock market competition', fullDesc: 'Trade live markets with virtual capital. Analyse trends, manage risk, and build a portfolio that outperforms the benchmark. The best trader takes it all.', date: '4th July 2026', duration: '1 Day', price: '₹1,539', priceNote: 'Use coupon for ₹1,399', team: 'Solo', img: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=300&fit=crop' },
       { num: '08', title: 'Film Making', desc: 'Short film creation and storytelling', fullDesc: 'Concept, shoot, edit, and screen — all in one day. Bring a compelling story to life with your team and compete for the best short film at NYDC 2026.<br><br><strong>Regulation of the Event:</strong><br>• The official topic/theme for the film will be provided to all participants one week prior to the event.<br>• Participants must create, complete, and finalize their film within the given timeframe, strictly based on the assigned theme.<br>• The final film must be presented on the event day.', date: '5th July 2026', duration: '1 Day', price: '₹3,849', priceNote: 'Use coupon for ₹3,499', team: 'Up to 5', img: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=300&fit=crop' },
       { num: '09', title: 'Raag Jaam', desc: 'Musical performances and competitions', fullDesc: 'An evening of soul-stirring musical performances. Vocalists, instrumentalists, and bands compete across genres in India\'s most vibrant youth music showcase.<br><br><strong>Regulation of the Event:</strong><br>1. Each band will be allotted 6–8 minutes for their performance.<br>2. Setup and sound-check time are excluded from the performance duration.<br>3. Participants must bring their own musical instruments and equipment required for the performance.<br>4. The performance may be Fusion, Western, Indian Classical, or any other musical genre.', date: '4th July 2026', duration: '1 Day', price: '₹4,619', priceNote: 'Use coupon for ₹4,199', team: 'Up to 6', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=300&fit=crop' },
