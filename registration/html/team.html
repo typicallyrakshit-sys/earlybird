@@ -15,14 +15,15 @@
   <meta name="description" content="Meet the passionate leaders, technologists, coordinators, and creatives behind National Youth Development Conference 2026.">
   <link rel="icon" href="../../NYDC-Final-main/images/nydc-logo.png" type="image/png" />
   <link rel="stylesheet" href="../../NYDC-Final-main/css/styles.css"/>
-  <link rel="stylesheet" href="../css/registration.css">
   <link rel="stylesheet" href="../css/team.css">
 </head>
 <body class="antialiased">
 
-  <!-- Background Ambience & Decorative Elements -->
-  <div class="bg-ambience"></div>
-  <div class="border-frame"></div>
+  <!-- Decorative Border (Behind navbar) -->
+  <div class="fixed inset-6 border border-[#8b1a1a]/40 pointer-events-none z-[30]"></div>
+
+  <!-- Background Ambience -->
+  <div class="fixed inset-0 -z-10 pointer-events-none" style="background:radial-gradient(ellipse at center, #0a0505 0%, #000000 100%)"></div>
   <div class="grainy-border-left"></div>
   <div class="grainy-border-right"></div>
 
@@ -33,23 +34,23 @@
 
   <!-- Navigation (Exact match with index.html) -->
   <nav class="fixed top-8 left-0 right-0 z-50 transition-all duration-300" id="main-nav" style="background:rgba(0,0,0,0.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(139,26,26,0.15);">
-    <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-center">
+    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-center relative">
       <!-- Desktop Nav -->
-      <div class="hidden md:flex items-center gap-8">
-        <a href="../../index.html#about" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">About</a>
-        <a href="../../index.html#vision" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Vision</a>
-        <a href="../../index.html#events" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Events</a>
-        <a href="../../index.html#gallery" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Gallery</a>
-        <a href="../../index.html#partners" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Partners</a>
-        <a href="../../index.html#footer" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Contact Us</a>
-        <a href="agenda.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Portfolios</a>
-        <a href="team.html" class="font-body text-sm uppercase tracking-widest text-[#8b1a1a] font-semibold transition-colors duration-300" style="text-decoration:none;">Team</a>
-        <a href="login.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Login</a>
-        <a href="../registration.html" data-reg-element class="font-body text-base uppercase tracking-widest rounded-full transition-all duration-300" style="text-decoration:none;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;border:1px solid #8b1a1a;box-shadow:0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3);letter-spacing:0.15em;font-weight:600;padding:10px 15px;" onmouseover="this.style.boxShadow='0 0 25px rgba(139,26,26,0.7),0 6px 20px rgba(0,0,0,0.4)';this.style.transform='translateY(-2px) scale(1.05)';" onmouseout="this.style.boxShadow='0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3)';this.style.transform='translateY(0) scale(1)';">Register</a>
+      <div class="hidden md:flex items-center gap-6 lg:gap-8">
+        <a href="../../index.html#about" class="font-body text-xs lg:text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">About</a>
+        <a href="../../index.html#vision" class="font-body text-xs lg:text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Vision</a>
+        <a href="../../index.html#events" class="font-body text-xs lg:text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Events</a>
+        <a href="../../index.html#gallery" class="font-body text-xs lg:text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Gallery</a>
+        <a href="../../index.html#partners" class="font-body text-xs lg:text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Partners</a>
+        <a href="../../index.html#footer" class="font-body text-xs lg:text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Contact Us</a>
+        <a href="agenda.html" class="font-body text-xs lg:text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Portfolios</a>
+        <a href="team.html" class="font-body text-xs lg:text-sm uppercase tracking-widest text-[#8b1a1a] font-semibold transition-colors duration-300" style="text-decoration:none;">Team</a>
+        <a href="login.html" class="font-body text-xs lg:text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Login</a>
+        <a href="../registration.html" data-reg-element class="font-body text-xs lg:text-sm uppercase tracking-widest rounded-full transition-all duration-300" style="text-decoration:none;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;border:1px solid #8b1a1a;box-shadow:0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3);letter-spacing:0.15em;font-weight:600;padding:8px 18px;" onmouseover="this.style.boxShadow='0 0 25px rgba(139,26,26,0.7),0 6px 20px rgba(0,0,0,0.4)';this.style.transform='translateY(-2px) scale(1.05)';" onmouseout="this.style.boxShadow='0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3)';this.style.transform='translateY(0) scale(1)';">Register</a>
       </div>
 
       <!-- Mobile Hamburger -->
-      <button class="md:hidden flex flex-col gap-1.5 p-2 absolute right-6" id="hamburger-btn" aria-label="Toggle navigation">
+      <button class="md:hidden flex flex-col justify-center gap-1.5 p-2 absolute right-6 top-1/2 -translate-y-1/2" id="hamburger-btn" aria-label="Toggle navigation">
         <span class="w-5 h-px bg-white transition-all duration-300"></span>
         <span class="w-5 h-px bg-white transition-all duration-300"></span>
         <span class="w-5 h-px bg-white transition-all duration-300"></span>
@@ -94,7 +95,7 @@
           <span class="team-stat-label">Team Members</span>
         </div>
         <div class="team-stat-chip">
-          <span class="team-stat-num">1000+</span>
+          <span class="team-stat-num">400+</span>
           <span class="team-stat-label">Delegates</span>
         </div>
         <div class="team-stat-chip">
