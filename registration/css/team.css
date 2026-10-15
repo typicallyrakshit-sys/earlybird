@@ -5,103 +5,10 @@
 .team-page-wrapper {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 80px 24px 100px;
+  padding: 140px 24px 100px;
   min-height: 100vh;
   position: relative;
   z-index: 10;
-}
-
-/* ───── Top Navigation Bar ───── */
-.team-nav-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 40px;
-  padding: 12px 20px;
-  background: rgba(10, 5, 5, 0.75);
-  border: 1px solid rgba(139, 26, 26, 0.25);
-  border-radius: 50px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-
-.team-nav-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.back-home-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #d1d5db;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  padding: 8px 16px;
-  border-radius: 30px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.3s ease;
-}
-
-.back-home-btn:hover {
-  color: #fff;
-  border-color: var(--accent);
-  background: rgba(139, 26, 26, 0.2);
-  transform: translateX(-2px);
-}
-
-.team-nav-links {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.team-nav-link {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #9ca3af;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.team-nav-link:hover,
-.team-nav-link.active {
-  color: #fff;
-}
-
-.team-nav-link.active {
-  color: #ef4444;
-  font-weight: 600;
-}
-
-.team-reg-btn {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: #fff;
-  text-decoration: none;
-  padding: 9px 22px;
-  border-radius: 30px;
-  background: linear-gradient(135deg, #8b1a1a, #c0392b);
-  border: 1px solid #8b1a1a;
-  box-shadow: 0 0 15px rgba(139, 26, 26, 0.4);
-  transition: all 0.3s ease;
-}
-
-.team-reg-btn:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 0 25px rgba(139, 26, 26, 0.7);
 }
 
 /* ───── Hero Header ───── */
@@ -202,11 +109,11 @@
 /* ───── Filter Tabs Bar ───── */
 .team-filter-bar {
   position: sticky;
-  top: 60px;
+  top: 86px;
   z-index: 40;
   display: flex;
   gap: 8px;
-  background: rgba(10, 5, 5, 0.85);
+  background: rgba(10, 5, 5, 0.88);
   border: 1px solid rgba(139, 26, 26, 0.3);
   border-radius: 16px;
   padding: 6px;
@@ -273,7 +180,7 @@
 /* ───── Department Sections ───── */
 .department-section {
   margin-bottom: 72px;
-  scroll-margin-top: 140px;
+  scroll-margin-top: 150px;
 }
 
 .dept-header {
@@ -345,7 +252,7 @@
   gap: 24px;
 }
 
-/* Featured 2-column or centered layout for top leadership */
+/* Featured 2-column layout for top leadership */
 .team-grid.featured-grid {
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   max-width: 900px;
@@ -708,15 +615,11 @@
 /* ───── Responsive Queries ───── */
 @media (max-width: 768px) {
   .team-page-wrapper {
-    padding: 60px 16px 80px;
-  }
-  
-  .team-nav-links {
-    display: none;
+    padding: 120px 16px 80px;
   }
   
   .team-filter-bar {
-    top: 50px;
+    top: 76px;
     padding: 4px;
   }
   

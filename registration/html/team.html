@@ -14,10 +14,11 @@
   <title>Organizing Team — NYDC 2026</title>
   <meta name="description" content="Meet the passionate leaders, technologists, coordinators, and creatives behind National Youth Development Conference 2026.">
   <link rel="icon" href="../../NYDC-Final-main/images/nydc-logo.png" type="image/png" />
+  <link rel="stylesheet" href="../../NYDC-Final-main/css/styles.css"/>
   <link rel="stylesheet" href="../css/registration.css">
   <link rel="stylesheet" href="../css/team.css">
 </head>
-<body>
+<body class="antialiased">
 
   <!-- Background Ambience & Decorative Elements -->
   <div class="bg-ambience"></div>
@@ -26,35 +27,53 @@
   <div class="grainy-border-right"></div>
 
   <!-- Top Banner -->
-  <div class="top-banner">
-    <p>NYDC 2026 POWERED BY GENSPARK</p>
+  <div class="fixed top-0 left-0 right-0 z-[70] bg-[#8b1a1a] text-white py-2 text-center select-none shadow-lg">
+    <p class="font-body text-[10px] md:text-xs tracking-[0.4em] font-bold uppercase">NYDC 2026 POWERED BY GENSPARK</p>
   </div>
 
+  <!-- Navigation (Exact match with index.html) -->
+  <nav class="fixed top-8 left-0 right-0 z-50 transition-all duration-300" id="main-nav" style="background:rgba(0,0,0,0.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(139,26,26,0.15);">
+    <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-center">
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="../../index.html#about" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">About</a>
+        <a href="../../index.html#vision" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Vision</a>
+        <a href="../../index.html#events" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Events</a>
+        <a href="../../index.html#gallery" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Gallery</a>
+        <a href="../../index.html#partners" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Partners</a>
+        <a href="../../index.html#footer" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Contact Us</a>
+        <a href="agenda.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Portfolios</a>
+        <a href="team.html" class="font-body text-sm uppercase tracking-widest text-[#8b1a1a] font-semibold transition-colors duration-300" style="text-decoration:none;">Team</a>
+        <a href="login.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300" style="text-decoration:none;">Login</a>
+        <a href="../registration.html" data-reg-element class="font-body text-base uppercase tracking-widest rounded-full transition-all duration-300" style="text-decoration:none;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;border:1px solid #8b1a1a;box-shadow:0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3);letter-spacing:0.15em;font-weight:600;padding:10px 15px;" onmouseover="this.style.boxShadow='0 0 25px rgba(139,26,26,0.7),0 6px 20px rgba(0,0,0,0.4)';this.style.transform='translateY(-2px) scale(1.05)';" onmouseout="this.style.boxShadow='0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3)';this.style.transform='translateY(0) scale(1)';">Register</a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button class="md:hidden flex flex-col gap-1.5 p-2 absolute right-6" id="hamburger-btn" aria-label="Toggle navigation">
+        <span class="w-5 h-px bg-white transition-all duration-300"></span>
+        <span class="w-5 h-px bg-white transition-all duration-300"></span>
+        <span class="w-5 h-px bg-white transition-all duration-300"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="md:hidden overflow-hidden transition-all duration-300 max-h-0" id="mobile-menu">
+      <div class="px-6 pb-4 flex flex-col gap-4 bg-black/95 border-b border-[#8b1a1a]/20">
+        <a href="../../index.html#about" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">About</a>
+        <a href="../../index.html#vision" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Vision</a>
+        <a href="../../index.html#events" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Events</a>
+        <a href="../../index.html#gallery" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Gallery</a>
+        <a href="../../index.html#partners" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Partners</a>
+        <a href="../../index.html#footer" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Contact Us</a>
+        <a href="agenda.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Portfolios</a>
+        <a href="team.html" class="font-body text-sm uppercase tracking-widest text-[#8b1a1a] font-semibold transition-colors duration-300 text-left" style="text-decoration:none;">Team</a>
+        <a href="login.html" class="font-body text-sm uppercase tracking-widest text-gray-400 hover:text-[#8b1a1a] transition-colors duration-300 text-left" style="text-decoration:none;">Login</a>
+        <a href="../registration.html" data-reg-element class="font-body text-sm uppercase tracking-widest text-left px-6 py-2.5 rounded-full transition-all duration-300" style="text-decoration:none;background:linear-gradient(135deg,#8b1a1a,#c0392b);color:#fff;border:1px solid #8b1a1a;display:inline-block;text-align:center;box-shadow:0 0 15px rgba(139,26,26,0.4),0 4px 12px rgba(0,0,0,0.3);letter-spacing:0.15em;">Register</a>
+      </div>
+    </div>
+  </nav>
+
   <main class="team-page-wrapper">
-
-    <!-- Top Navigation Bar -->
-    <nav class="team-nav-bar">
-      <div class="team-nav-left">
-        <a href="../../index.html" class="back-home-btn">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-          Home
-        </a>
-      </div>
-
-      <div class="team-nav-links">
-        <a href="../../index.html#about" class="team-nav-link">About</a>
-        <a href="../../index.html#events" class="team-nav-link">Events</a>
-        <a href="../../index.html#gallery" class="team-nav-link">Gallery</a>
-        <a href="../../index.html#partners" class="team-nav-link">Partners</a>
-        <a href="agenda.html" class="team-nav-link">Portfolios</a>
-        <a href="team.html" class="team-nav-link active">Team</a>
-        <a href="login.html" class="team-nav-link">Login</a>
-      </div>
-
-      <a href="../registration.html" class="team-reg-btn">Register</a>
-    </nav>
 
     <!-- Hero Header -->
     <header class="team-hero">
@@ -716,11 +735,11 @@
       </div>
     </section>
 
-    <!-- Bottom CTA Banner -->
-    <div class="team-cta-banner">
+    <!-- Bottom CTA Banner (Gets updated dynamically when registration is closed) -->
+    <div class="team-cta-banner" id="team-cta-section">
       <h3>Join the Movement at <span>NYDC 2026</span></h3>
       <p>Be part of Delhi NCR's most prestigious youth convention. Compete, deliberate, innovate, and make lifelong connections.</p>
-      <a href="../registration.html" class="team-reg-btn" style="font-size:0.95rem; padding:12px 32px; display:inline-block;">Secure Your Pass Now →</a>
+      <a href="../registration.html" data-reg-element class="team-reg-btn" style="font-size:0.95rem; padding:12px 32px; display:inline-block;">Secure Your Pass Now →</a>
     </div>
 
   </main>
@@ -744,7 +763,23 @@
     </div>
   </div>
 
+  <!-- Mobile Hamburger Script -->
   <script>
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    let menuOpen = false;
+
+    if (hamburgerBtn && mobileMenu) {
+      hamburgerBtn.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        if (menuOpen) {
+          mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+        } else {
+          mobileMenu.style.maxHeight = '0px';
+        }
+      });
+    }
+
     // ───── Filter Tabs Logic ─────
     const filterBtns = document.querySelectorAll('.filter-btn');
     const sections = document.querySelectorAll('.department-section');
@@ -813,6 +848,61 @@
         closeTeamModal();
       }
     });
+  </script>
+
+  <!-- Firebase Registration Status Sync Script -->
+  <script type="module">
+    import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
+    import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",
+      authDomain: "nydc-72b34.firebaseapp.com",
+      projectId: "nydc-72b34",
+      storageBucket: "nydc-72b34.firebasestorage.app",
+      messagingSenderId: "935882112599",
+      appId: "1:935882112599:web:f04b660e233f21a46f2d12",
+      measurementId: "G-5G8Z44578K"
+    };
+
+    let app;
+    if (getApps().length === 0) {
+      app = initializeApp(firebaseConfig);
+    } else {
+      app = getApps()[0];
+    }
+    const db = getFirestore(app);
+
+    async function checkRegistrationStatus() {
+      try {
+        const snap = await getDoc(doc(db, 'settings', 'registration'));
+        const isOpen = snap.exists() ? snap.data().isOpen !== false : true;
+
+        if (!isOpen) {
+          // Hide all registration links/buttons
+          document.querySelectorAll('[data-reg-element]').forEach(el => {
+            el.style.display = 'none';
+          });
+
+          // Replace lowest CTA section content matching index.html
+          const ctaSection = document.getElementById('team-cta-section');
+          if (ctaSection) {
+            ctaSection.innerHTML = `
+              <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:12px;padding:12px 24px;margin-bottom:20px;">
+                <span style="font-family:'Outfit',sans-serif;font-size:0.85rem;font-weight:600;color:#ef4444;letter-spacing:0.1em;text-transform:uppercase;">Registrations Closed</span>
+              </div>
+              <p class="font-body text-gray-400 text-lg md:text-xl tracking-wider" style="max-width:560px;margin:0 auto;">
+                Registrations for NYDC 2026 are now closed. Follow us on Instagram for updates.
+              </p>
+            `;
+          }
+        }
+      } catch (e) {
+        console.warn('Registration status check failed:', e);
+      }
+    }
+
+    checkRegistrationStatus();
   </script>
 
 </body>
