@@ -17,6 +17,69 @@
   <link rel="icon" href="NYDC-Final-main/images/nydc-logo.png" type="image/png" />
   <link rel="stylesheet" href="NYDC-Final-main/css/styles.css"/>
   <link rel="stylesheet" href="NYDC-Final-main/css/registration.css"/>
+
+  <!-- Instant Registration Status Check (0ms delay) -->
+  <script>
+    (function() {
+      // 1. Instant cache check (0ms before first paint)
+      var cached = localStorage.getItem('nydc_reg_isOpen');
+      // If cached as closed OR initial visit (current conference status is closed), apply immediately
+      if (cached === 'false' || cached === null) {
+        document.documentElement.classList.add('reg-closed');
+      }
+
+      // 2. Fast parallel REST check directly to Firestore (no heavy SDK wait)
+      fetch('https://firestore.googleapis.com/v1/projects/nydc-72b34/databases/(default)/documents/settings/registration')
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          var isOpen = d && d.fields && d.fields.isOpen ? d.fields.isOpen.booleanValue !== false : true;
+          localStorage.setItem('nydc_reg_isOpen', isOpen ? 'true' : 'false');
+          if (isOpen) {
+            document.documentElement.classList.remove('reg-closed');
+            document.querySelectorAll('[data-reg-element]').forEach(function(el) {
+              el.style.removeProperty('display');
+            });
+            var mBtn = document.getElementById('modal-register-btn');
+            if (mBtn) mBtn.style.removeProperty('display');
+          } else {
+            document.documentElement.classList.add('reg-closed');
+            document.querySelectorAll('[data-reg-element]').forEach(function(el) {
+              el.style.display = 'none';
+            });
+            var mBtn = document.getElementById('modal-register-btn');
+            if (mBtn) mBtn.style.display = 'none';
+            applyClosedCta();
+          }
+        })
+        .catch(function(e) { console.warn('Fast reg check error:', e); });
+
+      function applyClosedCta() {
+        var cta = document.getElementById('register-cta-section');
+        if (cta && !cta.dataset.closedApplied) {
+          cta.dataset.closedApplied = 'true';
+          cta.innerHTML = '<div class="absolute inset-0 bg-gradient-to-b from-black via-[#0a0505] to-black"></div><div class="max-w-3xl mx-auto text-center relative z-10"><div style="display:inline-flex;align-items:center;gap:10px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:12px;padding:12px 24px;margin-bottom:20px;"><span style="font-family:\'Outfit\',sans-serif;font-size:0.85rem;font-weight:600;color:#ef4444;letter-spacing:0.1em;text-transform:uppercase;">Registrations Closed</span></div><p class="fade-up font-body text-gray-400 text-lg md:text-xl tracking-wider">Registrations for NYDC 2026 are now closed. Follow us on Instagram for updates.</p></div>';
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          if (document.documentElement.classList.contains('reg-closed')) {
+            applyClosedCta();
+          }
+        });
+      } else {
+        if (document.documentElement.classList.contains('reg-closed')) {
+          applyClosedCta();
+        }
+      }
+    })();
+  </script>
+  <style>
+    html.reg-closed [data-reg-element],
+    html.reg-closed #modal-register-btn {
+      display: none !important;
+    }
+  </style>
 </head>
 
 <body class="antialiased">
@@ -865,8 +928,10 @@
       try {
         const snap = await getDoc(doc(db, 'settings', 'registration'));
         const isOpen = snap.exists() ? snap.data().isOpen !== false : true;
+        localStorage.setItem('nydc_reg_isOpen', isOpen ? 'true' : 'false');
 
         if (!isOpen) {
+          document.documentElement.classList.add('reg-closed');
           // Hide all registration links/buttons
           document.querySelectorAll('[data-reg-element]').forEach(el => {
             el.style.display = 'none';
@@ -874,7 +939,8 @@
 
           // Replace CTA section content
           const ctaSection = document.getElementById('register-cta-section');
-          if (ctaSection) {
+          if (ctaSection && !ctaSection.dataset.closedApplied) {
+            ctaSection.dataset.closedApplied = 'true';
             ctaSection.innerHTML = `
               <div class="absolute inset-0 bg-gradient-to-b from-black via-[#0a0505] to-black"></div>
               <div class="max-w-3xl mx-auto text-center relative z-10">
@@ -893,10 +959,18 @@
           if (modalRegBtn) {
             modalRegBtn.style.display = 'none';
           }
+        } else {
+          document.documentElement.classList.remove('reg-closed');
+          document.querySelectorAll('[data-reg-element]').forEach(el => {
+            el.style.removeProperty('display');
+          });
+          const modalRegBtn = document.getElementById('modal-register-btn');
+          if (modalRegBtn) {
+            modalRegBtn.style.removeProperty('display');
+          }
         }
       } catch (e) {
         console.warn('Registration status check failed:', e);
-        // Default to open if check fails
       }
     }
 

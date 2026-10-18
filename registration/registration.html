@@ -17,6 +17,21 @@
     <link rel="stylesheet" href="css/registration.css">
     <link rel="stylesheet" href="css/institutional.css">
     <link rel="icon" href="../NYDC-Final-main/images/nydc-logo.png" type="image/png" />
+
+    <!-- Instant Registration Status Check (0ms delay) -->
+    <script>
+      (function() {
+        var cached = localStorage.getItem('nydc_reg_isOpen');
+        if (cached === 'false' || cached === null) {
+          document.documentElement.classList.add('reg-closed');
+        }
+      })();
+    </script>
+    <style>
+      html.reg-closed #reg-type-overlay {
+        display: none !important;
+      }
+    </style>
 </head>
 <body>
 
@@ -326,6 +341,7 @@
         try {
           const snap = await getDoc(doc(fbDb, 'settings', 'registration'));
           const isOpen = snap.exists() ? snap.data().isOpen !== false : true;
+          localStorage.setItem('nydc_reg_isOpen', isOpen ? 'true' : 'false');
 
           if (!isOpen) {
             // Hide the registration type overlay

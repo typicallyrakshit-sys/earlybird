@@ -386,6 +386,7 @@ async function loadRegistrationStatus() {
   try {
     const snap = await getDoc(doc(db, 'settings', 'registration'));
     const isOpen = snap.exists() ? snap.data().isOpen !== false : true;
+    localStorage.setItem('nydc_reg_isOpen', isOpen ? 'true' : 'false');
     regToggle.checked = isOpen;
     updateToggleLabel(isOpen);
   } catch (e) {
@@ -405,6 +406,7 @@ function updateToggleLabel(isOpen) {
 regToggle.addEventListener('change', async () => {
   const isOpen = regToggle.checked;
   updateToggleLabel(isOpen);
+  localStorage.setItem('nydc_reg_isOpen', isOpen ? 'true' : 'false');
   try {
     await setDoc(doc(db, 'settings', 'registration'), { isOpen }, { merge: true });
     console.log(`Registration ${isOpen ? 'opened' : 'closed'}`);
@@ -413,6 +415,7 @@ regToggle.addEventListener('change', async () => {
     // Revert toggle on failure
     regToggle.checked = !isOpen;
     updateToggleLabel(!isOpen);
+    localStorage.setItem('nydc_reg_isOpen', !isOpen ? 'true' : 'false');
     alert('Failed to update registration status: ' + e.message);
   }
 });

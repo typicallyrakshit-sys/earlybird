@@ -19,6 +19,16 @@
     <link rel="icon" href="../../NYDC-Final-main/images/nydc-logo.png" type="image/png" />
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="../js/mun-data.js"></script>
+
+    <!-- Instant Registration Status Check (0ms delay) -->
+    <script>
+      (function() {
+        var cached = localStorage.getItem('nydc_reg_isOpen');
+        if (cached === 'false' || cached === null) {
+          document.documentElement.classList.add('reg-closed');
+        }
+      })();
+    </script>
 </head>
 
 <body>
@@ -997,6 +1007,7 @@
             try {
                 const snap = await getDoc(doc(db, 'settings', 'registration'));
                 const isOpen = snap.exists() ? snap.data().isOpen !== false : true;
+                localStorage.setItem('nydc_reg_isOpen', isOpen ? 'true' : 'false');
 
                 if (!isOpen) {
                     const wrapper = document.querySelector('.registration-wrapper') || document.querySelector('main');
