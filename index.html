@@ -321,39 +321,7 @@
         </div>
 
         <!-- Gallery Grid -->
-        <div class="gallery-mosaic" id="gallery-mosaic">
-          <!-- Row 1: Large landscape + portrait stack -->
-          <div class="gallery-item gallery-item--wide" data-gallery-idx="0">
-            <div class="gallery-frame">
-              <img src="NYDC-Final-main/images/main-page/web/DSC05441.jpg" alt="NYDC 2025 — Group photo of delegates outside the venue" loading="lazy" />
-              <div class="gallery-shine"></div>
-            </div>
-          </div>
-          <div class="gallery-item gallery-item--tall" data-gallery-idx="1">
-            <div class="gallery-frame">
-              <img src="NYDC-Final-main/images/main-page/web/DSC05378.jpg" alt="NYDC 2025 — Delegates at Moot Court session" loading="lazy" />
-              <div class="gallery-shine"></div>
-            </div>
-          </div>
-          <div class="gallery-item gallery-item--wide" data-gallery-idx="2">
-            <div class="gallery-frame">
-              <img src="NYDC-Final-main/images/main-page/web/DSC05297.jpg" alt="NYDC 2025 — Band performance at Raag Jaam" loading="lazy" />
-              <div class="gallery-shine"></div>
-            </div>
-          </div>
-          <div class="gallery-item gallery-item--tall" data-gallery-idx="3">
-            <div class="gallery-frame">
-              <img src="NYDC-Final-main/images/main-page/web/DSC05268.jpg" alt="NYDC 2025 — Delegates discussing between sessions" loading="lazy" />
-              <div class="gallery-shine"></div>
-            </div>
-          </div>
-          <div class="gallery-item gallery-item--wide" data-gallery-idx="4">
-            <div class="gallery-frame">
-              <img src="NYDC-Final-main/images/main-page/web/DSC05213.jpg" alt="NYDC 2025 — Participants with their conference badges" loading="lazy" />
-              <div class="gallery-shine"></div>
-            </div>
-          </div>
-        </div>
+        <div class="gallery-mosaic" id="gallery-mosaic"></div>
       </div>
 
       <!-- Lightbox -->
@@ -369,7 +337,7 @@
         </button>
         <img id="gallery-lightbox-img" src="" alt="" />
         <div class="gallery-lightbox__counter">
-          <span id="gallery-lightbox-current">1</span> / <span id="gallery-lightbox-total">5</span>
+          <span id="gallery-lightbox-current">1</span> / <span id="gallery-lightbox-total">11</span>
         </div>
       </div>
     </section>
@@ -389,9 +357,8 @@
         }
         .gallery-item--wide { grid-column: span 7; grid-row: span 2; }
         .gallery-item--tall { grid-column: span 5; grid-row: span 2; }
-        .gallery-mosaic .gallery-item:nth-child(3) { grid-column: span 5; }
-        .gallery-mosaic .gallery-item:nth-child(4) { grid-column: span 7; }
-        .gallery-mosaic .gallery-item:nth-child(5) { grid-column: span 12; grid-row: span 2; }
+        .gallery-item--half { grid-column: span 6; grid-row: span 2; }
+        .gallery-item--full { grid-column: span 12; grid-row: span 2; }
       }
 
       /* ── Frame styling ── */
@@ -455,32 +422,24 @@
       /* ── Scroll-reveal entrance ── */
       .gallery-item {
         opacity: 0;
-        transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-                    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
       }
-      .gallery-item:nth-child(1) { transform: translate(-30px, 50px) rotate(-2.5deg) scale(0.92); }
-      .gallery-item:nth-child(2) { transform: translate(30px, 60px) rotate(1.8deg) scale(0.92); }
-      .gallery-item:nth-child(3) { transform: translate(20px, 40px) rotate(1.2deg) scale(0.92); }
-      .gallery-item:nth-child(4) { transform: translate(-20px, 55px) rotate(-1.5deg) scale(0.92); }
-      .gallery-item:nth-child(5) { transform: translate(0, 70px) rotate(0.5deg) scale(0.92); }
+      .gallery-item:nth-child(odd) { transform: translate(-25px, 45px) rotate(-2deg) scale(0.93); }
+      .gallery-item:nth-child(even) { transform: translate(25px, 45px) rotate(1.8deg) scale(0.93); }
+      .gallery-item:nth-child(3n) { transform: translate(0, 50px) rotate(-1deg) scale(0.93); }
 
       .gallery-item.is-visible {
         opacity: 1;
         transform: translate(0, 0) rotate(0deg) scale(1);
       }
 
-      /* stagger each child */
-      .gallery-item:nth-child(1) { transition-delay: 0.05s; }
-      .gallery-item:nth-child(2) { transition-delay: 0.18s; }
-      .gallery-item:nth-child(3) { transition-delay: 0.30s; }
-      .gallery-item:nth-child(4) { transition-delay: 0.42s; }
-      .gallery-item:nth-child(5) { transition-delay: 0.55s; }
-
       /* Mobile: fixed aspect ratios */
       @media (max-width: 767px) {
         .gallery-item--wide { aspect-ratio: 3 / 2; }
         .gallery-item--tall { aspect-ratio: 3 / 4; }
-        .gallery-mosaic .gallery-item:nth-child(5) { aspect-ratio: 3 / 2; }
+        .gallery-item--half { aspect-ratio: 1 / 1; }
+        .gallery-item--full { aspect-ratio: 16 / 9; }
       }
 
       /* ── Lightbox ── */
@@ -763,6 +722,73 @@
       observer.observe(el);
     });
 
+    // ---- Gallery: Dynamic Loading via Loop ----
+    const galleryMosaic = document.getElementById('gallery-mosaic');
+    const totalGalleryImages = 11;
+    const gallerySrcs = [];
+
+    const galleryAltTexts = [
+      "NYDC — Group photo of delegates outside the venue",
+      "NYDC — Delegates at Moot Court session",
+      "NYDC — Band performance at Raag Jaam",
+      "NYDC — Delegates discussing between sessions",
+      "NYDC — Participants with their conference badges",
+      "NYDC — Committee session discussions",
+      "NYDC — Delegate addressing the conference",
+      "NYDC — Floor debate and voting",
+      "NYDC — Leadership and committee members",
+      "NYDC — Deliberations and keynote moment",
+      "NYDC — Conference closing and delegates celebration"
+    ];
+
+    // Pattern for grid layout variations (summing to 12 columns per row pair)
+    const layoutCycle = [
+      'gallery-item--wide', // span 7
+      'gallery-item--tall', // span 5 (7 + 5 = 12)
+      'gallery-item--tall', // span 5
+      'gallery-item--wide', // span 7 (5 + 7 = 12)
+      'gallery-item--half', // span 6
+      'gallery-item--half'  // span 6 (6 + 6 = 12)
+    ];
+
+    if (galleryMosaic) {
+      for (let i = 1; i <= totalGalleryImages; i++) {
+        const idx = i - 1;
+        const src = `NYDC-Final-main/images/main-page/web/${i}.jpg`;
+        gallerySrcs.push(src);
+
+        // Determine mosaic grid class
+        let layoutClass = layoutCycle[idx % layoutCycle.length];
+        if (i === totalGalleryImages && idx % 2 === 0) {
+          layoutClass = 'gallery-item--full';
+        }
+
+        const item = document.createElement('div');
+        item.className = `gallery-item ${layoutClass}`;
+        item.dataset.galleryIdx = idx;
+        item.style.transitionDelay = `${(idx % 4) * 0.1 + 0.05}s`;
+
+        const alt = galleryAltTexts[idx] || `NYDC Highlights — Photo ${i}`;
+
+        item.innerHTML = `
+          <div class="gallery-frame">
+            <img src="${src}" alt="${alt}" loading="lazy" />
+            <div class="gallery-shine"></div>
+          </div>
+        `;
+
+        item.querySelector('.gallery-frame').addEventListener('click', () => {
+          openLightbox(idx);
+        });
+
+        galleryMosaic.appendChild(item);
+      }
+    }
+
+    // Set lightbox counter total
+    const lbTotalEl = document.getElementById('gallery-lightbox-total');
+    if (lbTotalEl) lbTotalEl.textContent = gallerySrcs.length;
+
     // ---- Gallery: Scatter-in Reveal ----
     const galleryItems = document.querySelectorAll('.gallery-item');
     const galleryObserver = new IntersectionObserver((entries) => {
@@ -776,21 +802,7 @@
     galleryItems.forEach(item => galleryObserver.observe(item));
 
     // ---- Gallery: Lightbox ----
-    const gallerySrcs = [
-      'NYDC-Final-main/images/main-page/web/DSC05441.jpg',
-      'NYDC-Final-main/images/main-page/web/DSC05378.jpg',
-      'NYDC-Final-main/images/main-page/web/DSC05297.jpg',
-      'NYDC-Final-main/images/main-page/web/DSC05268.jpg',
-      'NYDC-Final-main/images/main-page/web/DSC05213.jpg',
-    ];
     let lightboxIdx = 0;
-
-    document.querySelectorAll('.gallery-frame').forEach(frame => {
-      frame.addEventListener('click', () => {
-        const idx = parseInt(frame.parentElement.dataset.galleryIdx, 10);
-        openLightbox(idx);
-      });
-    });
 
     function openLightbox(idx) {
       lightboxIdx = idx;
