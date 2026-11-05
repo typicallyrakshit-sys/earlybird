@@ -950,23 +950,21 @@
       try {
         const snap = await getDoc(doc(db, 'settings', 'registration'));
         const isOpen = snap.exists() ? snap.data().isOpen !== false : true;
+        // Update Local Storage
         localStorage.setItem('nydc_reg_isOpen', isOpen ? 'true' : 'false');
-
+      
         if (!isOpen) {
           document.documentElement.classList.add('reg-closed');
-          // Hide all registration links/buttons
-          document.querySelectorAll('[data-reg-element]').forEach(el => {
-            el.style.display = 'none';
-          });
-
-          // Replace CTA section content
           const ctaSection = document.getElementById('register-cta-section');
           if (ctaSection && !ctaSection.dataset.closedApplied) {
-            ctaSection.dataset.closedApplied = 'true';
+            ctaSection.dataset.closedApplied = 'true'; // Mark as handled
+
+            // Using template literal safely
             ctaSection.innerHTML = `
               <div class="absolute inset-0 bg-gradient-to-b from-black via-[#0a0505] to-black"></div>
               <div class="max-w-3xl mx-auto text-center relative z-10">
                 <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:12px;padding:12px 24px;margin-bottom:20px;">
+                  <svg style="width:16px;height:16px;fill:#ef4444" viewBox="0 0 24 24"><path d="M9.707,10.293a1,1,0,1,0,1.414,0L19,21.586a1,1,0,0,0,.293-.293l-7-7a1,1,0,0,0-1.414-1.414Z"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                   <span style="font-family:'Outfit',sans-serif;font-size:0.85rem;font-weight:600;color:#ef4444;letter-spacing:0.1em;text-transform:uppercase;">Registrations Closed</span>
                 </div>
                 <p class="fade-up font-body text-gray-400 text-lg md:text-xl tracking-wider">
@@ -976,23 +974,22 @@
             `;
           }
 
-          // Hide register button in event modal
-          const modalRegBtn = document.getElementById('modal-register-btn');
-          if (modalRegBtn) {
-            modalRegBtn.style.display = 'none';
+          if (document.getElementById('modal-register-btn')) {
+              const btn = document.getElementById('modal-register-btn');
+              if(btn) btn.style.display = 'none';
           }
         } else {
-          document.documentElement.classList.remove('reg-closed');
-          document.querySelectorAll('[data-reg-element]').forEach(el => {
-            el.style.removeProperty('display');
-          });
-          const modalRegBtn = document.getElementById('modal-register-btn');
-          if (modalRegBtn) {
-            modalRegBtn.style.removeProperty('display');
-          }
+            document.documentElement.classList.remove('reg-closed');
+            const elements = document.querySelectorAll('[data-reg-element]');
+            elements.forEach(el => el.style.removeProperty('display'));
+        
+            if (document.getElementById('modal-register-btn')) {
+              document.getElementById('modal-register-btn').style.removeProperty('display');
+            }
         }
-      } catch (e) {
-        console.warn('Registration status check failed:', e);
+      } catch (error) {
+        console.error("Failed to check registration status:", error);
+        document.documentElement.classList.remove('reg-closed'); 
       }
     }
 
