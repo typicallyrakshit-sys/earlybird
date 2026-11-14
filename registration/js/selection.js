@@ -94,7 +94,7 @@ import {
       // ─── IPL Team: verify still available ───
       if (iplTeam) {
         try {
-          const iplTeamsRef = doc(db, 'settings', 'ipl_teams');
+          const iplTeamsRef = doc(db, 'settings', 'ipl_teams_edition2');
           const iplTeamsSnap = await getDoc(iplTeamsRef);
           if (iplTeamsSnap.exists() && iplTeamsSnap.data()[iplTeam]) {
             // If the team is taken by someone else (not the current user's draft)
@@ -138,20 +138,20 @@ import {
       const storedDocId = sessionStorage.getItem('nydc_doc_id');
 
       if (storedDocId) {
-        // Update existing draft
-        const draftRef = doc(db, 'registrations', storedDocId);
+        // Update existing draft (Edition 2)
+        const draftRef = doc(db, 'registrations_edition2', storedDocId);
         await updateDoc(draftRef, registrationData);
         FinalDocId = storedDocId;
       } else {
-        // Create new doc
-        const docRef = await addDoc(collection(db, 'registrations'), registrationData);
+        // Create new doc (Edition 2)
+        const docRef = await addDoc(collection(db, 'registrations_edition2'), registrationData);
         FinalDocId = docRef.id;
       }
 
-      // ─── IPL Team Reservation ───
+      // ─── IPL Team Reservation (Edition 2) ───
       if (iplTeam) {
         try {
-          const iplTeamsRef = doc(db, 'settings', 'ipl_teams');
+          const iplTeamsRef = doc(db, 'settings', 'ipl_teams_edition2');
           await setDoc(iplTeamsRef, { [iplTeam]: FinalDocId }, { merge: true });
         } catch (iplErr) { console.warn('IPL reservation failed:', iplErr); }
       }
@@ -160,11 +160,11 @@ import {
       try {
         const uid = registrationData.uid;
         if (uid) {
-          const draftsQ = query(collection(db, 'registrations'), where('uid', '==', uid), where('status', '==', 'draft'));
+          const draftsQ = query(collection(db, 'registrations_edition2'), where('uid', '==', uid), where('status', '==', 'draft'));
           const draftsSnap = await getDocs(draftsQ);
           for (const draftDoc of draftsSnap.docs) {
             if (draftDoc.id !== FinalDocId) {
-              await deleteDoc(doc(db, 'registrations', draftDoc.id));
+              await deleteDoc(doc(db, 'registrations_edition2', draftDoc.id));
             }
           }
         }

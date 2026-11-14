@@ -1045,9 +1045,9 @@
 
         (async () => {
             const takenMap = {};
-            // 1. Individual registrations
+            // 1. Individual registrations (Edition 2)
             try {
-                const q = query(collection(db, 'registrations'), where('event', '==', 'mun'));
+                const q = query(collection(db, 'registrations_edition2'), where('event', '==', 'mun'));
                 const snap = await getDocs(q);
                 snap.forEach(d => {
                     const data = d.data();
@@ -1060,9 +1060,9 @@
                 });
             } catch (e) { console.warn('Inst fetch individual MUN taken:', e); }
 
-            // 2. Institutional registrations
+            // 2. Institutional registrations (Edition 2)
             try {
-                const iq = query(collection(db, 'institutional_registrations'));
+                const iq = query(collection(db, 'institutional_registrations_edition2'));
                 const isnap = await getDocs(iq);
                 isnap.forEach(d => {
                     const data = d.data();
@@ -1088,9 +1088,9 @@
             const genErr = document.getElementById('coord-general-error');
 
             try {
-                // Check if institution already has a registration (by institution name)
+                // Check if institution already has a registration (by institution name in Edition 2)
                 const instQuery = query(
-                    collection(db, 'institutional_registrations'),
+                    collection(db, 'institutional_registrations_edition2'),
                     where('institutionName', '==', data.instName)
                 );
                 const existing = await getDocs(instQuery);
@@ -1110,7 +1110,7 @@
                 window._instCoordData = { ...data, uid };
 
                 // ── Create a DRAFT Firestore doc immediately so login can detect this as institutional ──
-                const draftRef = await addDoc(collection(db, 'institutional_registrations'), {
+                const draftRef = await addDoc(collection(db, 'institutional_registrations_edition2'), {
                     registrationType: 'institutional',
                     uid,
                     coordinatorFirst: data.firstName,
@@ -1194,13 +1194,13 @@
                 let docRef;
                 if (window._instDraftDocId) {
                     // Update existing draft doc created in Step 1
-                    const dRef = doc(db, 'institutional_registrations', window._instDraftDocId);
+                    const dRef = doc(db, 'institutional_registrations_edition2', window._instDraftDocId);
                     await setDoc(dRef, regData);
                     docRef = { id: window._instDraftDocId };
                     console.log('Institutional draft updated to pending:', docRef.id);
                 } else {
                     // Fallback: create new doc (e.g. resumed from login)
-                    docRef = await addDoc(collection(db, 'institutional_registrations'), regData);
+                    docRef = await addDoc(collection(db, 'institutional_registrations_edition2'), regData);
                     console.log('Institutional registration saved:', docRef.id);
                 }
 

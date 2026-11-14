@@ -135,8 +135,8 @@ logoutBtn.onclick = () => signOut(auth);
 // ─── Data Fetching & Parsing ───
 async function fetchApprovedData() {
   try {
-    // 1. Fetch ALL individual registrations, then filter for approved
-    const qIndiv = query(collection(db, "registrations"));
+    // 1. Fetch ALL individual registrations, then filter for approved (Edition 2)
+    const qIndiv = query(collection(db, "registrations_edition2"));
     const snapIndiv = await getDocs(qIndiv);
     registrationsData = [];
     snapIndiv.forEach(d => {
@@ -146,8 +146,8 @@ async function fetchApprovedData() {
       }
     });
 
-    // 2. Fetch ALL institutional registrations, then filter for approved
-    const qInst = query(collection(db, "institutional_registrations"));
+    // 2. Fetch ALL institutional registrations, then filter for approved (Edition 2)
+    const qInst = query(collection(db, "institutional_registrations_edition2"));
     const snapInst = await getDocs(qInst);
     institutionalData = [];
     snapInst.forEach(d => {
@@ -386,7 +386,7 @@ function renderToggleButton(btnEl, p, pId) {
 
 // ─── Firestore Operations ───
 async function toggleIndividualMealInFirestore(docId, isLeader, memberIndex, mealType, newValue) {
-  const docRef = doc(db, 'registrations', docId);
+  const docRef = doc(db, 'registrations_edition2', docId);
   const snap = await getDoc(docRef);
   if (!snap.exists()) throw new Error("Registration record not found");
 
@@ -410,7 +410,7 @@ async function toggleIndividualMealInFirestore(docId, isLeader, memberIndex, mea
 }
 
 async function toggleInstitutionalMealInFirestore(docId, participantIdx, isLeader, memberIdx, mealType, newValue) {
-  const docRef = doc(db, 'institutional_registrations', docId);
+  const docRef = doc(db, 'institutional_registrations_edition2', docId);
   const snap = await getDoc(docRef);
   if (!snap.exists()) throw new Error("Institutional registration not found");
 

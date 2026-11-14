@@ -266,15 +266,15 @@
 
         // ─── FETCH DATA ───
         async function fetchData() {
-            // Fetch Institutional
-            const qInst = query(collection(db, "institutional_registrations"), orderBy('registeredAt', 'desc'));
+            // Fetch Institutional (Edition 2)
+            const qInst = query(collection(db, "institutional_registrations_edition2"), orderBy('registeredAt', 'desc'));
             const snapInst = await getDocs(qInst);
             instData = [];
             snapInst.forEach(d => instData.push({ id: d.id, ...d.data() }));
             renderInstitutions();
 
-            // Fetch Individual
-            const qIndiv = query(collection(db, "registrations"), orderBy('registeredAt', 'desc'));
+            // Fetch Individual (Edition 2)
+            const qIndiv = query(collection(db, "registrations_edition2"), orderBy('registeredAt', 'desc'));
             const snapIndiv = await getDocs(qIndiv);
             indivData = [];
             snapIndiv.forEach(d => indivData.push({ id: d.id, ...d.data() }));
@@ -1028,7 +1028,7 @@
                 const participants = [...currentInstDoc.participants];
                 participants[currentParticipantIndex].teamMembers = members;
 
-                await updateDoc(doc(db, "institutional_registrations", currentInstDoc.id), {
+                await updateDoc(doc(db, "institutional_registrations_edition2", currentInstDoc.id), {
                     participants: participants
                 });
 

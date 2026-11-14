@@ -88,10 +88,10 @@
       import { db } from '../js/firebase.js';
       import { collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
-      // ── 1. Individual registrations ──
+      // ── 1. Individual registrations (Edition 2) ──
       const takenMap = {}; // { committeeId: Set(portfolioName) }
       try {
-        const q = query(collection(db, 'registrations'), where('event', '==', 'mun'));
+        const q = query(collection(db, 'registrations_edition2'), where('event', '==', 'mun'));
         const snap = await getDocs(q);
         snap.forEach(d => {
           const data = d.data();
@@ -109,13 +109,13 @@
         console.error('Failed to fetch individual taken portfolios:', err);
       }
 
-      // ── 2. Institutional registrations (also mark as taken) ──
+      // ── 2. Institutional registrations (also mark as taken in Edition 2) ──
       const MUN_NAME_TO_ID = {
         'UNGA':'unga','UNCSW':'uncsw','UNHRC':'unhrc',
         'WHO':'who','AIPPM':'aippm','International Press (IP)':'ip'
       };
       try {
-        const iq   = query(collection(db, 'institutional_registrations'));
+        const iq   = query(collection(db, 'institutional_registrations_edition2'));
         const isnap = await getDocs(iq);
         isnap.forEach(d => {
           const data = d.data();

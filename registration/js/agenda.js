@@ -113,7 +113,7 @@ async function fetchTakenPortfolios() {
   const takenMap = { unga: new Set(), uncsw: new Set(), unhrc: new Set(), who: new Set(), aippm: new Set() };
 
   try {
-    const regsRef = collection(db, 'registrations');
+    const regsRef = collection(db, 'registrations_edition2');
     const q = query(regsRef, where('event', '==', 'mun'));
     const snapshot = await getDocs(q);
 

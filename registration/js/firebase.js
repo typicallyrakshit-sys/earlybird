@@ -27,6 +27,17 @@ export { app };
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
+// ─── Collection Names (Edition 2) ───
+export const COLLECTIONS = {
+  REGISTRATIONS: 'registrations_edition2',
+  INSTITUTIONAL: 'institutional_registrations_edition2',
+  IPL_TEAMS: 'ipl_teams_edition2',
+  // Historical Edition 1 (Archived):
+  REGISTRATIONS_ED1: 'registrations',
+  INSTITUTIONAL_ED1: 'institutional_registrations',
+  IPL_TEAMS_ED1: 'ipl_teams'
+};
+
 // ─── Shared Constants ───
 export const EVENT_NAMES = {
   mun: 'Model United Nations',

@@ -412,10 +412,10 @@
           const uid  = cred.user.uid;
           btn.textContent = 'Loading your registration…';
 
-          // ── 1. Check INSTITUTIONAL registrations first ──
+          // ── 1. Check INSTITUTIONAL registrations first (Edition 2) ──
           let instDoc = null;
           try {
-            const instQ    = query(collection(db, 'institutional_registrations'), where('uid', '==', uid));
+            const instQ    = query(collection(db, 'institutional_registrations_edition2'), where('uid', '==', uid));
             const instSnap = await getDocs(instQ);
             if (!instSnap.empty) {
               instSnap.forEach(d => { if (!instDoc) instDoc = d; });
@@ -450,8 +450,8 @@
             return;
           }
 
-          // ── 2. Check INDIVIDUAL registrations ──
-          const q    = query(collection(db, 'registrations'), where('uid', '==', uid));
+          // ── 2. Check INDIVIDUAL registrations (Edition 2) ──
+          const q    = query(collection(db, 'registrations_edition2'), where('uid', '==', uid));
           const snap = await getDocs(q);
 
           if (snap.empty) {

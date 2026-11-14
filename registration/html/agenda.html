@@ -242,7 +242,7 @@
     async function fetchTakenPortfolios() {
       const takenMap = { unga: new Set(), uncsw: new Set(), unhrc: new Set(), who: new Set(), aippm: new Set() };
       try {
-        const q = query(collection(db, 'registrations'), where('event', '==', 'mun'));
+        const q = query(collection(db, 'registrations_edition2'), where('event', '==', 'mun'));
         const snapshot = await getDocs(q);
         snapshot.forEach(d => {
           const data = d.data();

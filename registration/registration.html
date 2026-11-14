@@ -295,8 +295,8 @@
             createdAt: serverTimestamp()
           };
 
-          // Save draft to Firestore immediately so they can resume via login
-          const docRef = await addDoc(collection(db, 'registrations'), data);
+          // Save draft to Firestore immediately so they can resume via login (Edition 2)
+          const docRef = await addDoc(collection(db, 'registrations_edition2'), data);
 
           sessionStorage.setItem('nydc_registration', JSON.stringify(data));
           sessionStorage.setItem('nydc_doc_id', docRef.id);

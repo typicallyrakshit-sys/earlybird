@@ -288,7 +288,7 @@
           const { db: _db } = await import('../js/firebase.js');
           const { collection, getDocs, query, where } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
 
-          const regsRef = collection(_db, 'registrations');
+          const regsRef = collection(_db, 'registrations_edition2');
           const iplQuery = query(regsRef, where('event', '==', 'ipl'));
           const iplSnap = await getDocs(iplQuery);
 
@@ -410,7 +410,7 @@
             const { getFirestore: _gF, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js');
             const _app = getApps().length ? getApps()[0] : _iA({ apiKey:"AIzaSyDBo7RP1PSFhva-Ni0pKScX0MlIuUEAmnE",authDomain:"nydc-72b34.firebaseapp.com",projectId:"nydc-72b34",storageBucket:"nydc-72b34.firebasestorage.app",messagingSenderId:"935882112599",appId:"1:935882112599:web:f04b660e233f21a46f2d12" });
             const _db = _gF(_app);
-            const snap = await getDoc(doc(_db, 'registrations', storedDocId));
+            const snap = await getDoc(doc(_db, 'registrations_edition2', storedDocId));
             if (snap.exists()) {
               const d = snap.data();
               leader.firstName = leader.firstName || d.firstName || '';

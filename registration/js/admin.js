@@ -27,10 +27,19 @@ const searchInput = document.getElementById('search-input');
 const statusFilter = document.getElementById('status-filter');
 const couponStatsSection = document.getElementById('coupon-stats-section');
 const couponStatsGrid = document.getElementById('coupon-stats-grid');
+const editionFilter = document.getElementById('edition-filter');
 
 let registrationsData = [];
 let institutionalData = [];
 let activeTab = 'individual';
+
+function getCollectionNames() {
+  const isEd2 = !editionFilter || editionFilter.value === 'edition2';
+  return {
+    indiv: isEd2 ? 'registrations_edition2' : 'registrations',
+    inst: isEd2 ? 'institutional_registrations_edition2' : 'institutional_registrations'
+  };
+}
 
 // ─── Admin Access ───
 const FALLBACK_ADMIN = "dhamindhankher2010@gmail.com";
@@ -65,8 +74,9 @@ onAuthStateChanged(auth, async (user) => {
 // ─── Data Fetching ───
 async function fetchRegistrations() {
   try {
+    const colNames = getCollectionNames();
     // Individual registrations
-    const q = query(collection(db, "registrations"));
+    const q = query(collection(db, colNames.indiv));
     const snap = await getDocs(q);
     registrationsData = [];
     snap.forEach(d => registrationsData.push({ id: d.id, ...d.data() }));
@@ -78,7 +88,7 @@ async function fetchRegistrations() {
 
     // Institutional registrations
     try {
-      const iq = query(collection(db, "institutional_registrations"), orderBy('registeredAt', 'desc'));
+      const iq = query(collection(db, colNames.inst), orderBy('registeredAt', 'desc'));
       const isnap = await getDocs(iq);
       institutionalData = [];
       isnap.forEach(d => institutionalData.push({ id: d.id, ...d.data() }));
@@ -330,7 +340,8 @@ async function handleAction(regId, newStatus) {
   btns.forEach(b => { b.disabled = true; b.textContent = '…'; });
 
   try {
-    await updateDoc(doc(db, 'registrations', regId), { status: newStatus });
+    const colNames = getCollectionNames();
+    await updateDoc(doc(db, colNames.indiv, regId), { status: newStatus });
     
     const teamList = (reg.teamMembers||[]).map((m,i) => `${i+1}. ${m.firstName} ${m.lastName} (${m.email})`).join('\n');
     await sendNotification(
@@ -359,7 +370,8 @@ async function handleInstAction(regId, newStatus) {
   btns.forEach(b => { b.disabled = true; b.textContent = '…'; });
 
   try {
-    await updateDoc(doc(db, 'institutional_registrations', regId), { status: newStatus });
+    const colNames = getCollectionNames();
+    await updateDoc(doc(db, colNames.inst, regId), { status: newStatus });
     
     const participantsList = (reg.participants||[]).map((p,i) => `${i+1}. ${p.firstName} ${p.lastName} (${EVENT_NAMES[p.event]||p.event})`).join('\n');
     await sendNotification(
@@ -435,6 +447,13 @@ window.switchTab = function(tab) {
     renderInstitutionalTable(institutionalData);
   }
 };
+
+if (editionFilter) {
+  editionFilter.addEventListener('change', async () => {
+    showLoading(`Fetching ${editionFilter.value === 'edition2' ? 'Edition 2' : 'Edition 1'} registrations...`);
+    await fetchRegistrations();
+  });
+}
 
 searchInput.addEventListener('input', () => activeTab === 'individual' ? renderTable(registrationsData) : renderInstitutionalTable(institutionalData));
 statusFilter.addEventListener('change', () => activeTab === 'individual' ? renderTable(registrationsData) : renderInstitutionalTable(institutionalData));

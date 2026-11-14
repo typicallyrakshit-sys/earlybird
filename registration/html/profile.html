@@ -205,8 +205,8 @@
         // ── Fetch Profile Logic ──
         async function loadUserProfile(user) {
             try {
-                // Find registration doc where uid matches
-                const q = query(collection(db, 'registrations'), where('uid', '==', user.uid));
+                // Find registration doc where uid matches (Edition 2)
+                const q = query(collection(db, 'registrations_edition2'), where('uid', '==', user.uid));
                 const snapshot = await getDocs(q);
 
                 if (snapshot.empty) {
@@ -258,7 +258,7 @@
 
                 // Delete any stale draft docs (cleanup)
                 for (const d of draftDocs) {
-                    try { await deleteDoc(doc(db, 'registrations', d.id)); } catch(_) {}
+                    try { await deleteDoc(doc(db, 'registrations_edition2', d.id)); } catch(_) {}
                 }
 
                 const data = chosenDoc.data();
@@ -398,7 +398,7 @@
             btn.textContent = 'Clearing old registration…';
             try {
                 // Delete the rejected doc
-                await deleteDoc(doc(db, 'registrations', docId));
+                await deleteDoc(doc(db, 'registrations_edition2', docId));
 
                 // Restore personal info in session so event.html can use it
                 sessionStorage.setItem('nydc_registration', JSON.stringify({
@@ -425,7 +425,7 @@
                     grade: data.grade || '', city: data.city || '',
                     status: 'draft'
                 };
-                const newDocRef = await _add(_col(db, 'registrations'), newDraft);
+                const newDocRef = await _add(_col(db, 'registrations_edition2'), newDraft);
                 sessionStorage.setItem('nydc_doc_id', newDocRef.id);
 
                 window.location.href = 'event.html';
